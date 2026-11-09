@@ -27,3 +27,8 @@ dist-ssr
 .env
 .env.*
 !.env.example
+
+# Claude (shaxsiy sozlamalar)
+.claude/settings.local.json
+CLAUDE.local.md
+graphify-out/
