@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { i18n } from './index'
 import en from './locales/en.json'
 import legacyEn from './locales/legacy/en.json'
 import legacyRu from './locales/legacy/ru.json'
@@ -27,7 +28,22 @@ for (const [path, json] of Object.entries(featureFiles)) {
 
 const legacy = { ru: legacyRu, uz: legacyUz, en: legacyEn } as Record<string, Json>
 
+// Run every feature's i18n.ts, as the app does on start.
+import.meta.glob('/src/features/*/i18n.ts', { eager: true })
+
 describe('translations', () => {
+  // Catches a namespace being swallowed by a legacy flat key with the same name ("currency": "Валюта").
+  it.each([...features.keys()])(
+    'feature "%s" texts are actually loaded in every language',
+    (name) => {
+      for (const lng of ['ru', 'uz', 'en']) {
+        for (const key of leafKeys(features.get(name)![lng]).filter((k) => !k.includes('{{'))) {
+          expect(i18n.t(key, { lng }), `${lng}: ${key}`).not.toBe(key)
+        }
+      }
+    },
+  )
+
   it('new shared keys exist in all three languages', () => {
     expect(leafKeys(uz).sort()).toEqual(leafKeys(ru).sort())
     expect(leafKeys(en).sort()).toEqual(leafKeys(ru).sort())

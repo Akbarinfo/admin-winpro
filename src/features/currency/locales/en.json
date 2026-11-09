@@ -1,0 +1,13 @@
+{
+  "currency": {
+    "title": "Currencies",
+    "add": "Add currency",
+    "edit": "Edit currency",
+    "name": "Name",
+    "symbol": "Symbol",
+    "main": "Main",
+    "main_label": "Main currency",
+    "main_hint": "The country's base currency. New exchange rates start from it by default.",
+    "empty": "No currencies yet. Add the first one."
+  }
+}

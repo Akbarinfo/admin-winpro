@@ -120,7 +120,9 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 2. Umumiy qatlam — ✅ DataTable, Pagination, Combobox, Modal, FormField, NumberInput, useServerTable, useConfirmDelete,
    useEntityForm, lookups (valyutalar), testlar, `/ui-kit`. Excel va ImageUpload 5-bosqichda.
 3. Namuna bo'lim: Курсы валют — ✅ kod va testlar tayyor, real backend bilan tekshirilishi kerak
-4. Oddiy CRUD bo'limlar — **keyingi bosqich**: valyuta, mamlakat, birlik, seriya, tekstura, ta'minotchi…
+4. Oddiy CRUD bo'limlar — **jarayonda** (`/new-feature <bo'lim>`): ✅ Валюты.
+   Qolgan: mamlakat, birlik, seriya, material turi, ta'minotchi, savdo toifasi, tekstura, tekstura guruhi,
+   ustaxona xizmatlari, ilova versiyalari, tillar, tarif funksiyalari, mobil foydalanuvchilar, foydalanuvchilar: valyuta, mamlakat, birlik, seriya, tekstura, ta'minotchi…
 5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar
 
@@ -132,11 +134,10 @@ Tegishli bosqichga yetganda foydalanuvchiga eslatilsin.
 
 | Qachon | Nima |
 |---|---|
-| 2-bosqich | `.claude/rules/`: `ui-components.md`, `api.md`, `features.md` — real misollar bilan |
-| 3-bosqich (Курсы валют tayyor) | `.claude/skills/new-feature` — namuna bo'limdan yangi CRUD bo'lim yaratadi |
+| ✅ 2-bosqich | `.claude/rules/`: `ui-components.md`, `api.md`, `features.md`, `testing.md` |
+| ✅ 3-bosqich | `.claude/skills/new-feature` — eski paneldan CRUD bo'limni ko'chiradi (`/new-feature currency`) |
 | GitHub repo yaratilganda | `.mcp.json` (GitHub MCP) |
 | 4-bosqich o'rtasi (~10–15 feature) | graphify — `graphify-out/` gitga tushmaydi |
 | 4–5-bosqichlar | `.claude/agents/architecture-reviewer.md` |
-| Testlar (Vitest) qo'shilganda | `.claude/rules/testing.md` |
 
 Shaxsiy sozlamalar `.claude/settings.local.json` va `CLAUDE.local.md`da saqlanadi, ular gitga tushmaydi.

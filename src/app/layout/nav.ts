@@ -49,7 +49,7 @@ export const NAV: NavGroup[] = [
   {
     title: 'nav.group_references',
     items: [
-      { to: '/currency', label: 'sidebar_menu_currency', icon: Coins },
+      { to: '/currency', label: 'currency.title', icon: Coins },
       { to: '/exchange', label: 'exchange.title', icon: ArrowLeftRight },
       { to: '/country', label: 'country', icon: Globe },
       { to: '/units', label: 'sidebar_menu_units', icon: Ruler },

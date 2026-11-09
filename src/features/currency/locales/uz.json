@@ -1,0 +1,13 @@
+{
+  "currency": {
+    "title": "Valyutalar",
+    "add": "Valyuta qo'shish",
+    "edit": "Valyutani tahrirlash",
+    "name": "Nomi",
+    "symbol": "Belgisi",
+    "main": "Asosiy",
+    "main_label": "Asosiy valyuta",
+    "main_hint": "Mamlakatning bazaviy valyutasi. Yangi kurslar sukut bo'yicha shundan hisoblanadi.",
+    "empty": "Hozircha valyutalar yo'q. Birinchisini qo'shing."
+  }
+}
