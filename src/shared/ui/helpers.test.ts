@@ -6,6 +6,7 @@ import {
   nextSort,
   numberToText,
   parseNumber,
+  splitByQuery,
 } from './helpers'
 
 describe('formatNumberText', () => {
@@ -85,5 +86,24 @@ describe('parseNumber', () => {
     expect(parseNumber('')).toBeNull()
     expect(parseNumber('-')).toBeNull()
     expect(parseNumber(',')).toBeNull()
+  })
+})
+
+describe('splitByQuery', () => {
+  it('marks every case-insensitive match', () => {
+    expect(splitByQuery('Рама 60 мм, рама', 'рама')).toEqual([
+      { text: 'Рама', match: true },
+      { text: ' 60 мм, ', match: false },
+      { text: 'рама', match: true },
+    ])
+  })
+
+  it('treats regex characters literally and ignores an empty query', () => {
+    expect(splitByQuery('AK-60 (101)', '(10')).toEqual([
+      { text: 'AK-60 ', match: false },
+      { text: '(10', match: true },
+      { text: '1)', match: false },
+    ])
+    expect(splitByQuery('Рама', '  ')).toEqual([{ text: 'Рама', match: false }])
   })
 })

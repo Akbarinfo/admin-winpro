@@ -24,7 +24,9 @@
     "delete_text": "Yozuv qaytarib bo'lmaydigan tarzda o'chiriladi.",
     "delete_named": "«{{name}}» qaytarib bo'lmaydigan tarzda o'chiriladi.",
     "load_error": "Ma'lumotlarni yuklab bo'lmadi.",
-    "retry": "Qayta urinish"
+    "retry": "Qayta urinish",
+    "search": "Qidirish",
+    "number": "№"
   },
   "errors": {
     "network": "Server bilan aloqa yo'q. Internetni tekshirib, qayta urinib ko'ring.",
@@ -96,7 +98,9 @@
     "akfa_units": "Birliklarni moslashtirish",
     "feedback": "Fikr-mulohazalar",
     "group_dev": "Ishlab chiqish",
-    "ui_kit": "UI komponentlar"
+    "ui_kit": "UI komponentlar",
+    "new": "NEW",
+    "not_migrated": "Hali ko'chirilmagan"
   },
   "soon": {
     "title": "Bo'lim ko'chirilmoqda",

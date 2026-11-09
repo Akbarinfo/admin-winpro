@@ -120,9 +120,9 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 2. Umumiy qatlam — ✅ DataTable, Pagination, Combobox, Modal, FormField, NumberInput, useServerTable, useConfirmDelete,
    useEntityForm, lookups (valyutalar), testlar, `/ui-kit`. Excel va ImageUpload 5-bosqichda.
 3. Namuna bo'lim: Курсы валют — ✅ kod va testlar tayyor, real backend bilan tekshirilishi kerak
-4. Oddiy CRUD bo'limlar — **jarayonda** (`/new-feature <bo'lim>`): ✅ Валюты.
-   Qolgan: mamlakat, birlik, seriya, material turi, ta'minotchi, savdo toifasi, tekstura, tekstura guruhi,
-   ustaxona xizmatlari, ilova versiyalari, tillar, tarif funksiyalari, mobil foydalanuvchilar, foydalanuvchilar: valyuta, mamlakat, birlik, seriya, tekstura, ta'minotchi…
+4. Oddiy CRUD bo'limlar — **jarayonda** (`/new-feature <bo'lim>`): ✅ Валюты, Единицы, Серии, Виды материала, Языки.
+   Qolgan: ta'minotchi, savdo toifasi, ustaxona xizmatlari, tarif funksiyalari, tekstura, tekstura guruhi
+   (avval `ImageUpload` + `fileUrl`), so'ng mamlakat, ilova versiyalari, foydalanuvchilar, mobil foydalanuvchilar: valyuta, mamlakat, birlik, seriya, tekstura, ta'minotchi…
 5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar
 

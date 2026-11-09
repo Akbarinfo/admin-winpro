@@ -42,6 +42,8 @@ Umumiy komponent yetmasa — `shared/ui`ga qo'shing (`.claude/rules/ui-component
 
 - `src/app/router/router.tsx` → `featureRoutes`ga `...xRoutes`.
 - `src/app/layout/nav.ts` → yorliqni `'x.title'`ga almashtiring.
+- O'sha punktga `status: 'new'` qo'ying; oldingi partiyadagi `'new'`larni `'ready'`ga o'tkazing
+  (status yo'q punkt menyuda xira va bosilmaydi — ko'chirilmaganini bildiradi).
 
 ## 4. Testlar
 

@@ -12,6 +12,7 @@ import {
   ConfirmDialog,
   DataTable,
   Field,
+  Highlight,
   IconButton,
   Input,
   LanguageSwitch,
@@ -20,10 +21,12 @@ import {
   PageHeader,
   Pagination,
   PasswordInput,
+  SearchInput,
   Select,
   Spinner,
   Switch,
   TableCard,
+  TableToolbar,
   Textarea,
   ThemeToggle,
   type Column,
@@ -78,9 +81,7 @@ function KitCard({
     >
       <div>
         <h3 className="text-[14.5px] font-semibold">{title}</h3>
-        {replaces && (
-          <p className="mt-0.5 text-[11.5px] text-faint">заменяет: {replaces}</p>
-        )}
+        {replaces && <p className="mt-0.5 text-[11.5px] text-faint">заменяет: {replaces}</p>}
       </div>
       {children}
     </Card>
@@ -110,6 +111,7 @@ export function UiKitPage() {
   const [selected, setSelected] = useState<number | null>(317)
   const [modal, setModal] = useState(false)
   const [confirm, setConfirm] = useState(false)
+  const [query, setQuery] = useState('')
 
   const sorted = useMemo(() => {
     const dir = sort.dir === 'asc' ? 1 : -1
@@ -119,8 +121,24 @@ export function UiKitPage() {
   }, [sort])
 
   const columns: Column<Rate>[] = [
-    { key: 'from', title: 'Из валюты', render: (r) => <Chip>{r.from}</Chip> },
-    { key: 'to', title: 'В валюту', render: (r) => <Chip>{r.to}</Chip> },
+    {
+      key: 'from',
+      title: 'Из валюты',
+      render: (r) => (
+        <Chip>
+          <Highlight text={r.from} query={query} />
+        </Chip>
+      ),
+    },
+    {
+      key: 'to',
+      title: 'В валюту',
+      render: (r) => (
+        <Chip>
+          <Highlight text={r.to} query={query} />
+        </Chip>
+      ),
+    },
     { key: 'date', title: 'Дата', sortable: true, render: (r) => formatDate(r.date) },
     {
       key: 'rate',
@@ -293,7 +311,7 @@ export function UiKitPage() {
         <KitCard
           wide
           title="DataTable + Pagination"
-          replaces="TemDataTable.jsx, TemDataTableInline.js, DataTable.js, FillingDataTable.js, Pagination.js, Select.js"
+          replaces="TemDataTable.jsx, TemDataTableInline.js, DataTable.js, FillingDataTable.js, Pagination.js, Select.js, search/*SearchInput.js + 6 Context"
         >
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-semibold tracking-wider text-faint uppercase">
@@ -314,13 +332,28 @@ export function UiKitPage() {
             </span>
           </div>
           <TableCard className="max-h-[360px]">
+            <TableToolbar>
+              <SearchInput value={query} onChange={setQuery} />
+              {query && (
+                <span className="text-xs text-faint">
+                  Ищем: «{query}» (применяется через 300 мс, от 2 символов)
+                </span>
+              )}
+            </TableToolbar>
             <DataTable
               columns={columns}
-              rows={tableState === 'empty' ? [] : sorted}
+              rows={
+                tableState === 'empty'
+                  ? []
+                  : sorted.filter((r) =>
+                      `${r.from} ${r.to}`.toLowerCase().includes(query.toLowerCase()),
+                    )
+              }
               getRowKey={(r) => r.id}
               loading={tableState === 'loading'}
               sort={sort}
               onSortChange={setSort}
+              highlight={query}
               selectedKey={selected}
               onRowClick={(r) => setSelected(r.id)}
               actions={() => (

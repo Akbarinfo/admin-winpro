@@ -65,22 +65,9 @@ export function CurrencyListPage() {
           fetching={table.isFetching}
           sort={table.sort}
           onSortChange={table.onSortChange}
-          empty={
-            table.error ? (
-              <span>
-                {t('common.load_error')}{' '}
-                <button
-                  type="button"
-                  className="font-medium text-primary-strong hover:underline"
-                  onClick={() => table.refetch()}
-                >
-                  {t('common.retry')}
-                </button>
-              </span>
-            ) : (
-              t('currency.empty')
-            )
-          }
+          error={table.error}
+          onRetry={() => table.refetch()}
+          empty={t('currency.empty')}
           actions={(row) => (
             <>
               <IconButton

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
 import type { TableSort } from '@/shared/api/table'
 import { cn } from '@/shared/lib/cn'
+import { Highlight } from './Highlight'
 import { nextSort } from './helpers'
 
 export type Column<T> = {
@@ -18,7 +19,8 @@ export type Column<T> = {
   align?: 'left' | 'right'
   className?: string
   /** Custom cell. Without it the raw field value is shown. */
-  render?: (row: T) => ReactNode
+  /** `index` — position on the current page, from 0. */
+  render?: (row: T, index: number) => ReactNode
 }
 
 type DataTableProps<T> = {
@@ -37,6 +39,11 @@ type DataTableProps<T> = {
   selectedKey?: Key | null
   onRowClick?: (row: T) => void
   empty?: ReactNode
+  /** Loading failed: shown instead of `empty`, with a retry link when `onRetry` is given. */
+  error?: unknown
+  onRetry?: () => void
+  /** Current search: matches are marked in plain cells. Custom cells use <Highlight>. */
+  highlight?: string
   skeletonRows?: number
 }
 
@@ -52,6 +59,9 @@ export function DataTable<T>({
   selectedKey,
   onRowClick,
   empty,
+  error,
+  onRetry,
+  highlight,
   skeletonRows = 5,
 }: DataTableProps<T>) {
   const { t } = useTranslation()
@@ -130,11 +140,26 @@ export function DataTable<T>({
           ) : rows.length === 0 ? (
             <tr>
               <td colSpan={colCount} className="px-3.5 py-12 text-center text-muted">
-                {empty ?? t('common.no_data')}
+                {error ? (
+                  <>
+                    {t('common.load_error')}{' '}
+                    {onRetry && (
+                      <button
+                        type="button"
+                        onClick={onRetry}
+                        className="font-medium text-primary-strong hover:underline"
+                      >
+                        {t('common.retry')}
+                      </button>
+                    )}
+                  </>
+                ) : (
+                  (empty ?? t('common.no_data'))
+                )}
               </td>
             </tr>
           ) : (
-            rows.map((row) => {
+            rows.map((row, index) => {
               const key = getRowKey(row)
               const selected = selectedKey !== undefined && selectedKey === key
               return (
@@ -151,9 +176,14 @@ export function DataTable<T>({
                 >
                   {columns.map((col) => (
                     <td key={col.key} className={cn(cell(col.align), col.className)}>
-                      {col.render
-                        ? col.render(row)
-                        : String((row as Record<string, unknown>)[col.key] ?? '')}
+                      {col.render ? (
+                        col.render(row, index)
+                      ) : (
+                        <Highlight
+                          text={String((row as Record<string, unknown>)[col.key] ?? '')}
+                          query={highlight}
+                        />
+                      )}
                     </td>
                   ))}
                   {actions && (

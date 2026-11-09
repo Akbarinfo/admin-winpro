@@ -36,7 +36,17 @@ import {
 } from 'lucide-react'
 import { matchPath } from 'react-router'
 
-export type NavItem = { to: string; label: string; icon: LucideIcon }
+export type NavItem = {
+  to: string
+  label: string
+  icon: LucideIcon
+  /**
+   * Migration progress, shown in the sidebar:
+   * undefined — not migrated yet (greyed out, not clickable); 'ready' — migrated; 'new' — migrated in the latest batch.
+   * When a section is migrated, mark it 'new' and turn the previous batch's 'new' into 'ready'.
+   */
+  status?: 'ready' | 'new'
+}
 export type NavGroup = { title: string; items: NavItem[] }
 
 // Sidebar menu as data. Paths and labels come from the old panel (components/Sidebar.js),
@@ -44,17 +54,17 @@ export type NavGroup = { title: string; items: NavItem[] }
 export const NAV: NavGroup[] = [
   {
     title: 'nav.group_overview',
-    items: [{ to: '/', label: 'sidebar_menu_dashboard', icon: House }],
+    items: [{ to: '/', label: 'sidebar_menu_dashboard', icon: House, status: 'ready' }],
   },
   {
     title: 'nav.group_references',
     items: [
-      { to: '/currency', label: 'currency.title', icon: Coins },
-      { to: '/exchange', label: 'exchange.title', icon: ArrowLeftRight },
+      { to: '/currency', label: 'currency.title', icon: Coins, status: 'ready' },
+      { to: '/exchange', label: 'exchange.title', icon: ArrowLeftRight, status: 'ready' },
       { to: '/country', label: 'country', icon: Globe },
-      { to: '/units', label: 'sidebar_menu_units', icon: Ruler },
-      { to: '/series', label: 'sidebar_menu_series', icon: Layers },
-      { to: '/material-type', label: 'sidebar_material_type', icon: Boxes },
+      { to: '/units', label: 'units.title', icon: Ruler, status: 'new' },
+      { to: '/series', label: 'series.title', icon: Layers, status: 'new' },
+      { to: '/material-type', label: 'materialType.title', icon: Boxes, status: 'new' },
       { to: '/suppliers', label: 'sidebar_menu_suppliers', icon: Truck },
       { to: '/sales_category', label: 'sidebar_sales_category', icon: Tags },
     ],
@@ -108,13 +118,18 @@ export const NAV: NavGroup[] = [
       { to: '/workshop-service', label: 'sidebar_workshop_service', icon: Hammer },
       { to: '/app-versions', label: 'sidebar_app_versions', icon: MonitorSmartphone },
       { to: '/translations', label: 'sidebar_menu_translations', icon: Languages },
-      { to: '/languages', label: 'sidebar_menu_languages', icon: Type },
+      { to: '/languages', label: 'languages.title', icon: Type, status: 'new' },
       { to: '/tariff-feature', label: 'sidebar_menu_tariff_feature', icon: BadgeDollarSign },
     ],
   },
   // Dev only: component showcase for reviewing the design.
   ...(import.meta.env.DEV
-    ? [{ title: 'nav.group_dev', items: [{ to: '/ui-kit', label: 'nav.ui_kit', icon: LayoutGrid }] }]
+    ? [
+        {
+          title: 'nav.group_dev',
+          items: [{ to: '/ui-kit', label: 'nav.ui_kit', icon: LayoutGrid, status: 'ready' as const }],
+        },
+      ]
     : []),
 ]
 

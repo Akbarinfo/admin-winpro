@@ -1,0 +1,10 @@
+{
+  "series": {
+    "title": "Seriyalar",
+    "add": "Seriya qo'shish",
+    "edit": "Seriyani tahrirlash",
+    "name": "Nomi",
+    "description": "Tavsif",
+    "empty": "Hozircha seriyalar yo'q. Birinchisini qo'shing."
+  }
+}

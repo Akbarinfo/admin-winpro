@@ -61,6 +61,8 @@ export function useServerTable<T>({
     onSortChange: (sort: TableSort) => setParams({ sort, page: 1 }),
     search: params.search ?? '',
     onSearchChange: (search: string) => setParams({ search, page: 1 }),
+    /** «№» column: number of the row across pages (index is its position on this page). */
+    rowNumber: (index: number) => (params.page - 1) * params.size + index + 1,
     pagination: {
       page: params.page,
       size: params.size,

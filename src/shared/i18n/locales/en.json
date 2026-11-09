@@ -24,7 +24,9 @@
     "delete_text": "The record will be deleted permanently.",
     "delete_named": "“{{name}}” will be deleted permanently.",
     "load_error": "Couldn't load the data.",
-    "retry": "Retry"
+    "retry": "Retry",
+    "search": "Search",
+    "number": "#"
   },
   "errors": {
     "network": "Can't reach the server. Check your connection and try again.",
@@ -96,7 +98,9 @@
     "akfa_units": "Unit mapping",
     "feedback": "Feedback",
     "group_dev": "Development",
-    "ui_kit": "UI components"
+    "ui_kit": "UI components",
+    "new": "NEW",
+    "not_migrated": "Not migrated yet"
   },
   "soon": {
     "title": "Section is being migrated",

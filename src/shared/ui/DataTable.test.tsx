@@ -87,6 +87,14 @@ describe('DataTable', () => {
     expect(onSortChange).toHaveBeenLastCalledWith({ column: 'table.x.name', dir: 'desc' })
   })
 
+  it('marks search matches in plain cells', () => {
+    const { container } = render(
+      <DataTable columns={columns} rows={rows} getRowKey={(r) => r.id} highlight="us" />,
+    )
+    const marks = [...container.querySelectorAll('mark')].map((m) => m.textContent)
+    expect(marks).toEqual(['US'])
+  })
+
   it('does not make non-sortable columns clickable', () => {
     render(
       <DataTable columns={columns} rows={rows} getRowKey={(r) => r.id} onSortChange={vi.fn()} />,

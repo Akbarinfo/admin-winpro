@@ -1,0 +1,15 @@
+{
+  "materialType": {
+    "title": "Material types",
+    "add": "Add material type",
+    "edit": "Edit material type",
+    "name": "Name",
+    "description": "Description",
+    "empty": "No material types yet. Add the first one.",
+    "is_default": "Default",
+    "is_default_hint": "Used when no material type is chosen.",
+    "is_testing": "Test mode",
+    "is_testing_hint": "Visible to everyone, marked with a TEST badge — not fully verified yet",
+    "testing_badge": "TEST"
+  }
+}

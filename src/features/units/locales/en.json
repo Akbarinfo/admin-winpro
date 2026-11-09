@@ -1,0 +1,11 @@
+{
+  "units": {
+    "title": "Units of measure",
+    "add": "Add unit",
+    "edit": "Edit unit",
+    "name": "Name",
+    "short_name": "Abbreviation",
+    "short_name_hint": "How it's written next to a number: m, pcs, kg",
+    "empty": "No units yet. Add the first one."
+  }
+}

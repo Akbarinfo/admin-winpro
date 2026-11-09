@@ -29,24 +29,42 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
             <div className="px-2.5 pb-1.5 text-[11px] font-semibold tracking-[.08em] text-faint uppercase">
               {t(group.title)}
             </div>
-            {group.items.map(({ to, label, icon: Icon }) => (
-              <NavLink
-                key={to}
-                to={to}
-                end={to === '/'}
-                onClick={onNavigate}
-                className={({ isActive }) =>
-                  cn(
-                    'flex h-[34px] items-center gap-2.5 rounded-md px-2.5 font-medium text-muted hover:bg-surface-2 hover:text-fg',
-                    isActive &&
-                      'bg-primary-soft text-primary-strong hover:bg-primary-soft hover:text-primary-strong',
-                  )
-                }
-              >
-                <Icon size={18} aria-hidden="true" className="shrink-0" />
-                <span className="truncate">{t(label)}</span>
-              </NavLink>
-            ))}
+            {group.items.map(({ to, label, icon: Icon, status }) =>
+              // Not migrated yet: shown greyed out so it's clear what's left.
+              !status ? (
+                <span
+                  key={to}
+                  aria-disabled="true"
+                  title={t('nav.not_migrated')}
+                  className="flex h-[34px] cursor-not-allowed items-center gap-2.5 rounded-md px-2.5 font-medium text-muted opacity-45"
+                >
+                  <Icon size={18} aria-hidden="true" className="shrink-0" />
+                  <span className="truncate">{t(label)}</span>
+                </span>
+              ) : (
+                <NavLink
+                  key={to}
+                  to={to}
+                  end={to === '/'}
+                  onClick={onNavigate}
+                  className={({ isActive }) =>
+                    cn(
+                      'flex h-[34px] items-center gap-2.5 rounded-md px-2.5 font-medium text-muted hover:bg-surface-2 hover:text-fg',
+                      isActive &&
+                        'bg-primary-soft text-primary-strong hover:bg-primary-soft hover:text-primary-strong',
+                    )
+                  }
+                >
+                  <Icon size={18} aria-hidden="true" className="shrink-0" />
+                  <span className="truncate">{t(label)}</span>
+                  {status === 'new' && (
+                    <span className="ml-auto rounded-[5px] bg-primary px-1.5 py-px text-[10px] leading-4 font-semibold tracking-wide text-primary-fg">
+                      {t('nav.new')}
+                    </span>
+                  )}
+                </NavLink>
+              ),
+            )}
           </div>
         ))}
       </nav>

@@ -51,6 +51,20 @@ export function numberToText(value: number, minDecimals = 0) {
   return formatNumberText(digits ? `${int}.${digits}` : int)
 }
 
+/**
+ * Splits text into plain and matching parts for search highlighting (case-insensitive).
+ * ('Рама 60 мм', 'ра') → [{ text: 'Ра', match: true }, { text: 'ма 60 мм', match: false }]
+ */
+export function splitByQuery(text: string, query: string) {
+  const q = query.trim()
+  if (!q || !text) return [{ text, match: false }]
+  const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return text
+    .split(new RegExp(`(${escaped})`, 'gi'))
+    .filter(Boolean)
+    .map((part) => ({ text: part, match: part.toLowerCase() === q.toLowerCase() }))
+}
+
 /** Caret index in `text` right after the first `count` non-space characters. */
 export function caretAfter(text: string, count: number) {
   let seen = 0

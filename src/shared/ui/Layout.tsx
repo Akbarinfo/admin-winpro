@@ -42,6 +42,19 @@ export function TableCard({ className, ...rest }: ComponentProps<'div'>) {
   )
 }
 
+/** Row above the table inside a TableCard: search, filters, bulk actions. */
+export function TableToolbar({ className, ...rest }: ComponentProps<'div'>) {
+  return (
+    <div
+      className={cn(
+        'flex shrink-0 flex-wrap items-center gap-3 border-b border-line p-3',
+        className,
+      )}
+      {...rest}
+    />
+  )
+}
+
 const CHIP_TONES = {
   default: 'border border-line bg-surface-2 text-muted',
   primary: 'bg-primary-soft text-primary-strong',

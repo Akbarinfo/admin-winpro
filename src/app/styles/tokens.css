@@ -19,6 +19,7 @@
   --danger: #c2413b;
   --danger-soft: #fbe7e6;
   --overlay: rgb(12 24 27 / 0.42);
+  --highlight: #fde68a; /* search matches */
   color-scheme: light;
 }
 
@@ -42,5 +43,6 @@
   --danger: #ef7a73;
   --danger-soft: #3d1c1b;
   --overlay: rgb(0 0 0 / 0.6);
+  --highlight: rgb(234 179 8 / 0.4);
   color-scheme: dark;
 }

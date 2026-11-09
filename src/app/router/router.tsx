@@ -2,13 +2,24 @@ import { createBrowserRouter } from 'react-router'
 import { AuthLayout, authRoutes } from '@/features/auth'
 import { currencyRoutes } from '@/features/currency'
 import { exchangeRoutes } from '@/features/exchange'
+import { languageRoutes } from '@/features/languages'
+import { materialTypeRoutes } from '@/features/materialType'
+import { seriesRoutes } from '@/features/series'
+import { unitRoutes } from '@/features/units'
 import { AppLayout } from '../layout/AppLayout'
 import { NAV_ITEMS } from '../layout/nav'
 import { GuestOnly, RequireAuth } from './guards'
 import { ComingSoonPage, ErrorScreen, NotFoundPage } from './pages'
 
 // Migrated sections. Their paths are more specific than the placeholders' splats, so they win.
-const featureRoutes = [...currencyRoutes, ...exchangeRoutes]
+const featureRoutes = [
+  ...currencyRoutes,
+  ...exchangeRoutes,
+  ...unitRoutes,
+  ...seriesRoutes,
+  ...materialTypeRoutes,
+  ...languageRoutes,
+]
 
 // Dev-only pages; lazy so they never reach the production bundle.
 const devRoutes = import.meta.env.DEV

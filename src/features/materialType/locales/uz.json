@@ -1,0 +1,15 @@
+{
+  "materialType": {
+    "title": "Material turlari",
+    "add": "Material turini qo'shish",
+    "edit": "Material turini tahrirlash",
+    "name": "Nomi",
+    "description": "Tavsif",
+    "empty": "Hozircha material turlari yo'q. Birinchisini qo'shing.",
+    "is_default": "Sukut bo'yicha",
+    "is_default_hint": "Material turi tanlanmaganda shu qo'yiladi.",
+    "is_testing": "Test rejimi",
+    "is_testing_hint": "Hammaga ko'rinadi, TEST belgisi bilan — hali to'liq tekshirilmagan",
+    "testing_badge": "TEST"
+  }
+}

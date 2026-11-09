@@ -1,0 +1,11 @@
+{
+  "units": {
+    "title": "O'lchov birliklari",
+    "add": "Birlik qo'shish",
+    "edit": "Birlikni tahrirlash",
+    "name": "Nomi",
+    "short_name": "Qisqartmasi",
+    "short_name_hint": "Son yonida qanday yoziladi: m, dona, kg",
+    "empty": "Hozircha birliklar yo'q. Birinchisini qo'shing."
+  }
+}

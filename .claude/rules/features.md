@@ -13,7 +13,11 @@ Namuna: `src/features/exchange`. Yangi bo'lim shu fayllar to'plamidan nusxa olin
   `save(values, id?)`: id yo'q → POST, bor → PUT. URL va body eski panel bilan **aynan bir xil**.
 - `schema.ts` — zod. `XForm = z.input`, `XValues = z.output`. Majburiy son/id: `requiredNumber()`, musbat: `positiveNumber()`,
   matn: `requiredText()` (`@/shared/lib/zod`). Xabarlar — i18n kalitlari.
-- `XListPage.tsx` — `ListLayout` > `PageHeader` + `TableCard` (`DataTable` + `Pagination`) + `{del.dialog}` + `<Outlet />`.
+- `XListPage.tsx` — `ListLayout` > `PageHeader` + `TableCard` (`TableToolbar` + `DataTable` + `Pagination`) + `{del.dialog}` + `<Outlet />`.
+  Eski sahifada `<SearchInput/>` bo'lsa — `TableToolbar` ichida `<SearchInput value={table.search} onChange={table.onSearchChange} />`.
+  Qidiruv bo'lsa `DataTable`ga `highlight={table.search}` ham beriladi; maxsus `render` ustunida `<Highlight text query />`.
+  Eski `id: index + 1` ustuni → `{ key: 'number', render: (_, i) => table.rowNumber(i) }`. Yuklash xatosi: `error` + `onRetry` props.
+  `/table` endpoint'i yo'q bo'lsa (masalan tillar) — `useQuery` + `DataTable`, `Pagination`siz (`features/languages`).
 - `XFormDialog.tsx` — `useEntityForm` + `Modal onSubmit={submit}`. Yopish: `navigate({ pathname: '/x', search })`.
   `resolver` va `toForm` modul darajasida (har renderda yangilanmasin), `defaultValues` — `useState(() => …)`.
 - `routes.tsx` — `/x` + bola `add`, `update/:id`. URL'lar eski panel bilan bir xil.

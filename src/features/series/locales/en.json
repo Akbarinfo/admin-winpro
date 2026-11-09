@@ -1,0 +1,10 @@
+{
+  "series": {
+    "title": "Series",
+    "add": "Add series",
+    "edit": "Edit series",
+    "name": "Name",
+    "description": "Description",
+    "empty": "No series yet. Add the first one."
+  }
+}

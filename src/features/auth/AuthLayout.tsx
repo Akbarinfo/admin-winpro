@@ -91,13 +91,7 @@ function WindowArt() {
       <g strokeWidth="1.2">
         <path d="M40 392h360M40 384v16M400 384v16M24 20v340M16 20h16M16 360h16" />
       </g>
-      <g
-        fill="#fff"
-        stroke="none"
-        fontFamily="Inter, sans-serif"
-        fontSize="14"
-        textAnchor="middle"
-      >
+      <g fill="#fff" stroke="none" fontFamily="Inter, sans-serif" fontSize="14" textAnchor="middle">
         <text x="220" y="414">
           1400
         </text>

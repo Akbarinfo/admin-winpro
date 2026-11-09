@@ -1,0 +1,15 @@
+{
+  "languages": {
+    "title": "Tillar",
+    "add": "Til qo'shish",
+    "edit": "Tilni tahrirlash",
+    "code": "Kod",
+    "code_hint": "Ikki harfli kod: ru, uz, en. Yaratilgandan keyin o'zgarmaydi.",
+    "name": "Nomi",
+    "default": "Sukut bo'yicha",
+    "default_hint": "Yangi foydalanuvchilarga beriladigan til.",
+    "active": "Faol",
+    "inactive": "O'chirilgan",
+    "empty": "Hozircha tillar yo'q. Birinchisini qo'shing."
+  }
+}

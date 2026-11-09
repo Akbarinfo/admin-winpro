@@ -1,0 +1,15 @@
+{
+  "languages": {
+    "title": "Languages",
+    "add": "Add language",
+    "edit": "Edit language",
+    "code": "Code",
+    "code_hint": "Two-letter code: ru, uz, en. Can't be changed later.",
+    "name": "Name",
+    "default": "Default",
+    "default_hint": "The language new users get.",
+    "active": "Active",
+    "inactive": "Off",
+    "empty": "No languages yet. Add the first one."
+  }
+}
