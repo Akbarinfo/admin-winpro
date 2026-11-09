@@ -1,0 +1,46 @@
+/* Design tokens — the only place colors are defined. Components use them via Tailwind (bg-surface, text-primary…). */
+:root {
+  --bg: #f3f7f7;
+  --surface: #ffffff;
+  --surface-2: #f8fbfb;
+  --line: #dce6e7;
+  --line-strong: #c6d4d6;
+  --fg: #13262a;
+  --muted: #5b7074;
+  --faint: #8a9da0;
+  --primary: #37a0ad;
+  --primary-strong: #2a8794;
+  --primary-soft: #e4f3f5;
+  --primary-fg: #ffffff;
+  --ok: #2f8f5b;
+  --ok-soft: #e3f4ea;
+  --warn: #b7791f;
+  --warn-soft: #fdf3dd;
+  --danger: #c2413b;
+  --danger-soft: #fbe7e6;
+  --overlay: rgb(12 24 27 / 0.42);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0d1719;
+  --surface: #132226;
+  --surface-2: #172a2e;
+  --line: #23383c;
+  --line-strong: #30494e;
+  --fg: #e2eeef;
+  --muted: #93a9ad;
+  --faint: #6b8387;
+  --primary: #4cb6c3;
+  --primary-strong: #6cc7d2;
+  --primary-soft: #173b40;
+  --primary-fg: #08292e;
+  --ok: #5cc28a;
+  --ok-soft: #15352a;
+  --warn: #e0a84a;
+  --warn-soft: #3a2d14;
+  --danger: #ef7a73;
+  --danger-soft: #3d1c1b;
+  --overlay: rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
