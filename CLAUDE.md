@@ -112,7 +112,8 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
   `column` — eski paneldagi `headerTable[].name` bilan **aynan bir xil** bo'lishi kerak. Ba'zi sahifalarda bu
   maydon nomi emas, tarjima kaliti (exchange: `table.exchange.date`). Farq qilsa, ustunga `sortKey` beriladi.
 - Ro'yxatning jami soni `recordsFiltered`dan olinadi.
-- Fayl va rasm URL'lari (`/v1/file/{kind}/{id}`) uchun `fileUrl` hali yozilmagan — birinchi kerak bo'lganda `shared/api`ga qo'shiladi.
+- Fayl va rasm: `fileUrl(kind, id)` → `/v1/file/{kind}/{id}`. Rasm bilan saqlanadigan yozuvlar (supplier, texture, user)
+  multipart: `multipartBody(data, image)` — «data» JSON blob + «image» fayl (yangi rasm bo'lmasa `"null"`, eski panel kabi).
 
 ## Ko'chirish tartibi
 
@@ -120,9 +121,10 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 2. Umumiy qatlam — ✅ DataTable, Pagination, Combobox, Modal, FormField, NumberInput, useServerTable, useConfirmDelete,
    useEntityForm, lookups (valyutalar), testlar, `/ui-kit`. Excel va ImageUpload 5-bosqichda.
 3. Namuna bo'lim: Курсы валют — ✅ kod va testlar tayyor, real backend bilan tekshirilishi kerak
-4. Oddiy CRUD bo'limlar — **jarayonda** (`/new-feature <bo'lim>`): ✅ Валюты, Единицы, Серии, Виды материала, Языки.
-   Qolgan: ta'minotchi, savdo toifasi, ustaxona xizmatlari, tarif funksiyalari, tekstura, tekstura guruhi
-   (avval `ImageUpload` + `fileUrl`), so'ng mamlakat, ilova versiyalari, foydalanuvchilar, mobil foydalanuvchilar: valyuta, mamlakat, birlik, seriya, tekstura, ta'minotchi…
+4. Oddiy CRUD bo'limlar — **jarayonda** (`/new-feature <bo'lim>`): ✅ Валюты, Единицы, Серии, Виды материала, Языки,
+   Поставщики, Услуги мастерской, Тарифные функции, Текстуры (+ соответствия; `/texturegroup` → `/textures`).
+   Qolgan: savdo toifasi (profil tizimlari daraxti kerak), so'ng mamlakat, ilova versiyalari, foydalanuvchilar,
+   mobil foydalanuvchilar: valyuta, mamlakat, birlik, seriya, tekstura, ta'minotchi…
 5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar
 

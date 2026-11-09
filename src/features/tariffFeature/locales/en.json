@@ -1,0 +1,17 @@
+{
+  "tariffFeature": {
+    "title": "Tariff features",
+    "add": "Add tariff feature",
+    "edit": "Edit tariff feature",
+    "tariff": "Tariff",
+    "feature_key": "Feature key",
+    "feature_key_hint": "Latin letters, used by the app: max_orders",
+    "feature_label": "Feature label",
+    "value": "Value",
+    "value_hint": "For BOOLEAN — true or false",
+    "feature_type": "Feature type",
+    "unit": "Unit",
+    "sort_order": "Order",
+    "empty": "No features yet. Add the first one."
+  }
+}

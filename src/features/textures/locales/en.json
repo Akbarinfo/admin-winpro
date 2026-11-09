@@ -1,0 +1,21 @@
+{
+  "textures": {
+    "title": "Textures",
+    "add": "Add texture",
+    "edit": "Edit texture",
+    "image": "Laminate",
+    "name": "Name",
+    "color": "Colour",
+    "priority": "Priority",
+    "priority_hint": "Higher comes first in lists",
+    "is_double": "Laminated on both sides",
+    "empty": "No textures yet. Add the first one.",
+    "matches": "Matching textures",
+    "matches_hint": "Pick a texture in the table above to see the ones that go with it.",
+    "match_add": "Add match",
+    "match_edit": "Edit match",
+    "match_texture": "Texture",
+    "side": "Side",
+    "matches_empty": "No matches yet."
+  }
+}

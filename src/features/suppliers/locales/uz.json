@@ -1,0 +1,15 @@
+{
+  "suppliers": {
+    "title": "Ta'minotchilar",
+    "add": "Ta'minotchi qo'shish",
+    "edit": "Ta'minotchini tahrirlash",
+    "name": "Nomi",
+    "logo": "Logotip",
+    "address": "Manzil",
+    "phone": "Telefon",
+    "country": "Mamlakat",
+    "currency": "Valyuta",
+    "types": "Ta'minotchi turi",
+    "empty": "Hozircha ta'minotchilar yo'q. Birinchisini qo'shing."
+  }
+}

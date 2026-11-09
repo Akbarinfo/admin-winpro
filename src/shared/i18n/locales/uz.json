@@ -40,7 +40,9 @@
     "required": "Bu maydonni to'ldiring",
     "password_mismatch": "Parollar mos kelmadi",
     "positive": "Noldan katta bo'lishi kerak",
-    "same_currency": "Valyutalar har xil bo'lishi kerak"
+    "same_currency": "Valyutalar har xil bo'lishi kerak",
+    "phone": "Raqamni to'liq kiriting",
+    "color": "Rang #RRGGBB formatida"
   },
   "auth": {
     "brand_title": "Deraza biznesini boshqarish paneli",
@@ -113,5 +115,24 @@
     "next": "Keyingi sahifa",
     "page": "{{page}}-sahifa",
     "label": "Sahifalar"
+  },
+  "upload": {
+    "choose": "Rasmni tanlang yoki shu yerga torting",
+    "replace": "Rasmni almashtirish",
+    "hint": "PNG, JPG, GIF, {{size}} MB gacha",
+    "undo": "Tanlovni bekor qilish",
+    "not_image": "Bu rasm emas. PNG, JPG yoki GIF tanlang.",
+    "too_big": "Fayl {{size}} MB dan katta."
+  },
+  "phone": {
+    "country": "Mamlakat"
+  },
+  "crop": {
+    "title": "Rasmni qirqish",
+    "original": "Aslini yuklash",
+    "apply": "Qirqish",
+    "aspect": "Nisbat",
+    "zoom": "Masshtab",
+    "failed": "Rasmni qirqib bo'lmadi. Aslini yuklang."
   }
 }

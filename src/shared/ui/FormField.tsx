@@ -22,6 +22,8 @@ type FormFieldProps<T extends FieldValues, N extends FieldPath<T>> = {
   label: string
   required?: boolean
   hint?: string
+  /** ⓘ next to the label (see Field). */
+  tip?: string
   labelAside?: ReactNode
   /** Renders the control; receives value, onChange, onBlur, ref, id and invalid. */
   children: (field: FormFieldRenderProps<T, N>) => ReactElement
@@ -42,6 +44,7 @@ export function FormField<T extends FieldValues, N extends FieldPath<T>>({
   label,
   required,
   hint,
+  tip,
   labelAside,
   children,
 }: FormFieldProps<T, N>) {
@@ -52,6 +55,7 @@ export function FormField<T extends FieldValues, N extends FieldPath<T>>({
       htmlFor={name}
       error={fieldState.error?.message}
       hint={hint}
+      tip={tip}
       required={required}
       labelAside={labelAside}
     >

@@ -58,6 +58,9 @@ export function Modal({
       aria-labelledby={titleId}
       // Escape: keep the dialog in React's hands instead of letting the browser close it.
       onCancel={(e) => {
+        // «cancel» also bubbles up from a file input whose picker was closed without a choice —
+        // only the dialog's own cancel (Escape) closes it.
+        if (e.target !== e.currentTarget) return
         e.preventDefault()
         onClose()
       }}

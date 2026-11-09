@@ -1,0 +1,17 @@
+{
+  "tariffFeature": {
+    "title": "Tarif funksiyalari",
+    "add": "Tarif funksiyasi qo'shish",
+    "edit": "Tarif funksiyasini tahrirlash",
+    "tariff": "Tarif",
+    "feature_key": "Funksiya kaliti",
+    "feature_key_hint": "Lotin harflarida, ilovada ishlatiladi: max_orders",
+    "feature_label": "Funksiya nomi",
+    "value": "Qiymat",
+    "value_hint": "BOOLEAN turi uchun — true yoki false",
+    "feature_type": "Funksiya turi",
+    "unit": "O'lchov birligi",
+    "sort_order": "Tartib",
+    "empty": "Hozircha funksiyalar yo'q. Birinchisini qo'shing."
+  }
+}

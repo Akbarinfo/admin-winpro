@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import {
   caretAfter,
+  detectPhoneCountry,
+  formatPhone,
+  isPhoneComplete,
+  phoneDigits,
   formatNumberText,
   getPageItems,
   nextSort,
@@ -105,5 +109,52 @@ describe('splitByQuery', () => {
       { text: '1)', match: false },
     ])
     expect(splitByQuery('Рама', '  ')).toEqual([{ text: 'Рама', match: false }])
+  })
+})
+
+const UZ = { code: 'uz', phoneCode: '+998', phoneFormat: '+998 (##) ### ## ##' }
+const KZ = { code: 'kz', phoneCode: '+7', phoneFormat: '+7 (###) ### ## ##' }
+const KG = { code: 'kg', phoneCode: '+996', phoneFormat: '+996 (###) ### ###' }
+const COUNTRIES = [UZ, KZ, KG]
+
+describe('formatPhone', () => {
+  it('applies the country format while typing (separators appear before the next digit)', () => {
+    expect(formatPhone('9', UZ)).toBe('+998 (9')
+    expect(formatPhone('90', UZ)).toBe('+998 (90')
+    expect(formatPhone('901', UZ)).toBe('+998 (90) 1')
+    expect(formatPhone('901234567', UZ)).toBe('+998 (90) 123 45 67')
+    expect(formatPhone('', UZ)).toBe('')
+  })
+
+  it('re-formats its own value and pasted numbers, ignoring extra digits', () => {
+    expect(formatPhone('+998 (90) 123 45 678', UZ)).toBe('+998 (90) 123 45 67')
+    expect(formatPhone('+998(90) 123 - 45 - 67', UZ)).toBe('+998 (90) 123 45 67') // old panel format
+    expect(formatPhone('+998 (', UZ)).toBe('')
+  })
+
+  it('takes typed digits as the national number even when they start like the code', () => {
+    expect(formatPhone('7011234567', KZ)).toBe('+7 (701) 123 45 67')
+    expect(formatPhone('+7 (701) 123 45 67', KZ)).toBe('+7 (701) 123 45 67')
+  })
+})
+
+describe('detectPhoneCountry / phoneDigits / isPhoneComplete', () => {
+  it('detects the country by its code, longest first', () => {
+    expect(detectPhoneCountry('+998(90) 123 - 45 - 67', COUNTRIES)).toBe(UZ)
+    expect(detectPhoneCountry('+7 (701) 123 45 67', COUNTRIES)).toBe(KZ)
+    expect(detectPhoneCountry('+996 (555) 123 456', COUNTRIES)).toBe(KG)
+    expect(detectPhoneCountry('', COUNTRIES)).toBe(UZ)
+  })
+
+  it('extracts the national digits', () => {
+    expect(phoneDigits('+998(90) 123 - 45 - 67', UZ)).toBe('901234567')
+    expect(phoneDigits('', UZ)).toBe('')
+  })
+
+  it('checks the number is complete for its country', () => {
+    expect(isPhoneComplete('+998 (90) 123 45 67', COUNTRIES)).toBe(true)
+    expect(isPhoneComplete('+998(90) 123 - 45 - 67', COUNTRIES)).toBe(true)
+    expect(isPhoneComplete('+998 (90) 123', COUNTRIES)).toBe(false)
+    expect(isPhoneComplete('+996 (555) 123 456', COUNTRIES)).toBe(true)
   })
 })

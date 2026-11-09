@@ -1,0 +1,15 @@
+{
+  "suppliers": {
+    "title": "Suppliers",
+    "add": "Add supplier",
+    "edit": "Edit supplier",
+    "name": "Name",
+    "logo": "Logo",
+    "address": "Address",
+    "phone": "Phone",
+    "country": "Country",
+    "currency": "Currency",
+    "types": "Supplier type",
+    "empty": "No suppliers yet. Add the first one."
+  }
+}

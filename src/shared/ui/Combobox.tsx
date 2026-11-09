@@ -1,6 +1,16 @@
-import { useEffect, useId, useMemo, useRef, useState, type Key, type Ref } from 'react'
+import {
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type Key,
+  type ReactNode,
+  type Ref,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Check, ChevronDown, X } from 'lucide-react'
+import { useAnchoredPosition } from '@/shared/hooks/useAnchoredPosition'
 import { cn } from '@/shared/lib/cn'
 import { Spinner } from './Spinner'
 
@@ -12,6 +22,10 @@ type ComboboxProps<T> = {
   onChange: (value: T | null) => void
   getKey: (option: T) => Key
   getLabel: (option: T) => string
+  /** Custom option row (colour swatch, image…). The label is still used for typing and the field text. */
+  renderOption?: (option: T) => ReactNode
+  /** Small mark before the chosen value inside the field, e.g. its colour. */
+  renderValueMark?: (option: T) => ReactNode
   onBlur?: () => void
   placeholder?: string
   clearable?: boolean
@@ -30,6 +44,8 @@ export function Combobox<T>({
   onChange,
   getKey,
   getLabel,
+  renderOption,
+  renderValueMark,
   onBlur,
   placeholder,
   clearable,
@@ -45,6 +61,8 @@ export function Combobox<T>({
   const rootRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLUListElement>(null)
   const [open, setOpen] = useState(false)
+  // Fixed position: the list isn't clipped by a dialog's scroll area.
+  const listStyle = useAnchoredPosition(rootRef, open)
   const [query, setQuery] = useState('')
   const [active, setActive] = useState(0)
 
@@ -85,6 +103,9 @@ export function Combobox<T>({
     if (open) listRef.current?.children[active]?.scrollIntoView({ block: 'nearest' })
   }, [open, active])
 
+  // Shown while the field displays the chosen value (not while typing a search).
+  const mark = value && !open && renderValueMark ? renderValueMark(value) : null
+
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault()
@@ -105,6 +126,11 @@ export function Combobox<T>({
 
   return (
     <div ref={rootRef} className="relative">
+      {mark && (
+        <span className="pointer-events-none absolute top-1/2 left-3 flex -translate-y-1/2">
+          {mark}
+        </span>
+      )}
       <input
         ref={ref}
         id={id}
@@ -128,7 +154,8 @@ export function Combobox<T>({
         onKeyDown={onKeyDown}
         onBlur={onBlur}
         className={cn(
-          'h-9 w-full min-w-0 cursor-pointer rounded-md border border-line-strong bg-surface pr-16 pl-3 outline-none transition-[border-color,box-shadow] placeholder:text-faint',
+          'h-9 w-full min-w-0 cursor-pointer rounded-md border border-line-strong bg-surface pr-16 outline-none transition-[border-color,box-shadow] placeholder:text-faint',
+          mark ? 'pl-9' : 'pl-3',
           'focus:cursor-text focus:border-primary focus:shadow-[0_0_0_3px_var(--primary-soft)]',
           'disabled:cursor-not-allowed disabled:bg-surface-2 disabled:text-faint',
           open && value && 'placeholder:text-fg/60',
@@ -157,7 +184,8 @@ export function Combobox<T>({
           ref={listRef}
           id={listId}
           role="listbox"
-          className="absolute top-[calc(100%+4px)] right-0 left-0 z-30 max-h-64 overflow-auto rounded-md border border-line bg-surface p-1 shadow-[0_8px_24px_rgb(19_38_42/.12)]"
+          className="z-50 overflow-auto rounded-md border border-line bg-surface p-1 shadow-[0_8px_24px_rgb(19_38_42/.12)]"
+          style={listStyle}
         >
           {filtered.length === 0 ? (
             <li className="px-2.5 py-2 text-[13px] text-faint">
@@ -181,7 +209,9 @@ export function Combobox<T>({
                     selected && 'font-medium text-primary-strong',
                   )}
                 >
-                  <span className="min-w-0 flex-1 truncate">{getLabel(option)}</span>
+                  <span className="min-w-0 flex-1 truncate">
+                    {renderOption ? renderOption(option) : getLabel(option)}
+                  </span>
                   {selected && <Check size={16} aria-hidden="true" className="text-primary" />}
                 </li>
               )

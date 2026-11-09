@@ -1,0 +1,13 @@
+{
+  "workshopService": {
+    "title": "Workshop services",
+    "add": "Add service",
+    "edit": "Edit service",
+    "name": "Name",
+    "service_type": "Service type",
+    "calculation_type": "Calculation type",
+    "price": "Price",
+    "currency": "Currency",
+    "empty": "No services yet. Add the first one."
+  }
+}

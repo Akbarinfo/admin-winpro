@@ -1,0 +1,13 @@
+{
+  "workshopService": {
+    "title": "Ustaxona xizmatlari",
+    "add": "Xizmat qo'shish",
+    "edit": "Xizmatni tahrirlash",
+    "name": "Nomi",
+    "service_type": "Xizmat turi",
+    "calculation_type": "Hisoblash turi",
+    "price": "Narxi",
+    "currency": "Valyuta",
+    "empty": "Hozircha xizmatlar yo'q. Birinchisini qo'shing."
+  }
+}

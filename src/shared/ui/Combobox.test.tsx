@@ -80,4 +80,27 @@ describe('Combobox', () => {
     expect(onChange).toHaveBeenLastCalledWith(null)
     expect(screen.getByRole('combobox')).toHaveValue('')
   })
+
+  it('renders custom option rows and a mark for the chosen value', async () => {
+    render(
+      <Combobox
+        options={OPTIONS}
+        value={OPTIONS[1]}
+        onChange={() => {}}
+        getKey={(o) => o.id}
+        getLabel={(o) => o.name}
+        renderOption={(o) => <b data-testid="row">{o.name.toUpperCase()}</b>}
+        renderValueMark={() => <i data-testid="mark" />}
+      />,
+    )
+    expect(screen.getByTestId('mark')).toBeInTheDocument()
+    expect(screen.getByRole('combobox')).toHaveValue('Rehau Blitz') // the field still shows the label
+    await userEvent.click(screen.getByRole('combobox'))
+    expect(screen.getAllByTestId('row').map((r) => r.textContent)).toEqual([
+      'AKFA 60',
+      'REHAU BLITZ',
+      'REHAU GRAZIO',
+    ])
+    expect(screen.queryByTestId('mark')).not.toBeInTheDocument() // hidden while searching
+  })
 })

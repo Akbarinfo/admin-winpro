@@ -62,10 +62,10 @@ export const NAV: NavGroup[] = [
       { to: '/currency', label: 'currency.title', icon: Coins, status: 'ready' },
       { to: '/exchange', label: 'exchange.title', icon: ArrowLeftRight, status: 'ready' },
       { to: '/country', label: 'country', icon: Globe },
-      { to: '/units', label: 'units.title', icon: Ruler, status: 'new' },
-      { to: '/series', label: 'series.title', icon: Layers, status: 'new' },
-      { to: '/material-type', label: 'materialType.title', icon: Boxes, status: 'new' },
-      { to: '/suppliers', label: 'sidebar_menu_suppliers', icon: Truck },
+      { to: '/units', label: 'units.title', icon: Ruler, status: 'ready' },
+      { to: '/series', label: 'series.title', icon: Layers, status: 'ready' },
+      { to: '/material-type', label: 'materialType.title', icon: Boxes, status: 'ready' },
+      { to: '/suppliers', label: 'suppliers.title', icon: Truck, status: 'new' },
       { to: '/sales_category', label: 'sidebar_sales_category', icon: Tags },
     ],
   },
@@ -81,7 +81,7 @@ export const NAV: NavGroup[] = [
   {
     title: 'nav.group_catalog',
     items: [
-      { to: '/textures', label: 'sidebar_menu_textures', icon: Palette },
+      { to: '/textures', label: 'textures.title', icon: Palette, status: 'new' },
       { to: '/connection', label: 'sidebar_menu_connection', icon: Link2 },
       { to: '/inserts', label: 'sidebar_menu_insert', icon: ListPlus },
       { to: '/filling', label: 'sidebar_menu_filling', icon: PanelsTopLeft },
@@ -115,11 +115,11 @@ export const NAV: NavGroup[] = [
   {
     title: 'nav.group_system',
     items: [
-      { to: '/workshop-service', label: 'sidebar_workshop_service', icon: Hammer },
+      { to: '/workshop-service', label: 'workshopService.title', icon: Hammer, status: 'new' },
       { to: '/app-versions', label: 'sidebar_app_versions', icon: MonitorSmartphone },
       { to: '/translations', label: 'sidebar_menu_translations', icon: Languages },
-      { to: '/languages', label: 'languages.title', icon: Type, status: 'new' },
-      { to: '/tariff-feature', label: 'sidebar_menu_tariff_feature', icon: BadgeDollarSign },
+      { to: '/languages', label: 'languages.title', icon: Type, status: 'ready' },
+      { to: '/tariff-feature', label: 'tariffFeature.title', icon: BadgeDollarSign, status: 'new' },
     ],
   },
   // Dev only: component showcase for reviewing the design.
@@ -127,7 +127,9 @@ export const NAV: NavGroup[] = [
     ? [
         {
           title: 'nav.group_dev',
-          items: [{ to: '/ui-kit', label: 'nav.ui_kit', icon: LayoutGrid, status: 'ready' as const }],
+          items: [
+            { to: '/ui-kit', label: 'nav.ui_kit', icon: LayoutGrid, status: 'ready' as const },
+          ],
         },
       ]
     : []),

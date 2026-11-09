@@ -40,7 +40,9 @@
     "required": "Fill in this field",
     "password_mismatch": "Passwords don't match",
     "positive": "Must be greater than zero",
-    "same_currency": "Currencies must be different"
+    "same_currency": "Currencies must be different",
+    "phone": "Enter the full number",
+    "color": "Colour as #RRGGBB"
   },
   "auth": {
     "brand_title": "Control panel for the window business",
@@ -113,5 +115,24 @@
     "next": "Next page",
     "page": "Page {{page}}",
     "label": "Pages"
+  },
+  "upload": {
+    "choose": "Choose an image or drop it here",
+    "replace": "Replace image",
+    "hint": "PNG, JPG, GIF up to {{size}} MB",
+    "undo": "Undo selection",
+    "not_image": "That's not an image. Choose a PNG, JPG or GIF.",
+    "too_big": "The file is larger than {{size}} MB."
+  },
+  "phone": {
+    "country": "Country"
+  },
+  "crop": {
+    "title": "Crop image",
+    "original": "Upload original",
+    "apply": "Crop",
+    "aspect": "Aspect ratio",
+    "zoom": "Zoom",
+    "failed": "Couldn't crop the image. Upload the original."
   }
 }

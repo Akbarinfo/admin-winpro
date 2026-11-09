@@ -5,7 +5,11 @@ import { exchangeRoutes } from '@/features/exchange'
 import { languageRoutes } from '@/features/languages'
 import { materialTypeRoutes } from '@/features/materialType'
 import { seriesRoutes } from '@/features/series'
+import { supplierRoutes } from '@/features/suppliers'
+import { tariffFeatureRoutes } from '@/features/tariffFeature'
+import { textureRoutes } from '@/features/textures'
 import { unitRoutes } from '@/features/units'
+import { workshopServiceRoutes } from '@/features/workshopService'
 import { AppLayout } from '../layout/AppLayout'
 import { NAV_ITEMS } from '../layout/nav'
 import { GuestOnly, RequireAuth } from './guards'
@@ -19,6 +23,10 @@ const featureRoutes = [
   ...seriesRoutes,
   ...materialTypeRoutes,
   ...languageRoutes,
+  ...supplierRoutes,
+  ...workshopServiceRoutes,
+  ...tariffFeatureRoutes,
+  ...textureRoutes,
 ]
 
 // Dev-only pages; lazy so they never reach the production bundle.

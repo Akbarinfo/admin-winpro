@@ -65,6 +65,63 @@ export function splitByQuery(text: string, query: string) {
     .map((part) => ({ text: part, match: part.toLowerCase() === q.toLowerCase() }))
 }
 
+/** What a phone field needs to know about a country (a subset of /v1/country/list). */
+export type PhoneFormat = { phoneCode: string; phoneFormat: string }
+
+const onlyDigits = (v: string) => v.replace(/\D/g, '')
+
+/** The country of a stored number by its code (longest code first); the first one when none matches. */
+export function detectPhoneCountry<T extends PhoneFormat>(
+  value: string | null | undefined,
+  countries: T[],
+): T {
+  const digits = onlyDigits(value ?? '')
+  const found = [...countries]
+    .sort((a, b) => onlyDigits(b.phoneCode).length - onlyDigits(a.phoneCode).length)
+    .find((c) => digits && digits.startsWith(onlyDigits(c.phoneCode)))
+  return found ?? countries[0]
+}
+
+/** National digits of a stored number: «+998 (90) 123 45 67» → «901234567». */
+export function phoneDigits(value: string | null | undefined, country: PhoneFormat) {
+  const digits = onlyDigits(value ?? '')
+  const code = onlyDigits(country.phoneCode)
+  return digits.startsWith(code) ? digits.slice(code.length) : digits
+}
+
+/**
+ * Typed or pasted text → the value in the country's format: «+998 (90) 1». The format holds the code,
+ * so text that starts with «+» (the field's own value, a pasted number) has the code dropped first;
+ * plain digits are the national number. A separator appears only once a digit follows it.
+ * Returns '' when there are no digits.
+ */
+export function formatPhone(text: string, country: PhoneFormat) {
+  const code = onlyDigits(country.phoneCode)
+  const pattern = country.phoneFormat
+  let digits = onlyDigits(text)
+  if (text.trim().startsWith('+') && digits.startsWith(code)) digits = digits.slice(code.length)
+  digits = digits.slice(0, pattern.split('#').length - 1)
+  if (!digits) return ''
+
+  let out = ''
+  let used = 0
+  for (const ch of pattern) {
+    if (ch === '#') {
+      if (used === digits.length) break
+      out += digits[used++]
+    } else if (used < digits.length) {
+      out += ch
+    }
+  }
+  return out
+}
+
+/** Whether the number has all the digits its country's format needs. */
+export function isPhoneComplete(value: string, countries: PhoneFormat[]) {
+  const country = detectPhoneCountry(value, countries)
+  return phoneDigits(value, country).length === country.phoneFormat.split('#').length - 1
+}
+
 /** Caret index in `text` right after the first `count` non-space characters. */
 export function caretAfter(text: string, count: number) {
   let seen = 0
