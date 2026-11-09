@@ -32,4 +32,14 @@ usePreferences.subscribe((state, prev) => {
   document.documentElement.lang = state.lang
 })
 
+/**
+ * Adds a feature's own texts (features/<x>/locales/*.json). Called once from the feature's i18n.ts.
+ * Bundles are deep-merged, so a feature only adds keys under its own namespace ("exchange.*").
+ */
+export function registerTranslations(bundles: Record<'ru' | 'uz' | 'en', object>) {
+  for (const [lng, bundle] of Object.entries(bundles)) {
+    i18n.addResourceBundle(lng, 'translation', bundle, true, false)
+  }
+}
+
 export { i18n }

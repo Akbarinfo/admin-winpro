@@ -1,0 +1,13 @@
+{
+  "exchange": {
+    "title": "Exchange rates",
+    "add": "Add rate",
+    "edit": "Edit rate",
+    "from": "From currency",
+    "to": "To currency",
+    "date": "Date",
+    "rate": "Rate",
+    "swap": "Swap currencies",
+    "empty": "No rates yet. Add the first one."
+  }
+}

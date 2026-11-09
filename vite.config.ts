@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { fileURLToPath, URL } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
@@ -13,5 +14,11 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+  },
+  test: {
+    environment: 'jsdom',
+    // polyfills first: shared/store reads matchMedia when it is imported
+    setupFiles: ['src/test/polyfills.ts', 'src/test/setup.ts'],
+    css: false,
   },
 })

@@ -1,12 +1,25 @@
 import { createBrowserRouter } from 'react-router'
 import { AuthLayout, authRoutes } from '@/features/auth'
+import { exchangeRoutes } from '@/features/exchange'
 import { AppLayout } from '../layout/AppLayout'
 import { NAV_ITEMS } from '../layout/nav'
 import { GuestOnly, RequireAuth } from './guards'
 import { ComingSoonPage, ErrorScreen, NotFoundPage } from './pages'
 
-// Every menu section starts as a placeholder; a migrated feature replaces its entry
-// by spreading its own routes (e.g. ...exchangeRoutes) above the placeholders.
+// Migrated sections. Their paths are more specific than the placeholders' splats, so they win.
+const featureRoutes = [...exchangeRoutes]
+
+// Dev-only pages; lazy so they never reach the production bundle.
+const devRoutes = import.meta.env.DEV
+  ? [
+      {
+        path: '/ui-kit',
+        lazy: () => import('../dev/UiKitPage').then((m) => ({ Component: m.UiKitPage })),
+      },
+    ]
+  : []
+
+// Every other menu section shows «being migrated» until its feature is added above.
 const placeholderRoutes = NAV_ITEMS.map((item) => ({
   path: item.to === '/' ? '/' : `${item.to}/*`,
   element: <ComingSoonPage />,
@@ -30,7 +43,12 @@ export const router = createBrowserRouter([
             <AppLayout />
           </RequireAuth>
         ),
-        children: [...placeholderRoutes, { path: '*', element: <NotFoundPage /> }],
+        children: [
+          ...featureRoutes,
+          ...devRoutes,
+          ...placeholderRoutes,
+          { path: '*', element: <NotFoundPage /> },
+        ],
       },
     ],
   },

@@ -3,7 +3,28 @@
     "show_password": "Show password",
     "hide_password": "Hide password",
     "reload": "Reload page",
-    "to_home": "Go to home"
+    "to_home": "Go to home",
+    "save": "Save",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "close": "Close",
+    "add": "Add",
+    "edit": "Edit",
+    "delete": "Delete",
+    "clear": "Clear",
+    "actions": "Actions",
+    "loading": "Loading…",
+    "no_data": "Nothing here yet",
+    "nothing_found": "Nothing found",
+    "select_placeholder": "Select…",
+    "added": "Record added",
+    "saved": "Changes saved",
+    "deleted": "Record deleted",
+    "delete_title": "Delete this record?",
+    "delete_text": "The record will be deleted permanently.",
+    "delete_named": "“{{name}}” will be deleted permanently.",
+    "load_error": "Couldn't load the data.",
+    "retry": "Retry"
   },
   "errors": {
     "network": "Can't reach the server. Check your connection and try again.",
@@ -15,7 +36,9 @@
   },
   "validation": {
     "required": "Fill in this field",
-    "password_mismatch": "Passwords don't match"
+    "password_mismatch": "Passwords don't match",
+    "positive": "Must be greater than zero",
+    "same_currency": "Currencies must be different"
   },
   "auth": {
     "brand_title": "Control panel for the window business",
@@ -71,10 +94,20 @@
     "group_users": "Users",
     "group_system": "System",
     "akfa_units": "Unit mapping",
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+    "group_dev": "Development",
+    "ui_kit": "UI components"
   },
   "soon": {
     "title": "Section is being migrated",
     "text": "This section hasn't been moved to the new panel yet. Use the old version for now."
+  },
+  "pagination": {
+    "shown": "{{from}}–{{to}} of {{total}}",
+    "per_page": "Per page",
+    "prev": "Previous page",
+    "next": "Next page",
+    "page": "Page {{page}}",
+    "label": "Pages"
   }
 }

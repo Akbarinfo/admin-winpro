@@ -11,6 +11,7 @@ import {
   Hammer,
   House,
   Languages,
+  LayoutGrid,
   Layers,
   Layers3,
   LayoutTemplate,
@@ -49,7 +50,7 @@ export const NAV: NavGroup[] = [
     title: 'nav.group_references',
     items: [
       { to: '/currency', label: 'sidebar_menu_currency', icon: Coins },
-      { to: '/exchange', label: 'sidebar_menu_exchange', icon: ArrowLeftRight },
+      { to: '/exchange', label: 'exchange.title', icon: ArrowLeftRight },
       { to: '/country', label: 'country', icon: Globe },
       { to: '/units', label: 'sidebar_menu_units', icon: Ruler },
       { to: '/series', label: 'sidebar_menu_series', icon: Layers },
@@ -111,6 +112,10 @@ export const NAV: NavGroup[] = [
       { to: '/tariff-feature', label: 'sidebar_menu_tariff_feature', icon: BadgeDollarSign },
     ],
   },
+  // Dev only: component showcase for reviewing the design.
+  ...(import.meta.env.DEV
+    ? [{ title: 'nav.group_dev', items: [{ to: '/ui-kit', label: 'nav.ui_kit', icon: LayoutGrid }] }]
+    : []),
 ]
 
 export const NAV_ITEMS = NAV.flatMap((group) => group.items)

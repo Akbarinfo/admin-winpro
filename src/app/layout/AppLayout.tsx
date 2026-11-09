@@ -13,7 +13,7 @@ export function AppLayout() {
   const closeNav = () => setNavOpen(false)
 
   return (
-    <div className="grid min-h-full lg:grid-cols-[260px_minmax(0,1fr)]">
+    <div className="grid h-dvh lg:grid-cols-[260px_minmax(0,1fr)]">
       {/* Below lg the sidebar is an off-canvas drawer. */}
       <aside
         className={cn(
@@ -32,8 +32,8 @@ export function AppLayout() {
         />
       )}
 
-      <div className="min-w-0">
-        <header className="sticky top-0 z-20 flex h-[60px] items-center gap-2.5 border-b border-line bg-surface px-4">
+      <div className="flex min-h-0 min-w-0 flex-col">
+        <header className="z-20 flex h-[60px] shrink-0 items-center gap-2.5 border-b border-line bg-surface px-4">
           <IconButton
             label={t('layout.open_menu')}
             onClick={() => setNavOpen(true)}
@@ -47,7 +47,8 @@ export function AppLayout() {
             <UserMenu />
           </div>
         </header>
-        <main className="min-w-0 px-4 pt-6 pb-10 xl:px-8">
+        {/* Scrolls on its own. A list page fills it (h-full) and lets only the table body scroll. */}
+        <main className="min-h-0 min-w-0 flex-1 overflow-auto p-4">
           <Outlet />
         </main>
       </div>

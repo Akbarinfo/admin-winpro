@@ -1,0 +1,13 @@
+{
+  "exchange": {
+    "title": "Valyuta kurslari",
+    "add": "Kurs qo'shish",
+    "edit": "Kursni tahrirlash",
+    "from": "Qaysi valyutadan",
+    "to": "Qaysi valyutaga",
+    "date": "Sana",
+    "rate": "Kurs",
+    "swap": "Valyutalar o'rnini almashtirish",
+    "empty": "Hozircha kurslar yo'q. Birinchisini qo'shing."
+  }
+}

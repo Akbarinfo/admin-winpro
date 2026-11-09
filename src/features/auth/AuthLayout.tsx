@@ -94,7 +94,7 @@ function WindowArt() {
       <g
         fill="#fff"
         stroke="none"
-        fontFamily="JetBrains Mono, monospace"
+        fontFamily="Inter, sans-serif"
         fontSize="14"
         textAnchor="middle"
       >

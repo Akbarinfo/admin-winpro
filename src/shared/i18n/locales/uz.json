@@ -3,7 +3,28 @@
     "show_password": "Parolni ko'rsatish",
     "hide_password": "Parolni yashirish",
     "reload": "Sahifani yangilash",
-    "to_home": "Bosh sahifaga"
+    "to_home": "Bosh sahifaga",
+    "save": "Saqlash",
+    "saving": "Saqlanmoqda…",
+    "cancel": "Bekor qilish",
+    "close": "Yopish",
+    "add": "Qo'shish",
+    "edit": "Tahrirlash",
+    "delete": "O'chirish",
+    "clear": "Tozalash",
+    "actions": "Amallar",
+    "loading": "Yuklanmoqda…",
+    "no_data": "Hozircha hech narsa yo'q",
+    "nothing_found": "Hech narsa topilmadi",
+    "select_placeholder": "Tanlang…",
+    "added": "Yozuv qo'shildi",
+    "saved": "O'zgarishlar saqlandi",
+    "deleted": "Yozuv o'chirildi",
+    "delete_title": "Yozuv o'chirilsinmi?",
+    "delete_text": "Yozuv qaytarib bo'lmaydigan tarzda o'chiriladi.",
+    "delete_named": "«{{name}}» qaytarib bo'lmaydigan tarzda o'chiriladi.",
+    "load_error": "Ma'lumotlarni yuklab bo'lmadi.",
+    "retry": "Qayta urinish"
   },
   "errors": {
     "network": "Server bilan aloqa yo'q. Internetni tekshirib, qayta urinib ko'ring.",
@@ -15,7 +36,9 @@
   },
   "validation": {
     "required": "Bu maydonni to'ldiring",
-    "password_mismatch": "Parollar mos kelmadi"
+    "password_mismatch": "Parollar mos kelmadi",
+    "positive": "Noldan katta bo'lishi kerak",
+    "same_currency": "Valyutalar har xil bo'lishi kerak"
   },
   "auth": {
     "brand_title": "Deraza biznesini boshqarish paneli",
@@ -71,10 +94,20 @@
     "group_users": "Foydalanuvchilar",
     "group_system": "Tizim",
     "akfa_units": "Birliklarni moslashtirish",
-    "feedback": "Fikr-mulohazalar"
+    "feedback": "Fikr-mulohazalar",
+    "group_dev": "Ishlab chiqish",
+    "ui_kit": "UI komponentlar"
   },
   "soon": {
     "title": "Bo'lim ko'chirilmoqda",
     "text": "Bu bo'lim hali yangi panelga ko'chirilmagan. Hozircha eski versiyadan foydalaning."
+  },
+  "pagination": {
+    "shown": "{{from}}–{{to}} / {{total}}",
+    "per_page": "Sahifada",
+    "prev": "Oldingi sahifa",
+    "next": "Keyingi sahifa",
+    "page": "{{page}}-sahifa",
+    "label": "Sahifalar"
   }
 }

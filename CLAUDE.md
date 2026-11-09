@@ -11,15 +11,19 @@ npm run build         # tsc -b && vite build
 npm run typecheck     # tsc -b
 npm run lint          # oxlint (import chegaralari ham shu yerda tekshiriladi)
 npm run format        # prettier --write src
+npm run test          # vitest (watch)
+npm run test:run      # vitest bir marta
 ```
 
-Ishni tugatgandan keyin `npm run typecheck && npm run lint` o'tishi shart.
+Ishni tugatgandan keyin `npm run typecheck && npm run lint && npm run test:run` o'tishi shart.
+Dev rejimda `/ui-kit` sahifasi hamma `shared/ui` komponentlarini ko'rsatadi (production'ga tushmaydi).
 Prettier `src/` dagi faylni har tahrirdan keyin avtomatik formatlaydi (`.claude/settings.json` hook).
 
 ## Stek
 
 React 19, TypeScript 7, Vite 8, Tailwind v4, React Router (`createBrowserRouter`), TanStack Query,
 axios, Zustand, react-hook-form + zod, i18next, sonner (toast), lucide-react (ikonkalar), clsx.
+Testlar: Vitest + Testing Library (jsdom).
 
 ## Arxitektura
 
@@ -48,12 +52,19 @@ Feature ichida nisbiy import (`./api`), boshqa joyda `@/` alias (`@/shared/ui`).
 - **Server ma'lumotlari** TanStack Query'da. Zustand faqat client holati uchun (session, preferences).
   Server javobi Zustand'ga ko'chirilmaydi.
 - **Jadval holati** (page, size, sort, search, filtrlar) URL'da saqlanadi (`useTableParams`), localStorage'da emas.
-- **Formalar**: react-hook-form + zod schema. Xato maydon ostida chiqadi.
-- **Toast** `sonner`dan: `toast.success(t('action.saved'))`. Sozlama faqat `AppProviders`da.
+- **Formalar**: react-hook-form + zod schema, `useEntityForm` orqali. Oddiy matn maydoni `form.register()` + `<Field>`,
+  boshqariladigan maydon (Combobox, NumberInput) `<FormField>` orqali. Schema xabarlari i18n kalitlari (`validation.required`).
+  Combobox/NumberInput bo'sh qiymati `null`: `requiredNumber()`, `positiveNumber()` (`shared/lib/zod.ts`) uni chiqishda `number`ga aylantiradi.
+- **Toast** `sonner`dan: `toast.success(t('common.saved'))`. Sozlama faqat `AppProviders`da.
+  Saqlash va o'chirish toast'larini `useEntityForm` va `useConfirmDelete` o'zi chiqaradi.
+- **Query key**: har resursning bazaviy kaliti `api.ts`da (`exchangeKeys.all = ['exchange']`). Jadval, detail va
+  invalidatsiya shu kalitdan boshlanadi.
 - **Env** faqat `@/shared/config/env` orqali o'qiladi. `.env*` fayllar gitga tushmaydi (`.env.example` bundan mustasno).
 - **Matnlar** i18n kalitlari orqali (ru, uz, en). Interfeysning asosiy tili rus.
   `shared/i18n/locales/legacy/*.json` — eski paneldan o'zgarishsiz ko'chirilgan (`sidebar_menu_currency` kabi tekis kalitlar),
-  ularni o'zgartirmang. Yangi matnlar `shared/i18n/locales/{ru,uz,en}.json`ga bo'lim bo'yicha (`auth.login_title`) uchala tilda yoziladi.
+  ularni o'zgartirmang. Umumiy yangi matnlar (`common.*`, `validation.*`) `shared/i18n/locales/{ru,uz,en}.json`da.
+  Bo'lim matnlari `features/<nom>/locales/{ru,uz,en}.json`da, faqat `<nom>.*` kaliti ostida; `i18n.ts` ularni
+  `registerTranslations()` bilan ulaydi. `locales.test.ts` uchala tilda kalitlar bir xilligini tekshiradi.
 - **Menyu** `app/layout/nav.ts`da ma'lumot sifatida turadi. URL'lar eski panel bilan bir xil (xatcho'plar ishlashi uchun).
   Ko'chirilmagan bo'limlar `ComingSoonPage`ni ko'rsatadi. Bo'lim tayyor bo'lganda uning `routes.tsx` fayli
   `app/router/router.tsx`da placeholder'lardan oldin qo'shiladi.
@@ -67,12 +78,17 @@ Feature ichida nisbiy import (`./api`), boshqa joyda `@/` alias (`@/shared/ui`).
 | Fayl | Vazifasi |
 |---|---|
 | `types.ts` | Backend obyekti tipi |
-| `api.ts` | Endpointlar, `shared/api/client` orqali |
-| `schema.ts` | zod forma qoidalari |
-| `XListPage.tsx` | Ro'yxat: DataTable + Pagination |
-| `XFormDialog.tsx` | Modal forma (katta formada `XFormPage.tsx`) |
-| `routes.tsx` | Marshrutlar → `app/router/router.tsx` va `nav.ts`ga qo'shiladi |
-| `locales/{ru,uz,en}/x.json` | Tarjimalar, uchala tilda |
+| `api.ts` | `xKeys` va endpointlar (`table`, `get`, `save`, `remove`), `shared/api/client` orqali |
+| `schema.ts` | zod forma qoidalari, `XForm` (forma holati) va `XValues` (API'ga ketadigan) tiplari |
+| `XListPage.tsx` | `useServerTable` + `DataTable` + `Pagination` + `useConfirmDelete`, oxirida `<Outlet />` |
+| `XFormDialog.tsx` | `useEntityForm` + `Modal`. Katta formada `XFormPage.tsx` |
+| `routes.tsx` | `/x` (ro'yxat) va bola marshrutlar `add`, `update/:id` — dialog ro'yxat ustida ochiladi |
+| `locales/{ru,uz,en}.json`, `i18n.ts` | Tarjimalar uchala tilda va ularni ulash |
+| `index.ts` | `import './i18n'` va `xRoutes` eksporti |
+| `x.test.tsx`, `schema.test.ts` | HTTP client mock qilingan integratsion test va schema testi |
+
+Keyin `app/router/router.tsx`dagi `featureRoutes`ga qo'shiladi; `nav.ts`dagi yorliq `x.title`ga o'zgartiriladi.
+Dialog yopilganda `navigate({ pathname: '/x', search })` — jadvalning URL parametrlari saqlanadi.
 
 Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim shundan nusxa olinadi.
 
@@ -82,23 +98,29 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 |---|---|---|
 | Komponent, sahifa | PascalCase.tsx | `ExchangeListPage.tsx` |
 | Hook | camelCase, `use…` | `useServerTable.ts` |
-| Schema va tip | `xxxSchema`, `XxxInput` | `exchangeSchema`, `ExchangeInput` |
+| Schema va tip | `xxxSchema`, `XxxForm`, `XxxValues` | `exchangeSchema`, `ExchangeForm` |
 | Konstanta | UPPER_SNAKE | `PRODUCT_GROUPS` |
-| Tarjima kaliti | bo'lim.qism.kalit | `exchange.form.rate` |
+| Tarjima kaliti | bo'lim.kalit | `exchange.rate` |
+| Test | fayl yonida, `.test.ts(x)` | `tableParams.test.ts` |
 
 ## Backend bilan ishlash
 
 - Ro'yxatlar `POST .../table` ga DataTables formatidagi body bilan so'raladi: uni faqat `buildTableBody()` yig'adi.
 - Xato statuslari: `401` → logout va login sahifasi; `420` → backend ogohlantirishi (sariq toast);
   `400/422` → maydon xatolari; `5xx` va tarmoq → qizil toast.
-- Fayl va rasm URL'lari `fileUrl(kind, id)` orqali: `/v1/file/{kind}/{id}`.
+- Saralash `order: [{ column, dir: 'ASC' | 'DESC' }]` — katta harflarda; default `id DESC` (eski panel kabi).
+  `column` — eski paneldagi `headerTable[].name` bilan **aynan bir xil** bo'lishi kerak. Ba'zi sahifalarda bu
+  maydon nomi emas, tarjima kaliti (exchange: `table.exchange.date`). Farq qilsa, ustunga `sortKey` beriladi.
+- Ro'yxatning jami soni `recordsFiltered`dan olinadi.
+- Fayl va rasm URL'lari (`/v1/file/{kind}/{id}`) uchun `fileUrl` hali yozilmagan — birinchi kerak bo'lganda `shared/api`ga qo'shiladi.
 
 ## Ko'chirish tartibi
 
 1. Skelet: layout, router, auth, session store — ✅ kod tayyor, real backend bilan login tekshirilishi kerak
-2. Umumiy qatlam — **keyingi bosqich**: api client, DataTable, Pagination, Combobox, FormField, useServerTable, useConfirmDelete, useEntityForm, lookups
-3. Namuna bo'lim: Курсы валют
-4. Oddiy CRUD bo'limlar: valyuta, mamlakat, birlik, seriya, tekstura, ta'minotchi…
+2. Umumiy qatlam — ✅ DataTable, Pagination, Combobox, Modal, FormField, NumberInput, useServerTable, useConfirmDelete,
+   useEntityForm, lookups (valyutalar), testlar, `/ui-kit`. Excel va ImageUpload 5-bosqichda.
+3. Namuna bo'lim: Курсы валют — ✅ kod va testlar tayyor, real backend bilan tekshirilishi kerak
+4. Oddiy CRUD bo'limlar — **keyingi bosqich**: valyuta, mamlakat, birlik, seriya, tekstura, ta'minotchi…
 5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar
 
