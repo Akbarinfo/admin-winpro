@@ -52,6 +52,12 @@ Feature ichida nisbiy import (`./api`), boshqa joyda `@/` alias (`@/shared/ui`).
 - **Toast** `sonner`dan: `toast.success(t('action.saved'))`. Sozlama faqat `AppProviders`da.
 - **Env** faqat `@/shared/config/env` orqali o'qiladi. `.env*` fayllar gitga tushmaydi (`.env.example` bundan mustasno).
 - **Matnlar** i18n kalitlari orqali (ru, uz, en). Interfeysning asosiy tili rus.
+  `shared/i18n/locales/legacy/*.json` — eski paneldan o'zgarishsiz ko'chirilgan (`sidebar_menu_currency` kabi tekis kalitlar),
+  ularni o'zgartirmang. Yangi matnlar `shared/i18n/locales/{ru,uz,en}.json`ga bo'lim bo'yicha (`auth.login_title`) uchala tilda yoziladi.
+- **Menyu** `app/layout/nav.ts`da ma'lumot sifatida turadi. URL'lar eski panel bilan bir xil (xatcho'plar ishlashi uchun).
+  Ko'chirilmagan bo'limlar `ComingSoonPage`ni ko'rsatadi. Bo'lim tayyor bo'lganda uning `routes.tsx` fayli
+  `app/router/router.tsx`da placeholder'lardan oldin qo'shiladi.
+- **Sessiya** (`token`, `user`) sessionStorage'da, til va tema esa localStorage'da saqlanadi.
 - `console.log` qoldirilmaydi.
 
 ## Yangi bo'lim qo'shish
@@ -89,8 +95,8 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 
 ## Ko'chirish tartibi
 
-1. Skelet: layout, router, auth, session store — **hozirgi bosqich**
-2. Umumiy qatlam: api client, DataTable, Pagination, Combobox, FormField, useServerTable, useConfirmDelete, useEntityForm, lookups
+1. Skelet: layout, router, auth, session store — ✅ kod tayyor, real backend bilan login tekshirilishi kerak
+2. Umumiy qatlam — **keyingi bosqich**: api client, DataTable, Pagination, Combobox, FormField, useServerTable, useConfirmDelete, useEntityForm, lookups
 3. Namuna bo'lim: Курсы валют
 4. Oddiy CRUD bo'limlar: valyuta, mamlakat, birlik, seriya, tekstura, ta'minotchi…
 5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali

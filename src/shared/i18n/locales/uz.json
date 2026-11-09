@@ -1,0 +1,80 @@
+{
+  "common": {
+    "show_password": "Parolni ko'rsatish",
+    "hide_password": "Parolni yashirish",
+    "reload": "Sahifani yangilash",
+    "to_home": "Bosh sahifaga"
+  },
+  "errors": {
+    "network": "Server bilan aloqa yo'q. Internetni tekshirib, qayta urinib ko'ring.",
+    "unknown": "Nimadir xato ketdi. Qayta urinib ko'ring.",
+    "crash_title": "Nimadir xato ketdi",
+    "crash_text": "Sahifa yuklanmadi. Uni yangilang — xato takrorlansa, administratorga xabar bering.",
+    "not_found_title": "Sahifa topilmadi",
+    "not_found_text": "Bunday manzil yo'q. Havola eskirgan bo'lishi mumkin."
+  },
+  "validation": {
+    "required": "Bu maydonni to'ldiring",
+    "password_mismatch": "Parollar mos kelmadi"
+  },
+  "auth": {
+    "brand_title": "Deraza biznesini boshqarish paneli",
+    "brand_text": "Deraza nimadan yig'ilsa, hammasi shu yerda: profil artikulidan kerakli mamlakatdagi narxigacha.",
+    "feat_catalog_title": "Mahsulotlar katalogi",
+    "feat_catalog_text": "Profillar, furnitura, uplotnitellar va to'ldirishlar o'lcham va chizmalari bilan",
+    "feat_prices_title": "Mamlakatlar bo'yicha narxlar",
+    "feat_prices_text": "O'zbekiston va Qozog'iston, har bir sana uchun valyuta kurslari",
+    "feat_akfa_title": "Akfa integratsiyasi",
+    "feat_akfa_text": "Artikullarni moslashtirish va narxlarni avtomatik yangilash",
+    "login_title": "Tizimga kirish",
+    "login_subtitle": "Ishchi hisobingiz bilan kiring",
+    "username": "Email yoki login",
+    "password": "Parol",
+    "forgot_link": "Parolni unutdingizmi?",
+    "submit": "Kirish",
+    "submitting": "Kirilmoqda…",
+    "back_to_login": "Kirish sahifasiga qaytish",
+    "forgot_title": "Parolni tiklash",
+    "forgot_subtitle": "Hisobingiz emaili yoki telefonini kiriting. Tasdiqlash kodini yuboramiz.",
+    "email_or_phone": "Email yoki telefon",
+    "send_code": "Kodni olish",
+    "sending": "Yuborilmoqda…",
+    "code_sent": "Tasdiqlash kodi yuborildi",
+    "reset_title": "Yangi parol",
+    "reset_subtitle": "Xabardagi kodni kiriting va yangi parol o'ylab toping.",
+    "confirm_code": "Tasdiqlash kodi",
+    "new_password": "Yangi parol",
+    "repeat_password": "Parolni takrorlang",
+    "save_password": "Parolni saqlash",
+    "saving": "Saqlanmoqda…",
+    "done_title": "Parol o'zgartirildi",
+    "done_text": "Endi yangi parol bilan kiring.",
+    "go_login": "Kirish sahifasiga o'tish"
+  },
+  "layout": {
+    "open_menu": "Menyuni ochish",
+    "close_menu": "Menyuni yopish",
+    "navigation": "Navigatsiya",
+    "language": "Til",
+    "theme_dark": "Qorong'i mavzuni yoqish",
+    "theme_light": "Yorug' mavzuni yoqish",
+    "user_menu": "Foydalanuvchi menyusi",
+    "logout": "Chiqish"
+  },
+  "nav": {
+    "group_overview": "Umumiy",
+    "group_references": "Ma'lumotnomalar",
+    "group_products": "Mahsulotlar",
+    "group_catalog": "Katalog",
+    "group_templates": "Andozalar",
+    "group_integrations": "Integratsiyalar",
+    "group_users": "Foydalanuvchilar",
+    "group_system": "Tizim",
+    "akfa_units": "Birliklarni moslashtirish",
+    "feedback": "Fikr-mulohazalar"
+  },
+  "soon": {
+    "title": "Bo'lim ko'chirilmoqda",
+    "text": "Bu bo'lim hali yangi panelga ko'chirilmagan. Hozircha eski versiyadan foydalaning."
+  }
+}

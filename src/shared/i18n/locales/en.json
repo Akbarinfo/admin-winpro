@@ -1,0 +1,80 @@
+{
+  "common": {
+    "show_password": "Show password",
+    "hide_password": "Hide password",
+    "reload": "Reload page",
+    "to_home": "Go to home"
+  },
+  "errors": {
+    "network": "Can't reach the server. Check your connection and try again.",
+    "unknown": "Something went wrong. Please try again.",
+    "crash_title": "Something went wrong",
+    "crash_text": "The page failed to load. Reload it — if the error repeats, tell your administrator.",
+    "not_found_title": "Page not found",
+    "not_found_text": "This address doesn't exist. The link may be outdated."
+  },
+  "validation": {
+    "required": "Fill in this field",
+    "password_mismatch": "Passwords don't match"
+  },
+  "auth": {
+    "brand_title": "Control panel for the window business",
+    "brand_text": "Everything a window is made of: from a profile's article number to its price in each country.",
+    "feat_catalog_title": "Product catalog",
+    "feat_catalog_text": "Profiles, hardware, seals and fillings with sizes and drawings",
+    "feat_prices_title": "Prices by country",
+    "feat_prices_text": "Uzbekistan and Kazakhstan, exchange rates for every date",
+    "feat_akfa_title": "Akfa integration",
+    "feat_akfa_text": "Article mapping and automatic price updates",
+    "login_title": "Sign in",
+    "login_subtitle": "Use your work account",
+    "username": "Email or login",
+    "password": "Password",
+    "forgot_link": "Forgot password?",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "back_to_login": "Back to sign in",
+    "forgot_title": "Reset password",
+    "forgot_subtitle": "Enter your account's email or phone. We'll send you a confirmation code.",
+    "email_or_phone": "Email or phone",
+    "send_code": "Get code",
+    "sending": "Sending…",
+    "code_sent": "Confirmation code sent",
+    "reset_title": "New password",
+    "reset_subtitle": "Enter the code from the message and choose a new password.",
+    "confirm_code": "Confirmation code",
+    "new_password": "New password",
+    "repeat_password": "Repeat password",
+    "save_password": "Save password",
+    "saving": "Saving…",
+    "done_title": "Password changed",
+    "done_text": "Now sign in with your new password.",
+    "go_login": "Go to sign in"
+  },
+  "layout": {
+    "open_menu": "Open menu",
+    "close_menu": "Close menu",
+    "navigation": "Navigation",
+    "language": "Language",
+    "theme_dark": "Switch to dark theme",
+    "theme_light": "Switch to light theme",
+    "user_menu": "User menu",
+    "logout": "Sign out"
+  },
+  "nav": {
+    "group_overview": "Overview",
+    "group_references": "References",
+    "group_products": "Products",
+    "group_catalog": "Catalog",
+    "group_templates": "Templates",
+    "group_integrations": "Integrations",
+    "group_users": "Users",
+    "group_system": "System",
+    "akfa_units": "Unit mapping",
+    "feedback": "Feedback"
+  },
+  "soon": {
+    "title": "Section is being migrated",
+    "text": "This section hasn't been moved to the new panel yet. Use the old version for now."
+  }
+}
