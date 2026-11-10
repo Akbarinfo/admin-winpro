@@ -1,4 +1,5 @@
 import type { TableSort } from '@/shared/api/table'
+import type { Key } from 'react'
 
 // Pure helpers of shared/ui components, kept apart so component files export only components.
 
@@ -130,4 +131,148 @@ export function caretAfter(text: string, count: number) {
     if (text[i] !== ' ') seen++
   }
   return text.length
+}
+
+/** How TreeSelect reads a node of any shape. */
+export type TreeAccess<T> = {
+  getKey: (node: T) => Key
+  getLabel: (node: T) => string
+  getChildren: (node: T) => T[] | null | undefined
+}
+
+export type TreeRow<T> = {
+  node: T
+  /** 1 for roots */
+  level: number
+  hasChildren: boolean
+  expanded: boolean
+}
+
+/**
+ * Tree rows to show, depth first. Without a query: children only under expanded nodes.
+ * With a query: nodes whose label contains it, plus their ancestors, all open.
+ */
+export function visibleTreeRows<T>(
+  roots: T[],
+  access: TreeAccess<T>,
+  expanded: ReadonlySet<Key>,
+  query = '',
+): TreeRow<T>[] {
+  const q = query.trim().toLowerCase()
+  const rows: TreeRow<T>[] = []
+
+  if (!q) {
+    const walk = (nodes: T[], level: number) => {
+      for (const node of nodes) {
+        const children = access.getChildren(node) ?? []
+        const open = children.length > 0 && expanded.has(access.getKey(node))
+        rows.push({ node, level, hasChildren: children.length > 0, expanded: open })
+        if (open) walk(children, level + 1)
+      }
+    }
+    walk(roots, 1)
+    return rows
+  }
+
+  // Returns the rows of a subtree that has a match, or null.
+  const match = (node: T, level: number): TreeRow<T>[] | null => {
+    const inner = (access.getChildren(node) ?? []).flatMap((c) => match(c, level + 1) ?? [])
+    const self = access.getLabel(node).toLowerCase().includes(q)
+    if (!self && inner.length === 0) return null
+    return [{ node, level, hasChildren: inner.length > 0, expanded: inner.length > 0 }, ...inner]
+  }
+  return roots.flatMap((r) => match(r, 1) ?? [])
+}
+
+/** Every node of the tree by key. */
+export function indexTree<T>(roots: T[], access: TreeAccess<T>) {
+  const map = new Map<Key, T>()
+  const walk = (nodes: T[]) => {
+    for (const node of nodes) {
+      map.set(access.getKey(node), node)
+      walk(access.getChildren(node) ?? [])
+    }
+  }
+  walk(roots)
+  return map
+}
+
+/** Keys of the nodes above any of `keys` — opened so the chosen nodes are visible. */
+export function ancestorKeys<T>(roots: T[], access: TreeAccess<T>, keys: Iterable<Key>) {
+  const wanted = new Set(keys)
+  const result = new Set<Key>()
+  const walk = (nodes: T[], path: Key[]): boolean => {
+    let found = false
+    for (const node of nodes) {
+      const key = access.getKey(node)
+      const below = walk(access.getChildren(node) ?? [], [...path, key])
+      if (below || wanted.has(key)) {
+        found = true
+        path.forEach((k) => result.add(k))
+      }
+      if (below) result.add(key)
+    }
+    return found
+  }
+  walk(roots, [])
+  return result
+}
+
+/** How much of a node is chosen: every leaf under it, some of them, or none. */
+export type CheckState = 'all' | 'some' | 'none'
+
+/** Keys of the leaves under a node; a node without children is its own leaf. */
+export function leafKeys<T>(node: T, access: TreeAccess<T>): Key[] {
+  const children = access.getChildren(node) ?? []
+  return children.length ? children.flatMap((c) => leafKeys(c, access)) : [access.getKey(node)]
+}
+
+/**
+ * Chosen keys as leaves only: a parent in the list stands for all of its leaves
+ * (old records may hold parent ids). Keys not in the tree — or before it loads — stay as they are.
+ */
+export function toLeafKeys<T>(index: ReadonlyMap<Key, T>, access: TreeAccess<T>, keys: Key[]) {
+  const result = new Set<Key>()
+  for (const key of keys) {
+    const node = index.get(key)
+    for (const leaf of node ? leafKeys(node, access) : [key]) result.add(leaf)
+  }
+  return [...result]
+}
+
+/** Check state of every node, from the chosen leaves: a parent is 'all' when every leaf under it is chosen. */
+export function treeCheckStates<T>(roots: T[], access: TreeAccess<T>, leaves: ReadonlySet<Key>) {
+  const states = new Map<Key, CheckState>()
+  const walk = (node: T): CheckState => {
+    const children = access.getChildren(node) ?? []
+    let state: CheckState
+    if (!children.length) {
+      state = leaves.has(access.getKey(node)) ? 'all' : 'none'
+    } else {
+      const inner = children.map(walk)
+      state = inner.every((s) => s === 'all')
+        ? 'all'
+        : inner.every((s) => s === 'none')
+          ? 'none'
+          : 'some'
+    }
+    states.set(access.getKey(node), state)
+    return state
+  }
+  roots.forEach(walk)
+  return states
+}
+
+/** The top-most fully chosen nodes: shown as one chip instead of every leaf under them. */
+export function topCheckedNodes<T>(
+  roots: T[],
+  access: TreeAccess<T>,
+  states: ReadonlyMap<Key, CheckState>,
+): T[] {
+  return roots.flatMap((node) => {
+    const state = states.get(access.getKey(node))
+    if (state === 'all') return [node]
+    if (state === 'some') return topCheckedNodes(access.getChildren(node) ?? [], access, states)
+    return []
+  })
 }

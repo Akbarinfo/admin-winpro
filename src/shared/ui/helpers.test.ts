@@ -1,5 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import {
+  ancestorKeys,
+  indexTree,
+  leafKeys,
+  toLeafKeys,
+  topCheckedNodes,
+  treeCheckStates,
+  visibleTreeRows,
   caretAfter,
   detectPhoneCountry,
   formatPhone,
@@ -156,5 +163,49 @@ describe('detectPhoneCountry / phoneDigits / isPhoneComplete', () => {
     expect(isPhoneComplete('+998(90) 123 - 45 - 67', COUNTRIES)).toBe(true)
     expect(isPhoneComplete('+998 (90) 123', COUNTRIES)).toBe(false)
     expect(isPhoneComplete('+996 (555) 123 456', COUNTRIES)).toBe(true)
+  })
+})
+
+describe('tree helpers', () => {
+  type N = { id: number; name: string; children?: N[] }
+  const tree: N[] = [
+    { id: 1, name: 'A', children: [{ id: 2, name: 'B', children: [{ id: 3, name: 'C' }] }] },
+    { id: 4, name: 'D' },
+  ]
+  const access = {
+    getKey: (n: N) => n.id,
+    getLabel: (n: N) => n.name,
+    getChildren: (n: N) => n.children,
+  }
+  const keys = (rows: { node: N }[]) => rows.map((r) => r.node.id)
+
+  it('visibleTreeRows follows expanded branches', () => {
+    expect(keys(visibleTreeRows(tree, access, new Set()))).toEqual([1, 4])
+    expect(keys(visibleTreeRows(tree, access, new Set([1])))).toEqual([1, 2, 4])
+    // A closed parent hides an open child.
+    expect(keys(visibleTreeRows(tree, access, new Set([2])))).toEqual([1, 4])
+  })
+
+  it('visibleTreeRows with a query keeps matches and their ancestors', () => {
+    const rows = visibleTreeRows(tree, access, new Set(), 'c')
+    expect(keys(rows)).toEqual([1, 2, 3])
+    expect(rows.map((r) => r.level)).toEqual([1, 2, 3])
+    expect(keys(visibleTreeRows(tree, access, new Set(), 'zz'))).toEqual([])
+  })
+
+  it('ancestorKeys and indexTree', () => {
+    expect([...ancestorKeys(tree, access, [3])].sort()).toEqual([1, 2])
+    expect([...ancestorKeys(tree, access, [4, 1])]).toEqual([])
+    expect(indexTree(tree, access).get(3)?.name).toBe('C')
+  })
+
+  it('cascading checks', () => {
+    const index = indexTree(tree, access)
+    expect(leafKeys(tree[0], access)).toEqual([3])
+    expect(toLeafKeys(index, access, [1, 4, 99])).toEqual([3, 4, 99])
+
+    const states = treeCheckStates(tree, access, new Set([3]))
+    expect([states.get(1), states.get(2), states.get(4)]).toEqual(['all', 'all', 'none'])
+    expect(topCheckedNodes(tree, access, states).map((n) => n.id)).toEqual([1])
   })
 })

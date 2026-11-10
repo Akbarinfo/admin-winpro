@@ -4,6 +4,7 @@ import { currencyRoutes } from '@/features/currency'
 import { exchangeRoutes } from '@/features/exchange'
 import { languageRoutes } from '@/features/languages'
 import { materialTypeRoutes } from '@/features/materialType'
+import { salesCategoryRoutes } from '@/features/salesCategory'
 import { seriesRoutes } from '@/features/series'
 import { supplierRoutes } from '@/features/suppliers'
 import { tariffFeatureRoutes } from '@/features/tariffFeature'
@@ -27,6 +28,7 @@ const featureRoutes = [
   ...workshopServiceRoutes,
   ...tariffFeatureRoutes,
   ...textureRoutes,
+  ...salesCategoryRoutes,
 ]
 
 // Dev-only pages; lazy so they never reach the production bundle.

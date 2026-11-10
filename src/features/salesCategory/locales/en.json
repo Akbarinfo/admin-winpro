@@ -1,0 +1,13 @@
+{
+  "salesCategory": {
+    "title": "Sales category",
+    "add": "Add sales category",
+    "edit": "Edit sales category",
+    "name": "Name",
+    "price": "Price",
+    "currency": "Currency",
+    "tariffs": "Free for tariffs",
+    "profile_systems": "Profile systems",
+    "empty": "No categories yet. Add the first one."
+  }
+}

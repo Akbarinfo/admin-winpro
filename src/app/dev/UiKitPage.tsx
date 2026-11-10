@@ -29,6 +29,7 @@ import {
   TableToolbar,
   Textarea,
   ThemeToggle,
+  TreeSelect,
   type Column,
 } from '@/shared/ui'
 
@@ -51,6 +52,19 @@ const RATES: Rate[] = [
 ]
 
 type Option = { id: number; name: string }
+type TreeNode = Option & { children?: TreeNode[] }
+const PROFILE_TREE: TreeNode[] = [
+  {
+    id: 1,
+    name: 'Akfa',
+    children: [
+      { id: 11, name: 'Akfa 60', children: [{ id: 111, name: 'Akfa 60 Termo' }] },
+      { id: 12, name: 'Akfa 70' },
+    ],
+  },
+  { id: 2, name: 'Engelberg', children: [{ id: 21, name: 'Engelberg 58' }] },
+  { id: 3, name: 'Rehau' },
+]
 const SYSTEMS: Option[] = [
   { id: 1, name: 'Akfa 60 — ПВХ' },
   { id: 2, name: 'Akfa 70 — ПВХ' },
@@ -105,6 +119,7 @@ export function UiKitPage() {
   const [loadingBtn, setLoadingBtn] = useState(false)
   const [num, setNum] = useState<number | null>(1250.5)
   const [system, setSystem] = useState<Option | null>(SYSTEMS[0])
+  const [treeValue, setTreeValue] = useState<number[]>([111])
   const [sort, setSort] = useState<TableSort>({ column: 'date', dir: 'desc' })
   const [page, setPage] = useState({ page: 3, size: 20 })
   const [tableState, setTableState] = useState<'data' | 'loading' | 'empty'>('data')
@@ -282,6 +297,23 @@ export function UiKitPage() {
               getKey={(o: Option) => o.id}
               getLabel={(o) => o.name}
               loading
+            />
+          </Field>
+        </KitCard>
+        <KitCard title="TreeSelect" replaces="TreeSelectComponent.js (antd TreeSelect)">
+          <Field
+            label="Системы профилей"
+            htmlFor="kit-tree"
+            hint="Родитель отмечает всю ветку; в значении только конечные узлы. → ← открыть/закрыть ветку"
+          >
+            <TreeSelect
+              id="kit-tree"
+              options={PROFILE_TREE}
+              value={treeValue}
+              onChange={setTreeValue}
+              getKey={(n) => n.id}
+              getLabel={(n) => n.name}
+              getChildren={(n) => n.children}
             />
           </Field>
         </KitCard>

@@ -118,12 +118,13 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 ## Ko'chirish tartibi
 
 1. Skelet: layout, router, auth, session store — ✅ kod tayyor, real backend bilan login tekshirilishi kerak
-2. Umumiy qatlam — ✅ DataTable, Pagination, Combobox, Modal, FormField, NumberInput, useServerTable, useConfirmDelete,
+2. Umumiy qatlam — ✅ DataTable, Pagination, Combobox, TreeSelect, Modal, FormField, NumberInput, useServerTable, useConfirmDelete,
    useEntityForm, lookups (valyutalar), testlar, `/ui-kit`. Excel va ImageUpload 5-bosqichda.
 3. Namuna bo'lim: Курсы валют — ✅ kod va testlar tayyor, real backend bilan tekshirilishi kerak
 4. Oddiy CRUD bo'limlar — **jarayonda** (`/new-feature <bo'lim>`): ✅ Валюты, Единицы, Серии, Виды материала, Языки,
-   Поставщики, Услуги мастерской, Тарифные функции, Текстуры (+ соответствия; `/texturegroup` → `/textures`).
-   Qolgan: savdo toifasi (profil tizimlari daraxti kerak), so'ng mamlakat, ilova versiyalari, foydalanuvchilar,
+   Поставщики, Услуги мастерской, Тарифные функции, Текстуры (+ соответствия; `/texturegroup` → `/textures`),
+   Категория продаж (`TreeSelect` — profil tizimlari daraxti, `shared/lookups/profileSystems`).
+   Qolgan: mamlakat, ilova versiyalari, foydalanuvchilar,
    mobil foydalanuvchilar: valyuta, mamlakat, birlik, seriya, tekstura, ta'minotchi…
 5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar

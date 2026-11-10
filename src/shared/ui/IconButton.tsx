@@ -24,7 +24,9 @@ export function IconButton({
       title={label}
       className={cn(
         'inline-grid size-8 shrink-0 place-items-center rounded-md text-muted transition-colors',
-        tone === 'danger' ? 'hover:bg-danger-soft hover:text-danger' : 'hover:bg-line hover:text-fg',
+        tone === 'danger'
+          ? 'hover:bg-danger-soft hover:text-danger'
+          : 'hover:bg-line hover:text-fg',
         bordered && 'border border-line bg-surface',
         className,
       )}

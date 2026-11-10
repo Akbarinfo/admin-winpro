@@ -1,0 +1,13 @@
+{
+  "salesCategory": {
+    "title": "Savdo toifasi",
+    "add": "Savdo toifasini qo'shish",
+    "edit": "Savdo toifasini tahrirlash",
+    "name": "Nomi",
+    "price": "Narxi",
+    "currency": "Valyuta",
+    "tariffs": "Bepul tariflar",
+    "profile_systems": "Profil tizimlari",
+    "empty": "Hozircha toifalar yo'q. Birinchisini qo'shing."
+  }
+}
