@@ -14,6 +14,8 @@ paths:
 - Router/React Query kerak bo'lsa — `renderWithProviders(ui, { url, routes })` (`src/test/render.tsx`).
 - Bo'lim integratsion testi (`features/x/x.test.tsx`): `vi.mock('@/shared/api/client')`, real `xApi` ishlaydi —
   shunda **endpoint va body** ham tekshiriladi. Kamida: ro'yxat, o'chirish, yaratish (body), tahrirlash (PUT), validatsiya.
+- Testlarda tarmoq yopiq (`src/test/network.ts`): real so'rov rad etiladi va uni yuborgan test yiqiladi.
+  Backend'ga ulanadigan test (e2e, real API) yozilmaydi.
 - Matnlar ruscha (default til) bo'yicha qidiriladi: `getByRole('button', { name: 'Сохранить' })`.
 - jsdom'da yo'q API'lar (`matchMedia`, `<dialog>.showModal`, `scrollIntoView`) `src/test/polyfills.ts`da.
 - Test o'tmasa, avval kodni tekshiring — testni "yashil qilish" uchun kutilgan qiymatni o'zgartirmang.
