@@ -8,6 +8,7 @@ import {
   Card,
   Checkbox,
   Chip,
+  ColorSwatch,
   Combobox,
   ConfirmDialog,
   DataTable,
@@ -29,6 +30,7 @@ import {
   TableToolbar,
   Textarea,
   ThemeToggle,
+  TextureMark,
   TreeSelect,
   type Column,
 } from '@/shared/ui'
@@ -444,6 +446,25 @@ export function UiKitPage() {
           <div className={`${row} text-primary`}>
             <Spinner />
             <Spinner className="size-6" />
+          </div>
+        </KitCard>
+        <KitCard title="ColorSwatch" replaces="цветные плашки текстур (style backgroundColor)">
+          <div className={row}>
+            <ColorSwatch color="#a8743d" />
+            <ColorSwatch color="#2f4f4f" />
+            <ColorSwatch color={null} />
+          </div>
+        </KitCard>
+        <KitCard title="TextureMark" replaces="кружок текстуры в ценах (img / backgroundColor)">
+          <div className={row}>
+            <span className="inline-flex items-center gap-2">
+              <TextureMark color="#a8743d" />
+              Золотой дуб
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <TextureMark color="#ffffff" />
+              Белый
+            </span>
           </div>
         </KitCard>
       </Section>

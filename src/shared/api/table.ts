@@ -25,7 +25,8 @@ export const DEFAULT_PAGE_SIZE = 20
 /** The old panel always sent an order; newest first. */
 export const DEFAULT_SORT: TableSort = { column: 'id', dir: 'desc' }
 
-export function buildTableBody(params: TableParams, filter: object = {}) {
+/** `sorted: false` — a table the old panel requested with an empty `order` (e.g. product prices). */
+export function buildTableBody(params: TableParams, filter: object = {}, sorted = true) {
   const sort = params.sort ?? DEFAULT_SORT
   return {
     id: null,
@@ -34,7 +35,7 @@ export function buildTableBody(params: TableParams, filter: object = {}) {
     length: params.size,
     recordsTotal: 0,
     columns: [],
-    order: [{ column: sort.column, dir: sort.dir.toUpperCase() as 'ASC' | 'DESC' }],
+    order: sorted ? [{ column: sort.column, dir: sort.dir.toUpperCase() as 'ASC' | 'DESC' }] : [],
     search: { value: params.search ?? '', regex: true },
     filter,
   }

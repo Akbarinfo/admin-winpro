@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useNavigate } from 'react-router'
+import { useLocation, useNavigate, useSearchParams } from 'react-router'
 import { AlertTriangle, Copy, FilterX, Pencil, Plus, Trash2 } from 'lucide-react'
 import { useConfirmDelete } from '@/shared/hooks/useConfirmDelete'
 import { useServerTable } from '@/shared/hooks/useServerTable'
@@ -29,6 +29,7 @@ import {
 import { productApi, productKeys } from './api'
 import { PRODUCT_FILTERS } from './filters'
 import { groupPath, type ProductGroup } from './groups'
+import { PricePanel } from './PricePanel'
 import type { ProductRow } from './types'
 
 /** The old list sorted by id, oldest first. */
@@ -46,6 +47,24 @@ export function ProductListPage({ group }: { group: ProductGroup }) {
   const openForm = (to: string) => navigate(to, { state: { from: pathname + search } })
 
   const { filters, setFilters, clear, active } = useTableFilters(group.key, PRODUCT_FILTERS)
+
+  // The product whose prices are open under the list: ?profile.selected=41 (a link keeps it).
+  // The old panel used ?selected= and ?page=; here every table's params carry its prefix.
+  const [searchParams, setSearchParams] = useSearchParams()
+  const selectedId = Number(searchParams.get(`${group.key}.selected`)) || null
+  const select = (productId: number | null) =>
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev)
+        if (productId === null) next.delete(`${group.key}.selected`)
+        else next.set(`${group.key}.selected`, String(productId))
+        // Another product's prices start from their first page.
+        next.delete('price.page')
+        return next
+      },
+      { replace: true },
+    )
+  const toggle = (row: ProductRow) => select(row.id === selectedId ? null : row.id)
 
   const table = useServerTable<ProductRow>({
     key: group.key,
@@ -68,6 +87,8 @@ export function ProductListPage({ group }: { group: ProductGroup }) {
     remove: (row) => productApi.remove(row.id),
     invalidate: productKeys.all,
     getName: (row) => row.name,
+    // Its prices can't stay open: the product is gone.
+    onDeleted: (row) => row.id === selectedId && select(null),
   })
 
   const [copying, setCopying] = useState<ProductRow | null>(null)
@@ -241,6 +262,16 @@ export function ProductListPage({ group }: { group: ProductGroup }) {
           columns={columns}
           rows={table.rows}
           getRowKey={(row) => row.id}
+          // Prices open right under their row (as texture matches do); one product at a time,
+          // since the prices table keeps its page and filter in the URL under one prefix.
+          onRowClick={toggle}
+          expandable={{
+            isExpanded: (row) => row.id === selectedId,
+            onToggle: toggle,
+            render: (row) => <PricePanel productId={row.id} productName={row.name} />,
+            label: (row, open) =>
+              t(open ? 'product.price.hide' : 'product.price.show', { name: row.name }),
+          }}
           loading={table.isLoading}
           fetching={table.isFetching}
           sort={table.sort}

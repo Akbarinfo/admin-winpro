@@ -7,6 +7,7 @@ import { useConfirmDelete } from '@/shared/hooks/useConfirmDelete'
 import { useServerTable } from '@/shared/hooks/useServerTable'
 import {
   Button,
+  ColorSwatch,
   DataTable,
   Highlight,
   IconButton,
@@ -20,7 +21,6 @@ import {
   type Column,
 } from '@/shared/ui'
 import { textureApi, textureKeys } from './api'
-import { ColorSwatch } from './ColorSwatch'
 import { TextureMatches } from './TextureMatches'
 import type { Texture } from './types'
 

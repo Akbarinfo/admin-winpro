@@ -46,6 +46,26 @@
     "cutting_optimization": "Cutting optimization",
     "arc_profile": "Arc profile",
     "drawing": "Drawing",
-    "drawing_file": "Drawing image"
+    "drawing_file": "Drawing image",
+    "price": {
+      "title": "Prices",
+      "title_of": "Prices: {{name}}",
+      "add": "Add price",
+      "edit": "Edit price",
+      "empty": "No prices yet",
+      "texture": "Texture",
+      "date": "Date",
+      "price": "Price",
+      "price_of_one": "Price per unit",
+      "currency": "Currency",
+      "country": "Country",
+      "all_countries": "All countries",
+      "copy": "Copy price",
+      "copied": "Price copied",
+      "akfa_title": "Linked to Akfa: {{name}}",
+      "akfa_warning": "This price is linked to Akfa ({{name}}). The next sync will overwrite your changes.",
+      "show": "Show prices: {{name}}",
+      "hide": "Hide prices: {{name}}"
+    }
   }
 }

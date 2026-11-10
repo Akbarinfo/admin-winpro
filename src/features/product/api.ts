@@ -1,8 +1,17 @@
 import { api } from '@/shared/api/client'
 import { multipartBody } from '@/shared/api/files'
 import type { TableBody, TablePage } from '@/shared/api/table'
+import type { PriceValues } from './priceSchema'
 import type { ProfileValues } from './schema'
-import type { ArticleType, ChosenNames, GroupType, ProductDetail, ProductRow } from './types'
+import type {
+  ArticleType,
+  ChosenNames,
+  GroupType,
+  PriceDetail,
+  ProductDetail,
+  ProductPrice,
+  ProductRow,
+} from './types'
 
 /** The saved product, or { error } with status 206. */
 type SaveResponse = { id?: number; error?: string }
@@ -77,4 +86,29 @@ export const productApi = {
   },
 
   remove: (id: number) => api.delete(`/v1/product/${id}`),
+}
+
+/** Prices have their own key: the product's detail and price detail ids would clash under one. */
+export const priceKeys = { all: ['product-price'] as const }
+
+// Endpoints and bodies match the old panel (layout/product/NewPriceLayoutV2.jsx, components/product/ModalPrice.js).
+export const priceApi = {
+  /** Prices of one product, optionally of one country. The old panel sent an empty `order`. */
+  table: (body: TableBody, signal?: AbortSignal) =>
+    api
+      .post<TablePage<ProductPrice>>('/v1/product/price/table', body, { signal })
+      .then((r) => r.data),
+
+  get: (id: string, signal?: AbortSignal) =>
+    api.get<PriceDetail>(`/v1/product/price/${id}`, { signal }).then((r) => r.data),
+
+  /** POST without id, PUT with it — both on /v1/product/price. */
+  save: (values: PriceValues, productId: number, id?: string) => {
+    const body = { id: id ? Number(id) : null, productId, ...values }
+    return id ? api.put('/v1/product/price', body) : api.post('/v1/product/price', body)
+  },
+
+  copy: (id: number) => api.post(`/v1/product/price/copy/${id}`),
+
+  remove: (id: number) => api.delete(`/v1/product/price/${id}`),
 }

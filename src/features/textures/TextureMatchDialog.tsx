@@ -4,9 +4,10 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useEntityForm } from '@/shared/hooks/useEntityForm'
 import { Alert, Button, Combobox, FormField, Modal, Spinner } from '@/shared/ui'
-import { matchApi, textureApi, textureKeys } from './api'
+import { useTextures, type TextureOption } from '@/shared/lookups/textures'
+import { matchApi, textureKeys } from './api'
 import { matchSchema, type MatchForm, type MatchValues } from './schema'
-import type { Texture, TextureMatch } from './types'
+import type { TextureMatch } from './types'
 
 const resolver = zodResolver(matchSchema)
 const toForm = (m: TextureMatch): MatchForm => ({
@@ -20,11 +21,7 @@ type Props = { textureId: number; match?: TextureMatch; onClose: () => void }
 /** Add or edit one matching texture of `textureId`. */
 export function TextureMatchDialog({ textureId, match, onClose }: Props) {
   const { t } = useTranslation()
-  const textures = useQuery({
-    queryKey: [...textureKeys.all, 'list'],
-    queryFn: ({ signal }) => textureApi.list(signal),
-    staleTime: 10 * 60_000,
-  })
+  const textures = useTextures()
   const sides = useQuery({
     queryKey: [...textureKeys.all, 'side-types'],
     queryFn: ({ signal }) => matchApi.sideTypes(signal),
@@ -102,7 +99,7 @@ export function TextureMatchDialog({ textureId, match, onClose }: Props) {
             required
           >
             {(field) => (
-              <Combobox<Texture>
+              <Combobox<TextureOption>
                 id={field.id}
                 ref={field.ref}
                 onBlur={field.onBlur}
@@ -117,7 +114,7 @@ export function TextureMatchDialog({ textureId, match, onClose }: Props) {
                     <span
                       aria-hidden="true"
                       className="h-5 w-10 shrink-0 rounded-md border border-line-strong"
-                      style={{ backgroundColor: x.color }}
+                      style={{ backgroundColor: x.color ?? undefined }}
                     />
                   </span>
                 )}
@@ -125,7 +122,7 @@ export function TextureMatchDialog({ textureId, match, onClose }: Props) {
                   <span
                     aria-hidden="true"
                     className="size-4 rounded border border-line-strong"
-                    style={{ backgroundColor: x.color }}
+                    style={{ backgroundColor: x.color ?? undefined }}
                   />
                 )}
                 loading={textures.isPending}

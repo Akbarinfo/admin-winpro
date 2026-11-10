@@ -4,9 +4,16 @@ import { useTranslation } from 'react-i18next'
 import { Pencil, Plus, Trash2 } from 'lucide-react'
 import { fileUrl } from '@/shared/api/files'
 import { useConfirmDelete } from '@/shared/hooks/useConfirmDelete'
-import { Button, Chip, DataTable, IconButton, Thumbnail, type Column } from '@/shared/ui'
+import {
+  Button,
+  Chip,
+  ColorSwatch,
+  DataTable,
+  IconButton,
+  Thumbnail,
+  type Column,
+} from '@/shared/ui'
 import { matchApi, matchKeys, textureKeys } from './api'
-import { ColorSwatch } from './ColorSwatch'
 import { TextureMatchDialog } from './TextureMatchDialog'
 import type { TextureMatch } from './types'
 

@@ -20,6 +20,8 @@ type ServerTableOptions<T> = {
   filter?: object
   defaultSort?: TableSort
   defaultSize?: number
+  /** false — send an empty `order`, as the old panel did for some tables. */
+  sorted?: boolean
 }
 
 /** Everything a server-side table needs: rows, loading state, sort and pagination wired to the URL. */
@@ -30,12 +32,13 @@ export function useServerTable<T>({
   filter,
   defaultSort = DEFAULT_SORT,
   defaultSize = DEFAULT_PAGE_SIZE,
+  sorted = true,
 }: ServerTableOptions<T>) {
   const [params, setParams] = useTableParams(key, defaultSize, defaultSort)
 
   const query = useQuery({
     queryKey: [...queryKey, 'table', params, filter ?? null],
-    queryFn: ({ signal }) => fetchPage(buildTableBody(params, filter), signal),
+    queryFn: ({ signal }) => fetchPage(buildTableBody(params, filter, sorted), signal),
     // Keep showing the current page while the next one loads, so the table doesn't jump.
     placeholderData: keepPreviousData,
   })

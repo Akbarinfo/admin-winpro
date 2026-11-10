@@ -16,6 +16,10 @@ describe('buildTableBody', () => {
     expect(buildTableBody({ page: 1, size: 10 }).order).toEqual([{ column: 'id', dir: 'DESC' }])
   })
 
+  it('sends an empty order for tables the old panel requested unsorted', () => {
+    expect(buildTableBody({ page: 1, size: 10 }, {}, false).order).toEqual([])
+  })
+
   it('passes search and filter through', () => {
     const body = buildTableBody({ page: 1, size: 10, search: 'рама' }, { supplierId: 3 })
     expect(body.search).toEqual({ value: 'рама', regex: true })

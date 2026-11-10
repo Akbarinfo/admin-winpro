@@ -57,3 +57,34 @@ export type ProductDetail = {
 
 /** Names of the chosen series, unit and supplier — the old form sent them next to the ids. */
 export type ChosenNames = { productSeriesName: string; unitName: string; supplierName: string }
+
+/** A row of POST /v1/product/price/table. */
+export type ProductPrice = {
+  id: number
+  productId: number
+  productName?: string | null
+  textureName?: string | null
+  /** The texture's picture; without one its colour is shown */
+  imageId?: number | null
+  color?: string | null
+  /** «2026-10-19» */
+  date?: string | null
+  price?: number | null
+  priceOfOne?: number | null
+  currencySymbol?: string | null
+  countryCode?: string | null
+  /** The price comes from Akfa: editing it here is overwritten by the next sync. */
+  akfaExternalName?: string | null
+}
+
+/** GET /v1/product/price/{id}. */
+export type PriceDetail = {
+  id: number
+  productId: number
+  textureId?: number | null
+  currencyId?: number | null
+  countryId?: number | null
+  price?: number | null
+  priceOfOne?: number | null
+  date?: string | null
+}

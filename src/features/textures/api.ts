@@ -2,10 +2,12 @@ import { api } from '@/shared/api/client'
 import { multipartBody } from '@/shared/api/files'
 import type { TableBody, TablePage } from '@/shared/api/table'
 import { todayIso } from '@/shared/lib/format'
+import { textureKeys } from '@/shared/lookups/textures'
 import type { MatchValues, TextureValues } from './schema'
 import type { Texture, TextureMatch } from './types'
 
-export const textureKeys = { all: ['texture'] as const }
+// Same key as the shared textures lookup: saving here refreshes the texture lists elsewhere too.
+export { textureKeys }
 /** Matches of one texture, under the texture key so a texture save refreshes them too. */
 export const matchKeys = {
   of: (textureId: number) => [...textureKeys.all, 'matches', textureId] as const,
@@ -18,10 +20,6 @@ export const textureApi = {
 
   get: (id: string, signal?: AbortSignal) =>
     api.get<Texture>(`/v1/texture/${id}`, { signal }).then((r) => r.data),
-
-  /** All textures, for choosing a matching one. */
-  list: (signal?: AbortSignal) =>
-    api.get<Texture[]>('/v1/texture/list', { signal }).then((r) => r.data),
 
   /** multipart «data» + «image»; POST and PUT both on /v1/texture. */
   save: ({ image, ...values }: TextureValues, id?: string) => {

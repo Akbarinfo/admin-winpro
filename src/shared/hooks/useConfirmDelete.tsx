@@ -12,6 +12,8 @@ type ConfirmDeleteOptions<T> = {
   invalidate: QueryKey
   /** Name shown in the dialog: «Удалить «USD → UZS»?» */
   getName?: (item: T) => string
+  /** Runs after a successful delete, e.g. to refresh another list or close a panel of the item. */
+  onDeleted?: (item: T) => void
 }
 
 /**
@@ -21,16 +23,22 @@ type ConfirmDeleteOptions<T> = {
  *   <IconButton onClick={() => del.request(row)} … />
  *   {del.dialog}
  */
-export function useConfirmDelete<T>({ remove, invalidate, getName }: ConfirmDeleteOptions<T>) {
+export function useConfirmDelete<T>({
+  remove,
+  invalidate,
+  getName,
+  onDeleted,
+}: ConfirmDeleteOptions<T>) {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const [target, setTarget] = useState<{ item: T } | null>(null)
 
   const mutation = useMutation({
     mutationFn: remove,
-    onSuccess: async () => {
+    onSuccess: async (_, item) => {
       toast.success(t('common.deleted'))
       await queryClient.invalidateQueries({ queryKey: invalidate })
+      onDeleted?.(item)
     },
     onError: (error) => {
       // 420 (e.g. the record is in use) is already shown as a warning by the API client; 5xx as an error.

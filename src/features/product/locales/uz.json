@@ -46,6 +46,26 @@
     "cutting_optimization": "Raskroy optimizatsiyasi",
     "arc_profile": "Arkali profil",
     "drawing": "Chizma",
-    "drawing_file": "Chizma rasmi"
+    "drawing_file": "Chizma rasmi",
+    "price": {
+      "title": "Narxlar",
+      "title_of": "Narxlar: {{name}}",
+      "add": "Narx qo'shish",
+      "edit": "Narxni tahrirlash",
+      "empty": "Hozircha narx yo'q",
+      "texture": "Tekstura",
+      "date": "Sana",
+      "price": "Narx",
+      "price_of_one": "Bir birlik narxi",
+      "currency": "Valyuta",
+      "country": "Davlat",
+      "all_countries": "Barcha davlatlar",
+      "copy": "Narxdan nusxa olish",
+      "copied": "Narxdan nusxa olindi",
+      "akfa_title": "Akfa bilan bog'langan: {{name}}",
+      "akfa_warning": "Bu narx Akfa bilan bog'langan ({{name}}). O'zgarishlarni keyingi sinxronizatsiya qayta yozib yuboradi.",
+      "show": "Narxlarni ko'rsatish: {{name}}",
+      "hide": "Narxlarni yashirish: {{name}}"
+    }
   }
 }
