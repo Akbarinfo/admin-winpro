@@ -33,6 +33,8 @@ type ComboboxProps<T> = {
   disabled?: boolean
   invalid?: boolean
   ref?: Ref<HTMLInputElement>
+  /** Accessible name when there is no <label> — e.g. a filter in a table toolbar. */
+  'aria-label'?: string
 }
 
 /** Searchable single select. Typing filters the options; ↑ ↓ Enter Escape work as in a native select. */
@@ -53,6 +55,7 @@ export function Combobox<T>({
   disabled,
   invalid,
   ref,
+  'aria-label': ariaLabel,
 }: ComboboxProps<T>) {
   const { t } = useTranslation()
   const autoId = useId()
@@ -135,6 +138,7 @@ export function Combobox<T>({
         ref={ref}
         id={id}
         name={name}
+        aria-label={ariaLabel}
         role="combobox"
         aria-expanded={open}
         aria-controls={listId}

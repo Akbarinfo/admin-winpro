@@ -1,9 +1,12 @@
 import { api } from '@/shared/api/client'
 import type { TableBody, TablePage } from '@/shared/api/table'
+import { unitKeys } from '@/shared/lookups/units'
 import type { UnitValues } from './schema'
 import type { Unit } from './types'
 
-export const unitKeys = { all: ['unit'] as const }
+// Same key as the shared units lookup: saving or deleting here also refreshes
+// the units lists used by other sections (e.g. product filters).
+export { unitKeys }
 
 // Endpoints and bodies match the old panel (layout/unit, services/unitService.js).
 export const unitApi = {

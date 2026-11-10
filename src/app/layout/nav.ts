@@ -61,7 +61,7 @@ export const NAV: NavGroup[] = [
     items: [
       { to: '/currency', label: 'currency.title', icon: Coins, status: 'ready' },
       { to: '/exchange', label: 'exchange.title', icon: ArrowLeftRight, status: 'ready' },
-      { to: '/country', label: 'countries.title', icon: Globe, status: 'new' },
+      { to: '/country', label: 'countries.title', icon: Globe, status: 'ready' },
       { to: '/units', label: 'units.title', icon: Ruler, status: 'ready' },
       { to: '/series', label: 'series.title', icon: Layers, status: 'ready' },
       { to: '/material-type', label: 'materialType.title', icon: Boxes, status: 'ready' },
@@ -72,7 +72,7 @@ export const NAV: NavGroup[] = [
   {
     title: 'nav.group_products',
     items: [
-      { to: '/product/profile', label: 'sidebar_menu_profiles', icon: Frame },
+      { to: '/product/profile', label: 'product.profile.title', icon: Frame, status: 'new' },
       { to: '/product/accessories', label: 'sidebar_menu_accessories', icon: Wrench },
       { to: '/product/seal', label: 'sidebar_menu_seal', icon: Grip },
       { to: '/product/filling', label: 'sidebar_menu_filling', icon: Square },
@@ -107,8 +107,8 @@ export const NAV: NavGroup[] = [
   {
     title: 'nav.group_users',
     items: [
-      { to: '/user', label: 'users.title', icon: Users, status: 'new' },
-      { to: '/mobile_user', label: 'mobileUsers.title', icon: Smartphone, status: 'new' },
+      { to: '/user', label: 'users.title', icon: Users, status: 'ready' },
+      { to: '/mobile_user', label: 'mobileUsers.title', icon: Smartphone, status: 'ready' },
       { to: '/feedback', label: 'nav.feedback', icon: MessageSquare },
     ],
   },
@@ -120,7 +120,7 @@ export const NAV: NavGroup[] = [
         to: '/app-versions',
         label: 'appVersions.title',
         icon: MonitorSmartphone,
-        status: 'new',
+        status: 'ready',
       },
       { to: '/translations', label: 'sidebar_menu_translations', icon: Languages },
       { to: '/languages', label: 'languages.title', icon: Type, status: 'ready' },

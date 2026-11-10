@@ -1,0 +1,27 @@
+{
+  "product": {
+    "profile": {
+      "title": "Profillar",
+      "add": "Profil qo'shish",
+      "edit": "Profilni tahrirlash"
+    },
+    "empty": "Hozircha mahsulot yo'q",
+    "name": "Nomi",
+    "name_in_catalog": "Katalogdagi nomi",
+    "article": "Artikul",
+    "type": "Turi",
+    "supplier": "Ta'minotchi",
+    "unit": "O'lchov birligi",
+    "series": "Seriya",
+    "profile_system": "Profil tizimi",
+    "useful_piece": "Foydali qism",
+    "waste_percent": "Qoldiqlar foizi",
+    "search": "Nomi yoki artikul",
+    "price_warning": "Narxida muammo bor",
+    "price_warning_hint": "Mahsulotning shubhali narxi bor",
+    "clear_filters": "Filtrlarni tozalash",
+    "copy": "Nusxa olish",
+    "copy_title": "Mahsulotdan nusxa olinsinmi?",
+    "copy_text": "«{{name}}» nusxasi yaratiladi, keyin uning formasi ochiladi."
+  }
+}

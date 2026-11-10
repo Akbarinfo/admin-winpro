@@ -1,0 +1,27 @@
+{
+  "product": {
+    "profile": {
+      "title": "Profiles",
+      "add": "Add profile",
+      "edit": "Edit profile"
+    },
+    "empty": "No products yet",
+    "name": "Name",
+    "name_in_catalog": "Catalog name",
+    "article": "Article",
+    "type": "Type",
+    "supplier": "Supplier",
+    "unit": "Unit",
+    "series": "Series",
+    "profile_system": "Profile system",
+    "useful_piece": "Useful piece",
+    "waste_percent": "Waste percent",
+    "search": "Name or article",
+    "price_warning": "Price issues",
+    "price_warning_hint": "The product has a suspicious price",
+    "clear_filters": "Clear filters",
+    "copy": "Copy",
+    "copy_title": "Copy the product?",
+    "copy_text": "A copy of «{{name}}» will be created, then its form opens."
+  }
+}

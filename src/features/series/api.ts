@@ -1,9 +1,12 @@
 import { api } from '@/shared/api/client'
 import type { TableBody, TablePage } from '@/shared/api/table'
+import { seriesKeys } from '@/shared/lookups/series'
 import type { SeriesValues } from './schema'
 import type { Series } from './types'
 
-export const seriesKeys = { all: ['series'] as const }
+// Same key as the shared series lookup: saving or deleting here also refreshes
+// the series lists used by other sections (e.g. product filters).
+export { seriesKeys }
 
 // Endpoints and bodies match the old panel (layout/series, services/seriesService.js).
 export const seriesApi = {

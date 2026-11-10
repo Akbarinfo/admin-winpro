@@ -1,10 +1,13 @@
 import { api } from '@/shared/api/client'
 import { multipartBody } from '@/shared/api/files'
 import type { TableBody, TablePage } from '@/shared/api/table'
+import { supplierKeys } from '@/shared/lookups/suppliers'
 import type { SupplierValues } from './schema'
 import type { Supplier, SupplierType } from './types'
 
-export const supplierKeys = { all: ['supplier'] as const }
+// Same key as the shared suppliers lookup: saving or deleting here also refreshes
+// the suppliers lists used by other sections (e.g. product filters).
+export { supplierKeys }
 
 // Endpoints and bodies match the old panel (layout/supplier, services/supplierService.js).
 export const supplierApi = {

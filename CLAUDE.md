@@ -51,7 +51,8 @@ Feature ichida nisbiy import (`./api`), boshqa joyda `@/` alias (`@/shared/ui`).
   Komponent ichida `fetch`/`axios` chaqirilmaydi.
 - **Server ma'lumotlari** TanStack Query'da. Zustand faqat client holati uchun (session, preferences).
   Server javobi Zustand'ga ko'chirilmaydi.
-- **Jadval holati** (page, size, sort, search, filtrlar) URL'da saqlanadi (`useTableParams`), localStorage'da emas.
+- **Jadval holati** (page, size, sort, search, filtrlar) URL'da saqlanadi (`useTableParams`, filtrlar — `useTableFilters`
+  bilan bir xil prefiks ostida), localStorage'da emas.
 - **Formalar**: react-hook-form + zod schema, `useEntityForm` orqali. Oddiy matn maydoni `form.register()` + `<Field>`,
   boshqariladigan maydon (Combobox, NumberInput) `<FormField>` orqali. Schema xabarlari i18n kalitlari (`validation.required`).
   Combobox/NumberInput bo'sh qiymati `null`: `requiredNumber()`, `positiveNumber()` (`shared/lib/zod.ts`) uni chiqishda `number`ga aylantiradi.
@@ -126,7 +127,8 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Категория продаж (`TreeSelect` — profil tizimlari daraxti, `shared/lookups/profileSystems`).
    Страны (alohida forma sahifasi + kod provayderlari), Версии приложения, Пользователи, Mobile users.
    4-bosqich oddiy CRUD'lari tugadi. Qolgan oddiy ro'yxatlar (feedback, price-requests) 6-bosqich bilan birga.
-5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali
+5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali (`features/product/groups.ts`).
+   Профили: ro'yxat va filtrlar ✅; forma sahifasi, narxlar paneli, Excel — navbatda
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.
