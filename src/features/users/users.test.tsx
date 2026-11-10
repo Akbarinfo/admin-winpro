@@ -125,6 +125,46 @@ describe('Users', () => {
     })
   })
 
+  it('sends the password as typed and drops the supplier when the role changes', async () => {
+    http.get.mockImplementation(async (url: string) => {
+      if (url === '/v1/user/7')
+        return { data: { ...ADMIN, id: 7, role: 'SUPPLIER_OWNER', supplierId: 3 } }
+      if (url === '/v1/user/enum/role/type')
+        return { data: [{ name: 'MANAGER' }, { name: 'SUPPLIER_OWNER' }] }
+      return { data: [] }
+    })
+    renderPage('/user/update/7')
+    const dialog = await screen.findByRole('dialog', { name: 'Изменить пользователя' })
+    const role = await within(dialog).findByLabelText(/Роль/)
+    await waitFor(() => expect(role).toHaveValue('SUPPLIER_OWNER'))
+    await userEvent.click(role)
+    await userEvent.click(await within(dialog).findByRole('option', { name: 'MANAGER' }))
+    await userEvent.type(within(dialog).getByLabelText(/Новый пароль/), ' pa ss ')
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Сохранить' }))
+    await waitFor(() => expect(http.put).toHaveBeenCalled())
+    expect(await dataPart(http.put.mock.calls[0][1] as FormData)).toMatchObject({
+      role: 'MANAGER',
+      supplierId: null,
+      newPassword: ' pa ss ',
+    })
+  })
+
+  it("keeps spaces in a new user's password, but not a blank one", async () => {
+    renderPage('/user/add')
+    const dialog = await screen.findByRole('dialog')
+    await userEvent.type(within(dialog).getByLabelText(/ФИО/), 'Сардор')
+    await userEvent.type(within(dialog).getByLabelText(/Логин/), 'sardor@akfa.uz')
+    await userEvent.type(within(dialog).getByLabelText(/^Пароль/), '   ')
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Сохранить' }))
+    expect(await within(dialog).findByText('Заполните это поле')).toBeInTheDocument()
+
+    await userEvent.type(within(dialog).getByLabelText(/^Пароль/), 'x ')
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Сохранить' }))
+    await waitFor(() => expect(http.post).toHaveBeenCalledWith('/v1/user/', expect.any(FormData)))
+    const body = http.post.mock.calls.find(([url]) => url === '/v1/user/')![1] as FormData
+    expect((await dataPart(body)).password).toBe('   x ')
+  })
+
   it('checks the login is an email and asks for a password', async () => {
     renderPage('/user/add')
     const dialog = await screen.findByRole('dialog')

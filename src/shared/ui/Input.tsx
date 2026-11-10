@@ -15,7 +15,8 @@ export function Input({ invalid, className, ...rest }: InputProps) {
         'focus:border-primary focus:shadow-[0_0_0_3px_var(--primary-soft)]',
         'disabled:cursor-not-allowed disabled:bg-surface-2 disabled:text-faint',
         // read-only keeps the value in the form (disabled fields are left out of the submit)
-        'read-only:bg-surface-2 read-only:text-muted',
+        // (a disabled input is :read-only too — keep its own disabled colours)
+        '[&:read-only:not(:disabled)]:bg-surface-2 [&:read-only:not(:disabled)]:text-muted',
         invalid && 'border-danger focus:border-danger focus:shadow-[0_0_0_3px_var(--danger-soft)]',
         className,
       )}

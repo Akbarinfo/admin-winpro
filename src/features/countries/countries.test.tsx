@@ -136,7 +136,10 @@ describe('Countries', () => {
   })
 
   it('shows a missing bucket from the backend under the bucket field', async () => {
-    http.put.mockRejectedValue(new ApiError(400, 'error.bucket.not.found'))
+    // Spring-style body: the code is in `message`, `error` is the generic reason.
+    http.put.mockRejectedValue(
+      new ApiError(400, 'Bad Request', undefined, 'Bad Request error.bucket.not.found'),
+    )
     renderPage('/country/update/2')
     const bucket = await screen.findByLabelText(/Bucket для файлов/)
     await waitFor(() => expect(bucket).toHaveValue('winpro-uz'))
@@ -146,12 +149,40 @@ describe('Countries', () => {
     ).toBeInTheDocument()
   })
 
-  it('only an administrator can edit the bucket', async () => {
+  it('only an administrator can edit the bucket — and saving keeps it', async () => {
     useSession.setState({ user: { role: 'MANAGER' } })
     renderPage('/country/update/2')
     const bucket = await screen.findByLabelText(/Bucket для файлов/)
+    await waitFor(() => expect(bucket).toHaveValue('winpro-uz'))
     expect(bucket).toHaveAttribute('readonly')
     expect(screen.getByText('Изменять может только администратор')).toBeInTheDocument()
+
+    await userEvent.click(screen.getByRole('button', { name: 'Сохранить' }))
+    await waitFor(() => expect(http.put).toHaveBeenCalled())
+    // Not cleared: a disabled field would be left out and sent as null.
+    expect(await countryPart(http.put.mock.calls[0][1] as FormData)).toMatchObject({
+      storageBucket: 'winpro-uz',
+    })
+  })
+
+  it('sends a newly chosen flag as the «file» part', async () => {
+    renderPage('/country/update/2')
+    await waitFor(() => expect(screen.getByLabelText(/Название/)).toHaveValue('Uzbekistan'))
+    const flag = new File(['png'], 'uz.png', { type: 'image/png' })
+    await userEvent.upload(screen.getByLabelText(/^Флаг/), flag)
+    await userEvent.click(screen.getByRole('button', { name: 'Сохранить' }))
+    await waitFor(() => expect(http.put).toHaveBeenCalled())
+    expect((http.put.mock.calls[0][1] as FormData).get('file')).toBe(flag)
+  })
+
+  it('shows a load error instead of an empty form', async () => {
+    http.get.mockImplementation(async (url: string) => {
+      if (url === '/v1/country/2') throw new ApiError(404, 'not found')
+      return { data: [] }
+    })
+    renderPage('/country/update/2')
+    expect(await screen.findByText('Не удалось загрузить данные.')).toBeInTheDocument()
+    expect(screen.queryByLabelText(/Название/)).not.toBeInTheDocument()
   })
 
   it('manages code providers of a saved country', async () => {
@@ -186,6 +217,16 @@ describe('Countries', () => {
         countryId: 2,
       }),
     )
+  })
+
+  it('deletes a code provider after confirmation', async () => {
+    renderPage('/country/update/2')
+    const section = await screen.findByRole('region', { name: /Провайдеры кодов/ })
+    await within(section).findByText('SMS')
+    await userEvent.click(within(section).getByRole('button', { name: 'Удалить' }))
+    const dialog = await screen.findByRole('dialog')
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Удалить' }))
+    await waitFor(() => expect(http.delete).toHaveBeenCalledWith('/v1/country-provider/9'))
   })
 
   it('deletes a country after confirmation', async () => {

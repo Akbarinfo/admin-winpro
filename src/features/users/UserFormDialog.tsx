@@ -75,7 +75,7 @@ export function UserFormDialog() {
     image: null,
   }))
 
-  const { form, isEdit, isLoading, isSaving, submit } = useEntityForm({
+  const { form, isEdit, isLoading, loadError, isSaving, submit } = useEntityForm({
     id,
     queryKey: userKeys.all,
     fetchOne: userApi.get,
@@ -100,13 +100,16 @@ export function UserFormDialog() {
           <Button variant="outline" onClick={close} disabled={isSaving}>
             {t('common.cancel')}
           </Button>
-          <Button type="submit" loading={isSaving} disabled={isLoading}>
+          <Button type="submit" loading={isSaving} disabled={isLoading || !!loadError}>
             {t(isSaving ? 'common.saving' : 'common.save')}
           </Button>
         </>
       }
     >
-      {isLoading ? (
+      {/* The record couldn't be loaded: say so instead of showing an empty form that would overwrite it. */}
+      {loadError ? (
+        <Alert>{t('common.load_error')}</Alert>
+      ) : isLoading ? (
         <div className="grid place-items-center py-10 text-primary">
           <Spinner className="size-6" />
         </div>

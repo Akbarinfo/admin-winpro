@@ -30,7 +30,7 @@ export function MobileUserListPage() {
   const [checking, setChecking] = useState<MobileUser | null>(null)
 
   const table = useServerTable<MobileUser>({
-    key: 'users',
+    key: 'mobileUsers',
     queryKey: mobileUserKeys.all,
     fetchPage: mobileUserApi.table,
   })

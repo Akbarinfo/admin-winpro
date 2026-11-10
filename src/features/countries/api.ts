@@ -8,12 +8,15 @@ import type { CountryProvider, CountryRecord } from './types'
 export { countryKeys }
 export const providerKeys = { of: (countryId: string) => ['country-provider', countryId] as const }
 
-/** Backend bucket errors («bucket.not.found»…) shown under the bucket field. */
+/**
+ * Backend bucket errors («bucket.not.found»…) shown under the bucket field. The code may come in
+ * `error`, `message` or `code` of the body — like the old panel, all of them are searched.
+ */
 function bucketError(error: unknown): never {
   if (error instanceof ApiError) {
-    const key = error.message.includes('bucket.not.found')
+    const key = error.details.includes('bucket.not.found')
       ? 'countries.bucket_errors.not_found'
-      : error.message.includes('bucket.invalid')
+      : error.details.includes('bucket.invalid')
         ? 'countries.bucket_errors.invalid'
         : null
     if (key) throw new ApiError(error.status, error.message, { storageBucket: key })

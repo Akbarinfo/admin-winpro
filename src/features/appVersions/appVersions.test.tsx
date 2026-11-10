@@ -85,6 +85,13 @@ describe('App versions', () => {
     )
   })
 
+  it('says so when the platform is not in the list, instead of an empty form', async () => {
+    renderPage('/app-versions/update/WINDOWS')
+    const dialog = await screen.findByRole('dialog', { name: 'Изменить версию' })
+    expect(await within(dialog).findByText('Не удалось загрузить данные.')).toBeInTheDocument()
+    expect(within(dialog).getByRole('button', { name: 'Сохранить' })).toBeDisabled()
+  })
+
   it('requires a platform and the latest version', async () => {
     renderPage('/app-versions/add')
     const dialog = await screen.findByRole('dialog')

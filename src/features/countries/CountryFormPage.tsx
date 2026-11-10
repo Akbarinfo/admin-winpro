@@ -87,7 +87,7 @@ export function CountryFormPage() {
     values.storageBucket === (entity?.storageBucket ?? '').trim().toLowerCase() ||
     new Promise<boolean>((resolve) => setBucketQuestion(() => resolve))
 
-  const { form, entity, isEdit, isLoading, isSaving, submit } = useEntityForm({
+  const { form, entity, isEdit, isLoading, loadError, isSaving, submit } = useEntityForm({
     id,
     queryKey: countryKeys.all,
     fetchOne: countryApi.get,
@@ -139,7 +139,10 @@ export function CountryFormPage() {
         }
       />
 
-      {isLoading ? (
+      {/* The record couldn't be loaded: say so instead of showing an empty form that would overwrite it. */}
+      {loadError ? (
+        <Alert>{t('common.load_error')}</Alert>
+      ) : isLoading ? (
         <div className="grid place-items-center py-16 text-primary">
           <Spinner className="size-6" />
         </div>
@@ -287,7 +290,7 @@ export function CountryFormPage() {
               <Button variant="outline" onClick={close} disabled={isSaving}>
                 {t('common.cancel')}
               </Button>
-              <Button type="submit" loading={isSaving}>
+              <Button type="submit" loading={isSaving} disabled={!!loadError}>
                 {t(isSaving ? 'common.saving' : 'common.save')}
               </Button>
             </div>

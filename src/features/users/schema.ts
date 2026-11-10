@@ -15,7 +15,10 @@ export const userSchema = (countries: PhoneFormat[], isEdit: boolean) =>
       phone: z
         .string()
         .refine((v) => v === '' || isPhoneComplete(v, countries), 'validation.phone'),
-      password: isEdit ? z.string() : requiredText(),
+      // Sent exactly as typed (the old panel didn't trim it): spaces are part of a password.
+      password: isEdit
+        ? z.string()
+        : z.string().refine((v) => v.trim() !== '', 'validation.required'),
       newPassword: z.string(),
       role: requiredText(),
       supplierId: z.number().nullable(),
