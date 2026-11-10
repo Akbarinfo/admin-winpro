@@ -142,6 +142,23 @@
     "country": "Davlat",
     "enabled": "O'z matni",
     "enable_for": "{{country}} uchun o'z matni",
-    "save_error": "Yozuv saqlandi, tarjimalar esa yo'q. Tarjimalar jadvalini tekshirib, qayta saqlang."
+    "save_error": "Yozuv saqlandi, tarjimalar esa yo'q. Tarjimalar jadvalini tekshirib, qayta saqlang.",
+    "import": "Excel'dan import",
+    "import_hint": "Jadval bazadan qayta yuklanadi: undagi saqlanmagan o'zgarishlar yo'qoladi."
+  },
+  "excel": {
+    "file": "Excel fayli",
+    "choose_file": "Excel faylini tanlang",
+    "change_file": "Boshqasini tanlash uchun bosing",
+    "drop_hint": "yoki shu yerga tashlang · .xlsx, .xls",
+    "not_excel": "Bu Excel fayli emas (.xlsx, .xls)",
+    "upload": "Yuklash",
+    "progress": "Fayl yuklanmoqda",
+    "template": "Shablonni yuklab olish",
+    "import": "Import",
+    "export": "Eksport",
+    "failed_rows": "Ba'zi qatorlar yuklanmadi — ularning ro'yxati faylga yuklab olindi",
+    "imported": "Fayl yuklandi",
+    "failed_rows_no_file": "Ba'zi qatorlar yuklanmadi"
   }
 }

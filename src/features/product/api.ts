@@ -86,7 +86,32 @@ export const productApi = {
   },
 
   remove: (id: number) => api.delete(`/v1/product/${id}`),
+
+  /** Excel of the filtered list: products («information») or their prices. */
+  exportExcel: (kind: 'information' | 'price', filter: object) =>
+    api
+      .post<Blob>(`/v1/product/excel/${kind}`, { filter }, { responseType: 'blob' })
+      .then((r) => r.data),
+
+  /** An example file to fill in for an import. */
+  template: (url: string) => api.get<Blob>(url, { responseType: 'blob' }).then((r) => r.data),
+
+  /**
+   * Import: multipart «file». The answer says whether every row went in; if not,
+   * `base64` is an Excel of the rows that didn't (the old panel saved it as failed-product.xlsx).
+   */
+  importExcel: (url: string, file: File, onProgress: (percent: number) => void) => {
+    const form = new FormData()
+    form.append('file', file)
+    return api
+      .post<ImportResult>(url, form, {
+        onUploadProgress: (e) => onProgress(Math.floor((e.loaded / (e.total || e.loaded)) * 100)),
+      })
+      .then((r) => r.data)
+  },
 }
+
+export type ImportResult = { isEmpty: boolean; base64?: string | null }
 
 /** Prices have their own key: the product's detail and price detail ids would clash under one. */
 export const priceKeys = { all: ['product-price'] as const }

@@ -11,12 +11,14 @@ import {
   ColorSwatch,
   Combobox,
   ConfirmDialog,
+  ExcelUploadDialog,
   DataTable,
   Field,
   Highlight,
   IconButton,
   Input,
   LanguageSwitch,
+  Menu,
   Modal,
   NumberInput,
   PageHeader,
@@ -127,6 +129,7 @@ export function UiKitPage() {
   const [tableState, setTableState] = useState<'data' | 'loading' | 'empty'>('data')
   const [selected, setSelected] = useState<number | null>(317)
   const [modal, setModal] = useState(false)
+  const [excel, setExcel] = useState(false)
   const [confirm, setConfirm] = useState(false)
   const [query, setQuery] = useState('')
 
@@ -237,6 +240,18 @@ export function UiKitPage() {
           <p className="text-xs text-faint">
             label обязателен: он же подсказка и имя для экранного диктора.
           </p>
+        </KitCard>
+        <KitCard title="Menu" replaces="dropdown/dropdown.js (Upload / Export)">
+          <div className={row}>
+            <Menu
+              label="Экспорт"
+              icon={<Download size={16} />}
+              items={[
+                { key: 'product', label: 'Товары', onSelect: () => {} },
+                { key: 'price', label: 'Цены', onSelect: () => {} },
+              ]}
+            />
+          </div>
         </KitCard>
       </Section>
 
@@ -427,6 +442,13 @@ export function UiKitPage() {
             В приложении открывается через useConfirmDelete — вместе с запросом и toast.
           </p>
         </KitCard>
+        <KitCard title="ExcelUploadDialog" replaces="uploadModal/uploadModal.js">
+          <div className={row}>
+            <Button variant="outline" onClick={() => setExcel(true)}>
+              Импорт из Excel
+            </Button>
+          </div>
+        </KitCard>
       </Section>
 
       <Section title="Статусы">
@@ -509,6 +531,26 @@ export function UiKitPage() {
         onConfirm={() => setConfirm(false)}
         onCancel={() => setConfirm(false)}
       />
+      {excel && (
+        <ExcelUploadDialog
+          title="Импорт товаров"
+          onClose={() => setExcel(false)}
+          onTemplate={() => new Promise((r) => setTimeout(r, 600))}
+          onUpload={(_, onProgress) =>
+            new Promise((resolve) => {
+              let p = 0
+              const timer = setInterval(() => {
+                p += 20
+                onProgress(p)
+                if (p >= 100) {
+                  clearInterval(timer)
+                  resolve(null)
+                }
+              }, 250)
+            })
+          }
+        />
+      )}
     </>
   )
 }

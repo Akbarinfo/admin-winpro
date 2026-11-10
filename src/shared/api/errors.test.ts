@@ -1,6 +1,6 @@
 import { AxiosError, AxiosHeaders } from 'axios'
 import { describe, expect, it, vi } from 'vitest'
-import { normalizeError } from './errors'
+import { normalizeError, readBlobError } from './errors'
 
 vi.mock('sonner', () => ({ toast: { warning: vi.fn(), error: vi.fn() } }))
 
@@ -39,5 +39,20 @@ describe('normalizeError', () => {
   it('passes field errors through', () => {
     const e = normalizeError(axiosError(422, { error: 'x', errors: { name: 'taken' } }))
     expect(e.fields).toEqual({ name: 'taken' })
+  })
+})
+
+describe('readBlobError', () => {
+  it('reads the JSON body of a blob request back, so its message shows', async () => {
+    const blob = new Blob([JSON.stringify({ error: 'Неверный формат файла' })], {
+      type: 'application/json',
+    })
+    const error = await readBlobError(axiosError(400, blob as unknown as Body))
+    expect(normalizeError(error as never).message).toBe('Неверный формат файла')
+  })
+
+  it('leaves other bodies alone', async () => {
+    const error = axiosError(400, { error: 'x' })
+    expect(await readBlobError(error)).toBe(error)
   })
 })

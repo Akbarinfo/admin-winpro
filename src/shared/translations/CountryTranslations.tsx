@@ -1,5 +1,10 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Input, Spinner } from '@/shared/ui'
+import { FileSpreadsheet } from 'lucide-react'
+import { toast } from 'sonner'
+import { saveBlob } from '@/shared/lib/download'
+import { Alert, Button, ExcelUploadDialog, Input, Spinner } from '@/shared/ui'
+import { translationApi } from './api'
 import type { TranslationField } from './helpers'
 import type { CountryTranslationsState } from './useCountryTranslations'
 
@@ -16,6 +21,7 @@ type CountryTranslationsProps = {
  */
 export function CountryTranslations({ state, fields, defaults }: CountryTranslationsProps) {
   const { t } = useTranslation()
+  const [importing, setImporting] = useState(false)
 
   if (state.error) return <Alert>{t('common.load_error')}</Alert>
   if (state.isLoading)
@@ -27,46 +33,73 @@ export function CountryTranslations({ state, fields, defaults }: CountryTranslat
   if (state.rows.length === 0) return null
 
   return (
-    <div className="overflow-x-auto rounded-md border border-line">
-      <table className="w-full text-left">
-        <thead className="bg-surface-2 text-xs font-medium text-muted">
-          <tr>
-            <th className="px-3 py-2">{t('translations.country')}</th>
-            <th className="w-20 px-3 py-2 text-center">{t('translations.enabled')}</th>
-            {fields.map((f) => (
-              <th key={f.key} className="px-3 py-2">
-                {f.label}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-line">
-          {state.rows.map((row) => (
-            <tr key={row.countryId}>
-              <td className="px-3 py-2 whitespace-nowrap">{row.countryName}</td>
-              <td className="px-3 py-2 text-center">
-                <input
-                  type="checkbox"
-                  className="size-4 accent-primary"
-                  aria-label={t('translations.enable_for', { country: row.countryName })}
-                  checked={row.enabled}
-                  onChange={() => state.toggle(row.countryId, defaults)}
-                />
-              </td>
+    <div className="grid gap-2.5">
+      {state.canImport && (
+        <Button
+          variant="outline"
+          size="sm"
+          className="justify-self-end"
+          icon={<FileSpreadsheet size={15} />}
+          onClick={() => setImporting(true)}
+        >
+          {t('translations.import')}
+        </Button>
+      )}
+      {importing && (
+        <ExcelUploadDialog
+          title={t('translations.import')}
+          onClose={() => setImporting(false)}
+          hint={t('translations.import_hint')}
+          onTemplate={() =>
+            translationApi.template().then((blob) => saveBlob(blob, 'translation_example.xlsx'))
+          }
+          onUpload={async (file, onProgress) => {
+            await state.importExcel(file, onProgress)
+            toast.success(t('excel.imported'))
+          }}
+        />
+      )}
+      <div className="overflow-x-auto rounded-md border border-line">
+        <table className="w-full text-left">
+          <thead className="bg-surface-2 text-xs font-medium text-muted">
+            <tr>
+              <th className="px-3 py-2">{t('translations.country')}</th>
+              <th className="w-20 px-3 py-2 text-center">{t('translations.enabled')}</th>
               {fields.map((f) => (
-                <td key={f.key} className="min-w-48 px-3 py-1.5">
-                  <Input
-                    aria-label={`${f.label} — ${row.countryName}`}
-                    disabled={!row.enabled}
-                    value={row.values[f.key]?.value ?? ''}
-                    onChange={(e) => state.setValue(row.countryId, f.key, e.target.value)}
-                  />
-                </td>
+                <th key={f.key} className="px-3 py-2">
+                  {f.label}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-line">
+            {state.rows.map((row) => (
+              <tr key={row.countryId}>
+                <td className="px-3 py-2 whitespace-nowrap">{row.countryName}</td>
+                <td className="px-3 py-2 text-center">
+                  <input
+                    type="checkbox"
+                    className="size-4 accent-primary"
+                    aria-label={t('translations.enable_for', { country: row.countryName })}
+                    checked={row.enabled}
+                    onChange={() => state.toggle(row.countryId, defaults)}
+                  />
+                </td>
+                {fields.map((f) => (
+                  <td key={f.key} className="min-w-48 px-3 py-1.5">
+                    <Input
+                      aria-label={`${f.label} — ${row.countryName}`}
+                      disabled={!row.enabled}
+                      value={row.values[f.key]?.value ?? ''}
+                      onChange={(e) => state.setValue(row.countryId, f.key, e.target.value)}
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { env } from '@/shared/config/env'
 import { usePreferences } from '@/shared/store/preferences'
 import { useSession } from '@/shared/store/session'
-import { normalizeError } from './errors'
+import { normalizeError, readBlobError } from './errors'
 
 export const api = axios.create({ baseURL: env.API_URL })
 
@@ -17,5 +17,5 @@ api.interceptors.request.use((config) => {
 // Every error leaves the client as an ApiError.
 api.interceptors.response.use(
   (response) => response,
-  (error) => Promise.reject(normalizeError(error)),
+  async (error) => Promise.reject(normalizeError(await readBlobError(error))),
 )

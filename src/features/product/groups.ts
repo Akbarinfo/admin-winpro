@@ -14,6 +14,14 @@ export type ProductGroup = {
   columns: { series: boolean; usefulPiece: boolean; wastePercent: boolean }
   /** List filters that only some groups have. */
   filters: { series: boolean; profileSystem: boolean }
+  /** The group's own product import and its example file (prices and translations are common). */
+  excel: { upload: string; template: string }
+}
+
+/** Imports every group shares. */
+export const PRICE_EXCEL = {
+  upload: '/v1/product/price/upload',
+  template: '/v1/product/excel/example',
 }
 
 export const PROFILE_GROUP: ProductGroup = {
@@ -23,6 +31,10 @@ export const PROFILE_GROUP: ProductGroup = {
   addLabel: 'product.profile.add',
   columns: { series: true, usefulPiece: true, wastePercent: true },
   filters: { series: true, profileSystem: true },
+  excel: {
+    upload: '/v1/product/profiles/upload',
+    template: '/v1/product/excel/profile/example',
+  },
 }
 
 export const PRODUCT_GROUPS = [PROFILE_GROUP]

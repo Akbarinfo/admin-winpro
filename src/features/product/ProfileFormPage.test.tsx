@@ -327,4 +327,42 @@ describe('Profile form', () => {
       GETS['/v1/product/41'] = PROFILE
     }
   })
+
+  it('imports translations from Excel for a saved profile only', async () => {
+    renderForm('/product/profile/update/41')
+    await waitFor(() => expect(screen.getByLabelText(NAME)).toHaveValue('Рама 60'))
+    await userEvent.click(screen.getByRole('button', { name: 'Импорт из Excel' }))
+    const dialog = await screen.findByRole('dialog')
+    await userEvent.upload(
+      within(dialog).getByLabelText('Файл Excel'),
+      new File(['x'], 'translations.xlsx'),
+    )
+    const loads = () =>
+      http.get.mock.calls.filter(([u]) => u === '/v1/country-translation/PRODUCT/41').length
+    const before = loads()
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Загрузить' }))
+
+    await waitFor(() =>
+      expect(http.post).toHaveBeenCalledWith(
+        '/v1/product/translation/upload',
+        expect.any(FormData),
+        expect.anything(),
+      ),
+    )
+    const body = http.post.mock.calls.find(
+      ([u]) => u === '/v1/product/translation/upload',
+    )![1] as FormData
+    expect(body.get('entityType')).toBe('PRODUCT')
+    expect(body.get('entityId')).toBe('41')
+    await waitFor(() => expect(loads()).toBe(before + 1)) // the table reloads
+    // the dialog has no form of its own: uploading doesn't submit (and save) the profile
+    expect(http.put).not.toHaveBeenCalled()
+    expect(toast.success).toHaveBeenCalledWith('Файл загружен')
+  })
+
+  it('offers no translation import before the profile exists', async () => {
+    renderForm('/product/profile/add')
+    await screen.findByRole('table')
+    expect(screen.queryByRole('button', { name: 'Импорт из Excel' })).not.toBeInTheDocument()
+  })
 })

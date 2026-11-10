@@ -47,6 +47,15 @@ export function useCountryTranslations(
 
   return {
     rows,
+    /** Excel import needs a saved record. */
+    canImport: entityId !== undefined,
+    /** Loads the texts from Excel, then shows what the server has (unsaved edits here are replaced). */
+    importExcel: async (file: File, onProgress: (percent: number) => void) => {
+      if (entityId === undefined) return
+      await translationApi.importExcel(entityType, entityId, file, onProgress)
+      setEdited(null)
+      await queryClient.invalidateQueries({ queryKey: translationKeys.of(entityType, entityId) })
+    },
     isLoading: countries.isPending || (entityId !== undefined && saved.isPending),
     error: countries.error ?? saved.error,
     toggle: (countryId: number, defaults: Record<string, string | null | undefined>) =>

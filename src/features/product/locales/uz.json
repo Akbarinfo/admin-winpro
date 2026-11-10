@@ -66,6 +66,12 @@
       "akfa_warning": "Bu narx Akfa bilan bog'langan ({{name}}). O'zgarishlarni keyingi sinxronizatsiya qayta yozib yuboradi.",
       "show": "Narxlarni ko'rsatish: {{name}}",
       "hide": "Narxlarni yashirish: {{name}}"
+    },
+    "excel": {
+      "products": "Mahsulotlar",
+      "prices": "Narxlar",
+      "translations": "Tarjimalar",
+      "import_title": "Import: {{what}}"
     }
   }
 }

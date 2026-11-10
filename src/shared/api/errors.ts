@@ -56,3 +56,18 @@ export function normalizeError(error: AxiosError<ErrorBody>): ApiError {
     .join(' ')
   return new ApiError(status, message, body?.errors, details || message)
 }
+
+/**
+ * A request made with `responseType: 'blob'` (Excel files) gets its error body as a Blob too.
+ * Reads a JSON one back into an object, so the backend's message isn't lost.
+ */
+export async function readBlobError<T>(error: AxiosError<T>) {
+  const data = error.response?.data
+  if (!(data instanceof Blob) || !data.type.includes('json')) return error
+  try {
+    error.response!.data = JSON.parse(await data.text()) as T
+  } catch {
+    // not JSON after all — keep the generic message
+  }
+  return error
+}

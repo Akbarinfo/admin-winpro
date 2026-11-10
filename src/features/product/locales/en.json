@@ -66,6 +66,12 @@
       "akfa_warning": "This price is linked to Akfa ({{name}}). The next sync will overwrite your changes.",
       "show": "Show prices: {{name}}",
       "hide": "Hide prices: {{name}}"
+    },
+    "excel": {
+      "products": "Products",
+      "prices": "Prices",
+      "translations": "Translations",
+      "import_title": "Import: {{what}}"
     }
   }
 }

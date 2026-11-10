@@ -120,7 +120,7 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 
 1. Skelet: layout, router, auth, session store — ✅ kod tayyor, real backend bilan login tekshirilishi kerak
 2. Umumiy qatlam — ✅ DataTable, Pagination, Combobox, TreeSelect, Modal, FormField, NumberInput, useServerTable, useConfirmDelete,
-   useEntityForm, lookups (valyutalar), testlar, `/ui-kit`. Excel va ImageUpload 5-bosqichda.
+   useEntityForm, lookups (valyutalar), testlar, `/ui-kit`. ImageUpload 4-, Excel (`Menu`, `ExcelUploadDialog`) 5-bosqichda.
 3. Namuna bo'lim: Курсы валют — ✅ kod va testlar tayyor, real backend bilan tekshirilishi kerak
 4. Oddiy CRUD bo'limlar — ✅ (`/new-feature <bo'lim>`): Валюты, Единицы, Серии, Виды материала, Языки,
    Поставщики, Услуги мастерской, Тарифные функции, Текстуры (+ соответствия; `/texturegroup` → `/textures`),
@@ -128,8 +128,8 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Страны (alohida forma sahifasi + kod provayderlari), Версии приложения, Пользователи, Mobile users.
    4-bosqich oddiy CRUD'lari tugadi. Qolgan oddiy ro'yxatlar (feedback, price-requests) 6-bosqich bilan birga.
 5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali (`features/product/groups.ts`).
-   Профили: ro'yxat va filtrlar ✅, forma sahifasi + tarjimalar (`shared/translations`) ✅,
-   narxlar paneli ✅; Excel — navbatda
+   Профили ✅ (ro'yxat, filtrlar, forma + tarjimalar `shared/translations`, narxlar qator ichida, Excel).
+   Keyin: Фурнитура, Уплотнители, Заполнения — `groups.ts`ga config + o'z forma maydonlari
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.

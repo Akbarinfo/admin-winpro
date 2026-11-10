@@ -30,6 +30,7 @@ import { productApi, productKeys } from './api'
 import { PRODUCT_FILTERS } from './filters'
 import { groupPath, type ProductGroup } from './groups'
 import { PricePanel } from './PricePanel'
+import { ProductExcel } from './ProductExcel'
 import type { ProductRow } from './types'
 
 /** The old list sorted by id, oldest first. */
@@ -170,9 +171,12 @@ export function ProductListPage({ group }: { group: ProductGroup }) {
       <PageHeader
         title={t(group.title)}
         actions={
-          <Button icon={<Plus size={16} />} onClick={() => openForm(`${groupPath(group)}/add`)}>
-            {t(group.addLabel)}
-          </Button>
+          <>
+            <ProductExcel group={group} filters={filters} />
+            <Button icon={<Plus size={16} />} onClick={() => openForm(`${groupPath(group)}/add`)}>
+              {t(group.addLabel)}
+            </Button>
+          </>
         }
       />
 
