@@ -1,15 +1,23 @@
 import type { RouteObject } from 'react-router'
-import { AppVersionFormDialog } from './AppVersionFormDialog'
-import { AppVersionListPage } from './AppVersionListPage'
 
 // Same URLs as the old panel: /app-versions, /app-versions/add, /app-versions/update/:platform.
+// Pages load on first visit (their own chunk); translations are registered up front by index.ts.
+const formDialog = () =>
+  import('./AppVersionFormDialog').then((m) => ({ Component: m.AppVersionFormDialog }))
+
 export const appVersionRoutes: RouteObject[] = [
   {
     path: '/app-versions',
-    element: <AppVersionListPage />,
+    lazy: () => import('./AppVersionListPage').then((m) => ({ Component: m.AppVersionListPage })),
     children: [
-      { path: 'add', element: <AppVersionFormDialog /> },
-      { path: 'update/:platform', element: <AppVersionFormDialog /> },
+      {
+        path: 'add',
+        lazy: formDialog,
+      },
+      {
+        path: 'update/:platform',
+        lazy: formDialog,
+      },
     ],
   },
 ]

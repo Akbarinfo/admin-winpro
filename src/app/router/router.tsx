@@ -19,9 +19,10 @@ import { workshopServiceRoutes } from '@/features/workshopService'
 import { AppLayout } from '../layout/AppLayout'
 import { NAV_ITEMS } from '../layout/nav'
 import { GuestOnly, RequireAuth } from './guards'
-import { ComingSoonPage, ErrorScreen, NotFoundPage } from './pages'
+import { ComingSoonPage, ErrorScreen, NotFoundPage, PageLoading } from './pages'
 
 // Migrated sections. Their paths are more specific than the placeholders' splats, so they win.
+// Each section's pages are lazy (see its routes.tsx); its translations load with this import.
 const featureRoutes = [
   ...currencyRoutes,
   ...exchangeRoutes,
@@ -60,6 +61,8 @@ const placeholderRoutes = NAV_ITEMS.map((item) => ({
 export const router = createBrowserRouter([
   {
     errorElement: <ErrorScreen />,
+    // Sections are lazy (their own chunks): shown while the first page's code loads.
+    hydrateFallbackElement: <PageLoading />,
     children: [
       {
         element: (

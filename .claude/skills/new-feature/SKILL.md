@@ -34,7 +34,7 @@ Foydalanuvchiga qisqa xulosa bering: ustunlar, forma maydonlari, endpointlar, g'
    `sortKey` = eski `headerTable[].name`, agar u maydon nomidan farq qilsa.
 6. `XFormDialog.tsx` — kichik forma (≤ ~8 maydon) dialog; kattasi `XFormPage.tsx` (alohida sahifa) — oldin foydalanuvchidan so'rang.
    Select'lar — `Combobox`; manbasi bir necha bo'limda kerak bo'lsa `shared/lookups/<y>.ts`ga chiqaring.
-7. `routes.tsx` — eski URL'lar bilan.
+7. `routes.tsx` — eski URL'lar bilan; sahifalar `lazy` (`exchange/routes.tsx` kabi).
 
 Umumiy komponent yetmasa — `shared/ui`ga qo'shing (`.claude/rules/ui-components.md`), bo'lim ichida yangi "umumiy" komponent yozmang.
 

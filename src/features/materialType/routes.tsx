@@ -1,15 +1,24 @@
 import type { RouteObject } from 'react-router'
-import { MaterialTypeFormDialog } from './MaterialTypeFormDialog'
-import { MaterialTypeListPage } from './MaterialTypeListPage'
 
 // Same URLs as the old panel: /material-type, /material-type/add, /material-type/update/:id.
+// Pages load on first visit (their own chunk); translations are registered up front by index.ts.
+const formDialog = () =>
+  import('./MaterialTypeFormDialog').then((m) => ({ Component: m.MaterialTypeFormDialog }))
+
 export const materialTypeRoutes: RouteObject[] = [
   {
     path: '/material-type',
-    element: <MaterialTypeListPage />,
+    lazy: () =>
+      import('./MaterialTypeListPage').then((m) => ({ Component: m.MaterialTypeListPage })),
     children: [
-      { path: 'add', element: <MaterialTypeFormDialog /> },
-      { path: 'update/:id', element: <MaterialTypeFormDialog /> },
+      {
+        path: 'add',
+        lazy: formDialog,
+      },
+      {
+        path: 'update/:id',
+        lazy: formDialog,
+      },
     ],
   },
 ]

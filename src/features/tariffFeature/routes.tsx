@@ -1,15 +1,27 @@
 import type { RouteObject } from 'react-router'
-import { TariffFeatureFormDialog } from './TariffFeatureFormDialog'
-import { TariffFeatureListPage } from './TariffFeatureListPage'
 
 // Same URLs as the old panel: /tariff-feature, /tariff-feature/add, /tariff-feature/update/:id.
+// Pages load on first visit (their own chunk); translations are registered up front by index.ts.
 export const tariffFeatureRoutes: RouteObject[] = [
   {
     path: '/tariff-feature',
-    element: <TariffFeatureListPage />,
+    lazy: () =>
+      import('./TariffFeatureListPage').then((m) => ({ Component: m.TariffFeatureListPage })),
     children: [
-      { path: 'add', element: <TariffFeatureFormDialog /> },
-      { path: 'update/:id', element: <TariffFeatureFormDialog /> },
+      {
+        path: 'add',
+        lazy: () =>
+          import('./TariffFeatureFormDialog').then((m) => ({
+            Component: m.TariffFeatureFormDialog,
+          })),
+      },
+      {
+        path: 'update/:id',
+        lazy: () =>
+          import('./TariffFeatureFormDialog').then((m) => ({
+            Component: m.TariffFeatureFormDialog,
+          })),
+      },
     ],
   },
 ]

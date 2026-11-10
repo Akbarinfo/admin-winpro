@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation, useRouteError } from 'react-router'
 import { Construction, RefreshCw, TriangleAlert } from 'lucide-react'
-import { Button } from '@/shared/ui'
+import { Button, Spinner } from '@/shared/ui'
 import { findNavItem } from '../layout/nav'
 
 function Message({
@@ -76,5 +76,16 @@ export function ErrorScreen() {
         </Button>
       }
     />
+  )
+}
+
+/** First load straight onto a page whose code isn't loaded yet (a link, a refresh). */
+export function PageLoading() {
+  const { t } = useTranslation()
+  return (
+    <div role="status" className="grid h-dvh place-items-center text-primary">
+      <Spinner className="size-7" />
+      <span className="sr-only">{t('common.loading')}</span>
+    </div>
   )
 }

@@ -1,15 +1,23 @@
 import type { RouteObject } from 'react-router'
-import { SeriesFormDialog } from './SeriesFormDialog'
-import { SeriesListPage } from './SeriesListPage'
 
 // Same URLs as the old panel: /series, /series/add, /series/update/:id.
+// Pages load on first visit (their own chunk); translations are registered up front by index.ts.
+const formDialog = () =>
+  import('./SeriesFormDialog').then((m) => ({ Component: m.SeriesFormDialog }))
+
 export const seriesRoutes: RouteObject[] = [
   {
     path: '/series',
-    element: <SeriesListPage />,
+    lazy: () => import('./SeriesListPage').then((m) => ({ Component: m.SeriesListPage })),
     children: [
-      { path: 'add', element: <SeriesFormDialog /> },
-      { path: 'update/:id', element: <SeriesFormDialog /> },
+      {
+        path: 'add',
+        lazy: formDialog,
+      },
+      {
+        path: 'update/:id',
+        lazy: formDialog,
+      },
     ],
   },
 ]

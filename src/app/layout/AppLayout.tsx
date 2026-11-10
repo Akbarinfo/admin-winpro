@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Outlet } from 'react-router'
+import { Outlet, useNavigation } from 'react-router'
 import { Menu } from 'lucide-react'
 import { cn } from '@/shared/lib/cn'
 import { IconButton, LanguageSwitch, ThemeToggle } from '@/shared/ui'
@@ -11,6 +11,8 @@ export function AppLayout() {
   const { t } = useTranslation()
   const [navOpen, setNavOpen] = useState(false)
   const closeNav = () => setNavOpen(false)
+  // A section's page loads on its first visit: the current page stays until it's there.
+  const loadingPage = useNavigation().state === 'loading'
 
   return (
     <div className="grid h-dvh lg:grid-cols-[260px_minmax(0,1fr)]">
@@ -32,7 +34,14 @@ export function AppLayout() {
         />
       )}
 
-      <div className="flex min-h-0 min-w-0 flex-col">
+      <div className="relative flex min-h-0 min-w-0 flex-col">
+        {loadingPage && (
+          <div
+            role="progressbar"
+            aria-label={t('common.loading')}
+            className="absolute inset-x-0 top-0 z-30 h-0.5 animate-pulse bg-primary"
+          />
+        )}
         <header className="z-20 flex h-[60px] shrink-0 items-center gap-2.5 border-b border-line bg-surface px-4">
           <IconButton
             label={t('layout.open_menu')}

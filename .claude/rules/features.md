@@ -20,7 +20,9 @@ Namuna: `src/features/exchange`. Yangi bo'lim shu fayllar to'plamidan nusxa olin
   `/table` endpoint'i yo'q bo'lsa (masalan tillar) — `useQuery` + `DataTable`, `Pagination`siz (`features/languages`).
 - `XFormDialog.tsx` — `useEntityForm` + `Modal onSubmit={submit}`. Yopish: `navigate({ pathname: '/x', search })`.
   `resolver` va `toForm` modul darajasida (har renderda yangilanmasin), `defaultValues` — `useState(() => …)`.
-- `routes.tsx` — `/x` + bola `add`, `update/:id`. URL'lar eski panel bilan bir xil.
+- `routes.tsx` — `/x` + bola `add`, `update/:id`. URL'lar eski panel bilan bir xil. Sahifalar `lazy`:
+  `lazy: () => import('./XListPage').then((m) => ({ Component: m.XListPage }))` — sahifa komponenti to'g'ridan-to'g'ri
+  import qilinmaydi (aks holda u asosiy bundle'ga tushadi). Tarjimalar `index.ts` orqali oldindan ulanadi (menyu nomlari uchun).
 - `locales/{ru,uz,en}.json` — faqat `{ "x": { … } }`. `i18n.ts` → `registerTranslations`. `index.ts` → `import './i18n'`.
 
 ## Ustunlar

@@ -1,15 +1,23 @@
 import type { RouteObject } from 'react-router'
-import { SupplierFormDialog } from './SupplierFormDialog'
-import { SupplierListPage } from './SupplierListPage'
 
 // Same URLs as the old panel: /suppliers, /suppliers/add, /suppliers/update/:id.
+// Pages load on first visit (their own chunk); translations are registered up front by index.ts.
+const formDialog = () =>
+  import('./SupplierFormDialog').then((m) => ({ Component: m.SupplierFormDialog }))
+
 export const supplierRoutes: RouteObject[] = [
   {
     path: '/suppliers',
-    element: <SupplierListPage />,
+    lazy: () => import('./SupplierListPage').then((m) => ({ Component: m.SupplierListPage })),
     children: [
-      { path: 'add', element: <SupplierFormDialog /> },
-      { path: 'update/:id', element: <SupplierFormDialog /> },
+      {
+        path: 'add',
+        lazy: formDialog,
+      },
+      {
+        path: 'update/:id',
+        lazy: formDialog,
+      },
     ],
   },
 ]

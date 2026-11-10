@@ -83,7 +83,7 @@ Feature ichida nisbiy import (`./api`), boshqa joyda `@/` alias (`@/shared/ui`).
 | `schema.ts` | zod forma qoidalari, `XForm` (forma holati) va `XValues` (API'ga ketadigan) tiplari |
 | `XListPage.tsx` | `useServerTable` + `DataTable` + `Pagination` + `useConfirmDelete`, oxirida `<Outlet />` |
 | `XFormDialog.tsx` | `useEntityForm` + `Modal`. Katta formada `XFormPage.tsx` |
-| `routes.tsx` | `/x` (ro'yxat) va bola marshrutlar `add`, `update/:id` — dialog ro'yxat ustida ochiladi |
+| `routes.tsx` | `/x` (ro'yxat) va bola marshrutlar `add`, `update/:id` — dialog ro'yxat ustida ochiladi. Sahifalar `lazy` (o'z chunk'i), komponentlar import qilinmaydi |
 | `locales/{ru,uz,en}.json`, `i18n.ts` | Tarjimalar uchala tilda va ularni ulash |
 | `index.ts` | `import './i18n'` va `xRoutes` eksporti |
 | `x.test.tsx`, `schema.test.ts` | HTTP client mock qilingan integratsion test va schema testi |
