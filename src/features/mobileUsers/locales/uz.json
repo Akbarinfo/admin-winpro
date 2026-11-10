@@ -1,0 +1,18 @@
+{
+  "mobileUsers": {
+    "title": "Mobil foydalanuvchilar",
+    "date": "Sana",
+    "full_name": "F.I.Sh.",
+    "username": "Foydalanuvchi nomi",
+    "phone": "Telefon",
+    "role": "Rol",
+    "checked": "Tekshirilgan",
+    "not_checked": "Tekshirilmagan",
+    "check": "Tekshirilgan deb belgilash",
+    "check_title": "Foydalanuvchi tekshirilgan deb belgilansinmi?",
+    "check_text": "«{{name}}» tekshirilgan deb belgilanadi. Buni bekor qilib bo'lmaydi.",
+    "check_done": "Foydalanuvchi tekshirilgan deb belgilandi",
+    "workshop": "Ustaxona (ID)",
+    "empty": "Hozircha mobil foydalanuvchilar yo'q."
+  }
+}

@@ -24,6 +24,8 @@ type EntityFormOptions<TForm extends FieldValues, TOutput, TEntity> = {
   resolver: Resolver<TForm, unknown, TOutput>
   defaultValues: DefaultValues<TForm>
   onSaved: () => void
+  /** Runs after validation; false (e.g. the user declined a confirmation) cancels saving. */
+  beforeSave?: (values: TOutput) => boolean | Promise<boolean>
 }
 
 /**
@@ -39,6 +41,7 @@ export function useEntityForm<TForm extends FieldValues, TOutput, TEntity>({
   resolver,
   defaultValues,
   onSaved,
+  beforeSave,
 }: EntityFormOptions<TForm, TOutput, TEntity>) {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
@@ -86,8 +89,13 @@ export function useEntityForm<TForm extends FieldValues, TOutput, TEntity>({
     isEdit,
     /** Edit mode: the record is still loading. */
     isLoading: isEdit && entity.isPending,
+    /** The loaded record (edit mode), e.g. for its current image. */
+    entity: entity.data,
     loadError: entity.error,
     isSaving: mutation.isPending,
-    submit: form.handleSubmit((output) => mutation.mutate(output)),
+    submit: form.handleSubmit(async (output) => {
+      if (beforeSave && !(await beforeSave(output))) return
+      mutation.mutate(output)
+    }),
   }
 }

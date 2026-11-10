@@ -20,6 +20,7 @@ type FieldProps = {
 /**
  * Label + control + one line under it.
  * - content-start: fields side by side stay aligned even when one of them is taller (has a hint).
+ * - One minmax(0, 1fr) column: a control with a wide natural size (an input) can't push past its column.
  * - The error never moves the layout: with a hint it takes the hint's line; without one it hangs
  *   below the control (absolute), in the gap to the next field.
  */
@@ -36,7 +37,7 @@ export function Field({
   const { t } = useTranslation()
 
   return (
-    <div className="relative grid min-w-0 content-start gap-1.5">
+    <div className="relative grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-1.5">
       <div className="flex items-center justify-between gap-3">
         <span className="inline-flex items-center gap-1">
           <label htmlFor={htmlFor} className="text-[12.5px] font-medium text-muted">

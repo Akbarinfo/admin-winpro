@@ -61,12 +61,12 @@ export const NAV: NavGroup[] = [
     items: [
       { to: '/currency', label: 'currency.title', icon: Coins, status: 'ready' },
       { to: '/exchange', label: 'exchange.title', icon: ArrowLeftRight, status: 'ready' },
-      { to: '/country', label: 'country', icon: Globe },
+      { to: '/country', label: 'countries.title', icon: Globe, status: 'new' },
       { to: '/units', label: 'units.title', icon: Ruler, status: 'ready' },
       { to: '/series', label: 'series.title', icon: Layers, status: 'ready' },
       { to: '/material-type', label: 'materialType.title', icon: Boxes, status: 'ready' },
       { to: '/suppliers', label: 'suppliers.title', icon: Truck, status: 'ready' },
-      { to: '/sales_category', label: 'salesCategory.title', icon: Tags, status: 'new' },
+      { to: '/sales_category', label: 'salesCategory.title', icon: Tags, status: 'ready' },
     ],
   },
   {
@@ -107,8 +107,8 @@ export const NAV: NavGroup[] = [
   {
     title: 'nav.group_users',
     items: [
-      { to: '/user', label: 'sidebar_menu_user', icon: Users },
-      { to: '/mobile_user', label: 'mobile_users', icon: Smartphone },
+      { to: '/user', label: 'users.title', icon: Users, status: 'new' },
+      { to: '/mobile_user', label: 'mobileUsers.title', icon: Smartphone, status: 'new' },
       { to: '/feedback', label: 'nav.feedback', icon: MessageSquare },
     ],
   },
@@ -116,7 +116,12 @@ export const NAV: NavGroup[] = [
     title: 'nav.group_system',
     items: [
       { to: '/workshop-service', label: 'workshopService.title', icon: Hammer, status: 'ready' },
-      { to: '/app-versions', label: 'sidebar_app_versions', icon: MonitorSmartphone },
+      {
+        to: '/app-versions',
+        label: 'appVersions.title',
+        icon: MonitorSmartphone,
+        status: 'new',
+      },
       { to: '/translations', label: 'sidebar_menu_translations', icon: Languages },
       { to: '/languages', label: 'languages.title', icon: Type, status: 'ready' },
       {

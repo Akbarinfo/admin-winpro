@@ -43,7 +43,8 @@
     "positive": "Must be greater than zero",
     "same_currency": "Currencies must be different",
     "phone": "Enter the full number",
-    "color": "Colour as #RRGGBB"
+    "color": "Colour as #RRGGBB",
+    "email": "Enter a valid email"
   },
   "auth": {
     "brand_title": "Control panel for the window business",

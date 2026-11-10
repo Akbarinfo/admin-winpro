@@ -1,0 +1,18 @@
+{
+  "mobileUsers": {
+    "title": "Mobile users",
+    "date": "Date",
+    "full_name": "Full name",
+    "username": "Username",
+    "phone": "Phone",
+    "role": "Role",
+    "checked": "Checked",
+    "not_checked": "Not checked",
+    "check": "Mark as checked",
+    "check_title": "Mark this user as checked?",
+    "check_text": "«{{name}}» will be marked as checked. This can't be undone.",
+    "check_done": "User marked as checked",
+    "workshop": "Workshop (ID)",
+    "empty": "No mobile users yet."
+  }
+}

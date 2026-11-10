@@ -1,0 +1,17 @@
+{
+  "users": {
+    "title": "Users",
+    "add": "Add user",
+    "edit": "Edit user",
+    "full_name": "Full name",
+    "username": "Login (email)",
+    "phone": "Phone",
+    "role": "Role",
+    "password": "Password",
+    "new_password": "New password",
+    "new_password_hint": "Leave empty to keep the current one",
+    "supplier": "Supplier",
+    "photo": "Photo",
+    "empty": "No users yet. Add the first one."
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "appVersions": {
+    "title": "App versions",
+    "add": "Add version",
+    "edit": "Edit version",
+    "platform": "Platform",
+    "latest_version": "Latest version",
+    "min_version": "Minimum version",
+    "min_version_tip": "Apps below this version will ask to update",
+    "force_update": "Force update",
+    "store_url": "Store link",
+    "release_notes": "Release notes",
+    "updated_at": "Updated",
+    "empty": "No versions yet. Add the first one."
+  }
+}

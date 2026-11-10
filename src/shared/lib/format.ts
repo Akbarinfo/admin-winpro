@@ -19,6 +19,13 @@ export function formatDate(value: string | null | undefined) {
   return match ? `${match[3]}.${match[2]}.${match[1]}` : value
 }
 
+/** «2026-10-19T14:05:33» → «19.10.2026 14:05» (the backend's local time, as written). Date only if there's no time. */
+export function formatDateTime(value: string | null | undefined) {
+  if (!value) return ''
+  const match = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})/.exec(value)
+  return match ? `${match[3]}.${match[2]}.${match[1]} ${match[4]}:${match[5]}` : formatDate(value)
+}
+
 /** Today as «YYYY-MM-DD» in local time — the value format of <input type="date">. */
 export function todayIso() {
   const d = new Date()

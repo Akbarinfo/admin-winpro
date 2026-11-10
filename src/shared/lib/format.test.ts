@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatDate, formatNumber, todayIso } from './format'
+import { formatDate, formatDateTime, formatNumber, todayIso } from './format'
 
 describe('formatDate', () => {
   it('formats ISO dates and timestamps as dd.mm.yyyy', () => {
@@ -27,5 +27,16 @@ describe('formatNumber', () => {
 describe('todayIso', () => {
   it('matches the <input type="date"> format', () => {
     expect(todayIso()).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+  })
+})
+
+describe('formatDateTime', () => {
+  it('keeps the time as written, without seconds', () => {
+    expect(formatDateTime('2026-10-19T14:05:33.123')).toBe('19.10.2026 14:05')
+    expect(formatDateTime('2026-10-19 09:00:00')).toBe('19.10.2026 09:00')
+  })
+  it('falls back to the date, and to empty', () => {
+    expect(formatDateTime('2026-10-19')).toBe('19.10.2026')
+    expect(formatDateTime(null)).toBe('')
   })
 })

@@ -121,11 +121,11 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 2. Umumiy qatlam — ✅ DataTable, Pagination, Combobox, TreeSelect, Modal, FormField, NumberInput, useServerTable, useConfirmDelete,
    useEntityForm, lookups (valyutalar), testlar, `/ui-kit`. Excel va ImageUpload 5-bosqichda.
 3. Namuna bo'lim: Курсы валют — ✅ kod va testlar tayyor, real backend bilan tekshirilishi kerak
-4. Oddiy CRUD bo'limlar — **jarayonda** (`/new-feature <bo'lim>`): ✅ Валюты, Единицы, Серии, Виды материала, Языки,
+4. Oddiy CRUD bo'limlar — ✅ (`/new-feature <bo'lim>`): Валюты, Единицы, Серии, Виды материала, Языки,
    Поставщики, Услуги мастерской, Тарифные функции, Текстуры (+ соответствия; `/texturegroup` → `/textures`),
    Категория продаж (`TreeSelect` — profil tizimlari daraxti, `shared/lookups/profileSystems`).
-   Qolgan: mamlakat, ilova versiyalari, foydalanuvchilar,
-   mobil foydalanuvchilar: valyuta, mamlakat, birlik, seriya, tekstura, ta'minotchi…
+   Страны (alohida forma sahifasi + kod provayderlari), Версии приложения, Пользователи, Mobile users.
+   4-bosqich oddiy CRUD'lari tugadi. Qolgan oddiy ro'yxatlar (feedback, price-requests) 6-bosqich bilan birga.
 5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar
 

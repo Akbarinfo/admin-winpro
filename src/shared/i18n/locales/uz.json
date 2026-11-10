@@ -43,7 +43,8 @@
     "positive": "Noldan katta bo'lishi kerak",
     "same_currency": "Valyutalar har xil bo'lishi kerak",
     "phone": "Raqamni to'liq kiriting",
-    "color": "Rang #RRGGBB formatida"
+    "color": "Rang #RRGGBB formatida",
+    "email": "To'g'ri email kiriting"
   },
   "auth": {
     "brand_title": "Deraza biznesini boshqarish paneli",

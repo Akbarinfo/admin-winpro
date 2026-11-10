@@ -1,0 +1,17 @@
+{
+  "users": {
+    "title": "Foydalanuvchilar",
+    "add": "Foydalanuvchi qo'shish",
+    "edit": "Foydalanuvchini tahrirlash",
+    "full_name": "F.I.Sh.",
+    "username": "Login (email)",
+    "phone": "Telefon",
+    "role": "Rol",
+    "password": "Parol",
+    "new_password": "Yangi parol",
+    "new_password_hint": "O'zgartirmaslik uchun bo'sh qoldiring",
+    "supplier": "Yetkazib beruvchi",
+    "photo": "Rasm",
+    "empty": "Hozircha foydalanuvchilar yo'q. Birinchisini qo'shing."
+  }
+}

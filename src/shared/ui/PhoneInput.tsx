@@ -133,7 +133,7 @@ export function PhoneInput({
           placeholder={country.phoneFormat.replace(/#/g, '_')}
           value={value ?? ''}
           onChange={(e) => emit(formatPhone(e.target.value, country))}
-          className="h-full min-w-0 flex-1 bg-transparent px-3 tabular-nums outline-none placeholder:text-faint"
+          className="h-full w-full min-w-0 flex-1 bg-transparent px-3 tabular-nums outline-none placeholder:text-faint"
         />
       </div>
 

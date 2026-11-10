@@ -14,6 +14,8 @@ export function Input({ invalid, className, ...rest }: InputProps) {
         'h-9 w-full min-w-0 rounded-md border border-line-strong bg-surface px-3 outline-none transition-[border-color,box-shadow] placeholder:text-faint',
         'focus:border-primary focus:shadow-[0_0_0_3px_var(--primary-soft)]',
         'disabled:cursor-not-allowed disabled:bg-surface-2 disabled:text-faint',
+        // read-only keeps the value in the form (disabled fields are left out of the submit)
+        'read-only:bg-surface-2 read-only:text-muted',
         invalid && 'border-danger focus:border-danger focus:shadow-[0_0_0_3px_var(--danger-soft)]',
         className,
       )}

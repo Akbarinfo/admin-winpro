@@ -1,0 +1,16 @@
+{
+  "appVersions": {
+    "title": "Ilova versiyalari",
+    "add": "Versiya qo'shish",
+    "edit": "Versiyani tahrirlash",
+    "platform": "Platforma",
+    "latest_version": "Oxirgi versiya",
+    "min_version": "Minimal versiya",
+    "min_version_tip": "Bundan past versiyadagi ilova yangilashni so'raydi",
+    "force_update": "Majburiy yangilash",
+    "store_url": "Do'kon havolasi",
+    "release_notes": "O'zgarishlar ro'yxati",
+    "updated_at": "Yangilangan",
+    "empty": "Hozircha versiyalar yo'q. Birinchisini qo'shing."
+  }
+}
