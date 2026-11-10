@@ -13,15 +13,13 @@ type PreferencesState = {
   toggleTheme: () => void
 }
 
-const systemTheme = (): Theme =>
-  window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-
 // localStorage: language and theme are conveniences, not secrets — they survive closing the browser.
+// The panel starts light (whatever the OS prefers); dark is chosen with the toggle and remembered.
 export const usePreferences = create<PreferencesState>()(
   persist(
     (set) => ({
       lang: 'ru',
-      theme: systemTheme(),
+      theme: 'light',
       setLang: (lang) => set({ lang }),
       toggleTheme: () => set((s) => ({ theme: s.theme === 'dark' ? 'light' : 'dark' })),
     }),
@@ -29,6 +27,12 @@ export const usePreferences = create<PreferencesState>()(
       name: 'winpro.preferences',
       storage: createJSONStorage(() => localStorage),
       partialize: ({ lang, theme }) => ({ lang, theme }),
+      // v0 started from the OS theme, so a saved «dark» may never have been chosen: start light once.
+      version: 1,
+      migrate: (saved, version) => {
+        const state = saved as Pick<PreferencesState, 'lang' | 'theme'>
+        return version < 1 ? { ...state, theme: 'light' as Theme } : state
+      },
     },
   ),
 )

@@ -131,6 +131,14 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.
 
+## Kod grafi va arxitektura tekshiruvi
+
+- **graphify**: `graphify-out/graph.json` — `src/`ning AST grafi (LLM'siz, bepul). Kod tuzilishi haqidagi savolda
+  avval `graphify query "<savol>"`, `graphify path "A" "B"`, `graphify explain "X"`. Yangi bo'limdan keyin
+  `/graphify src --update` bilan yangilanadi. `GRAPH_REPORT.md` — markaziy tugunlar va jamoalar.
+- **architecture-reviewer** (`.claude/agents/`): katta o'zgarish yoki yangi bo'limdan keyin, commitdan oldin
+  ishga tushiriladi — eski panelga moslik (endpoint, body), chegaralar, query key, i18n, testlar. Faqat o'qiydi.
+
 ## Claude sozlamalari: keyin qo'shiladiganlar
 
 Tegishli bosqichga yetganda foydalanuvchiga eslatilsin.
@@ -140,7 +148,7 @@ Tegishli bosqichga yetganda foydalanuvchiga eslatilsin.
 | ✅ 2-bosqich | `.claude/rules/`: `ui-components.md`, `api.md`, `features.md`, `testing.md` |
 | ✅ 3-bosqich | `.claude/skills/new-feature` — eski paneldan CRUD bo'limni ko'chiradi (`/new-feature currency`) |
 | GitHub repo yaratilganda | `.mcp.json` (GitHub MCP) |
-| 4-bosqich o'rtasi (~10–15 feature) | graphify — `graphify-out/` gitga tushmaydi |
-| 4–5-bosqichlar | `.claude/agents/architecture-reviewer.md` |
+| ✅ 4-bosqich oxiri | graphify (`src/` grafi) — `graphify-out/` gitga tushmaydi |
+| ✅ 4-bosqich oxiri | `.claude/agents/architecture-reviewer.md` |
 
 Shaxsiy sozlamalar `.claude/settings.local.json` va `CLAUDE.local.md`da saqlanadi, ular gitga tushmaydi.

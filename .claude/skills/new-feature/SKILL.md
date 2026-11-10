@@ -58,6 +58,9 @@ npm run typecheck && npm run lint && npm run test:run && npm run build
 ```
 
 Hammasi o'tmaguncha "tayyor" demang. Keyin:
+- `architecture-reviewer` agentini ishga tushiring (yangi bo'lim papkasi va ulangan fayllar bilan). Uning "Xato"
+  topilmalarini tuzating yoki nima uchun shundayligini foydalanuvchiga ayting.
+- `/graphify src --update` — kod grafini yangilang.
 - `CLAUDE.md` → "Ko'chirish tartibi"da bo'limni belgilang.
 - Foydalanuvchiga: nima ko'chirildi, eski paneldan nimasi farq qiladi, real backend bilan nimani tekshirish kerak.
 - Commit faqat foydalanuvchi so'raganda; xabar o'zbekcha (`feat: <bo'lim> bo'limi`).
