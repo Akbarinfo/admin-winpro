@@ -6,6 +6,10 @@ import type { MatchValues, TextureValues } from './schema'
 import type { Texture, TextureMatch } from './types'
 
 export const textureKeys = { all: ['texture'] as const }
+/** Matches of one texture, under the texture key so a texture save refreshes them too. */
+export const matchKeys = {
+  of: (textureId: number) => [...textureKeys.all, 'matches', textureId] as const,
+}
 
 // Endpoints and bodies match the old panel (layout/texture, components/texture/*, services/textureService.js).
 export const textureApi = {

@@ -36,6 +36,14 @@ const MATCH = {
 
 const renderPage = (url = '/textures') => renderWithProviders(<></>, { url, routes: textureRoutes })
 
+/** Opens «Золотой дуб»'s row and returns the panel under it. */
+async function openMatches() {
+  const toggle = await screen.findByRole('button', { name: 'Показать соответствия: Золотой дуб' })
+  await userEvent.click(toggle)
+  expect(toggle).toHaveAttribute('aria-expanded', 'true')
+  return toggle.closest('tr')!.nextElementSibling as HTMLElement
+}
+
 async function parts(body: unknown) {
   const form = body as FormData
   return { data: JSON.parse(await (form.get('data') as Blob).text()), image: form.get('image') }
@@ -52,6 +60,7 @@ beforeEach(() => {
     if (url === '/v1/texture/3') return { data: OAK }
     if (url === '/v1/texture/list') return { data: [OAK, WHITE] }
     if (url === '/v1/texture/matching/list/3') return { data: [MATCH] }
+    if (url === '/v1/texture/matching/list/4') return { data: [] }
     if (url === '/v1/texture/matching/90') return { data: MATCH }
     if (url === '/v1/texture/matching/matching-site-type') return { data: ['INSIDE', 'OUTSIDE'] }
     throw new Error(`unexpected GET ${url}`)
@@ -71,15 +80,24 @@ describe('Textures', () => {
     )
   })
 
-  it('shows the matches of the clicked texture and adds one with the old body', async () => {
+  it('loads a texture’s matches only when its row is opened', async () => {
     renderPage()
-    expect(await screen.findByText(/Выберите текстуру в таблице выше/)).toBeInTheDocument()
-    await userEvent.click(await screen.findByText('Золотой дуб'))
+    await screen.findByText('Золотой дуб')
+    const matchCalls = () =>
+      http.get.mock.calls.filter(([u]) => String(u).startsWith('/v1/texture/matching/list/'))
+    expect(matchCalls()).toHaveLength(0)
 
-    const panel = screen
-      .getByRole('heading', { name: 'Соответствующие текстуры' })
-      .closest('div')!.parentElement!
-    expect(await within(panel).findByText('Белый')).toBeInTheDocument()
+    await openMatches()
+    await waitFor(() =>
+      expect(matchCalls().map(([u]) => u)).toEqual(['/v1/texture/matching/list/3']),
+    )
+  })
+
+  it('opens a row to show its matches and adds one with the old body', async () => {
+    renderPage()
+    const panel = await openMatches()
+    expect(within(panel).getByText(/Соответствующие текстуры/)).toBeInTheDocument()
+    expect(await within(panel).findByText('INSIDE')).toBeInTheDocument()
 
     await userEvent.click(within(panel).getByRole('button', { name: 'Добавить соответствие' }))
     const dialog = await screen.findByRole('dialog', { name: 'Добавить соответствие' })
@@ -108,11 +126,9 @@ describe('Textures', () => {
   })
 
   it('edits a match with the texture id, so it stays attached to the texture', async () => {
-    renderPage('/textures?texture=3')
-    const panel = (
-      await screen.findByRole('heading', { name: 'Соответствующие текстуры' })
-    ).closest('div')!.parentElement!
-    const row = (await within(panel).findByText('Белый')).closest('tr')!
+    renderPage()
+    const panel = await openMatches()
+    const row = (await within(panel).findByText('INSIDE')).closest('tr')!
     await userEvent.click(within(row).getByRole('button', { name: 'Изменить' }))
 
     const dialog = await screen.findByRole('dialog', { name: 'Изменить соответствие' })
@@ -133,11 +149,9 @@ describe('Textures', () => {
   })
 
   it('deletes a match', async () => {
-    renderPage('/textures?texture=3')
-    const panel = (
-      await screen.findByRole('heading', { name: 'Соответствующие текстуры' })
-    ).closest('div')!.parentElement!
-    const row = (await within(panel).findByText('Белый')).closest('tr')!
+    renderPage()
+    const panel = await openMatches()
+    const row = (await within(panel).findByText('INSIDE')).closest('tr')!
     await userEvent.click(within(row).getByRole('button', { name: 'Удалить' }))
     const dialog = await screen.findByRole('dialog')
     await userEvent.click(within(dialog).getByRole('button', { name: 'Удалить' }))

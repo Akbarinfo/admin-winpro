@@ -20,3 +20,5 @@ paths:
 - O'lchamlar: input/tugma balandligi `h-9` (sm `h-[30px]`, lg `h-[42px]`), radius `rounded-md` (8px) / `rounded-lg` (12px),
   dialog va kartochka ichki padding'i `px-4`.
 - Yangi komponent → `index.ts`ga eksport, `/ui-kit`ga namuna (qaysi eski komponent o'rnini bosishi bilan), test.
+- Ochiladigan ro'yxatlarda belgilangan/hover variant — `bg-primary-soft`, tanlangani — `text-primary-strong` + ✓.
+  `bg-surface-2` oq fonda deyarli ko'rinmaydi, ro'yxatlar uchun ishlatilmaydi.

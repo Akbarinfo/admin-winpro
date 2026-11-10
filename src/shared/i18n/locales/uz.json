@@ -26,7 +26,8 @@
     "load_error": "Ma'lumotlarni yuklab bo'lmadi.",
     "retry": "Qayta urinish",
     "search": "Qidirish",
-    "number": "№"
+    "number": "№",
+    "expand": "Ochish"
   },
   "errors": {
     "network": "Server bilan aloqa yo'q. Internetni tekshirib, qayta urinib ko'ring.",

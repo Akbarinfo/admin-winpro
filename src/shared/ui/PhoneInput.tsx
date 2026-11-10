@@ -150,8 +150,8 @@ export function PhoneInput({
                 type="button"
                 onClick={() => choose(c)}
                 className={cn(
-                  'flex w-full items-center gap-3 rounded-[6px] px-2.5 py-2 text-left hover:bg-surface-2',
-                  c.code === country.code && 'bg-primary-soft',
+                  'flex w-full items-center gap-3 rounded-[6px] px-2.5 py-2 text-left hover:bg-primary-soft',
+                  c.code === country.code && 'text-primary-strong',
                 )}
               >
                 <Flag country={c} />

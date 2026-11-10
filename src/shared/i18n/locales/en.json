@@ -26,7 +26,8 @@
     "load_error": "Couldn't load the data.",
     "retry": "Retry",
     "search": "Search",
-    "number": "#"
+    "number": "#",
+    "expand": "Expand"
   },
   "errors": {
     "network": "Can't reach the server. Check your connection and try again.",

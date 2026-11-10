@@ -205,7 +205,7 @@ export function Combobox<T>({
                   onPointerMove={() => setActive(i)}
                   className={cn(
                     'flex min-h-[34px] cursor-pointer items-center gap-2 rounded-[6px] px-2.5 py-1.5',
-                    i === active && 'bg-surface-2',
+                    i === active && 'bg-primary-soft',
                     selected && 'font-medium text-primary-strong',
                   )}
                 >

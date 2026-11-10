@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Outlet, useLocation, useNavigate, useSearchParams } from 'react-router'
+import { Outlet, useLocation, useNavigate } from 'react-router'
 import { Pencil, Plus, Trash2 } from 'lucide-react'
 import { fileUrl } from '@/shared/api/files'
 import { useConfirmDelete } from '@/shared/hooks/useConfirmDelete'
@@ -28,18 +29,14 @@ export function TextureListPage() {
   const navigate = useNavigate()
   // Carry the table's URL params into the dialog and back, so closing it returns to the same page.
   const { search } = useLocation()
-  // The texture whose matches are shown below — in the URL, like the rest of the table state.
-  const [params, setParams] = useSearchParams()
-  const selectedId = Number(params.get('texture')) || null
-  const select = (row: Texture) =>
-    setParams(
-      (prev) => {
-        const next = new URLSearchParams(prev)
-        next.set('texture', String(row.id))
-        return next
-      },
-      { replace: true },
-    )
+  // Rows opened to show their matches; several can be open at once.
+  const [expanded, setExpanded] = useState<ReadonlySet<number>>(new Set())
+  const toggle = (row: Texture) =>
+    setExpanded((prev) => {
+      const next = new Set(prev)
+      if (!next.delete(row.id)) next.add(row.id)
+      return next
+    })
 
   const table = useServerTable<Texture>({
     key: 'textures',
@@ -105,8 +102,14 @@ export function TextureListPage() {
           fetching={table.isFetching}
           sort={table.sort}
           onSortChange={table.onSortChange}
-          selectedKey={selectedId}
-          onRowClick={select}
+          onRowClick={toggle}
+          expandable={{
+            isExpanded: (row) => expanded.has(row.id),
+            onToggle: toggle,
+            render: (row) => <TextureMatches textureId={row.id} />,
+            label: (row, open) =>
+              t(open ? 'textures.hide_matches' : 'textures.show_matches', { name: row.name }),
+          }}
           error={table.error}
           onRetry={() => table.refetch()}
           empty={table.search ? t('common.nothing_found') : t('textures.empty')}
@@ -126,8 +129,6 @@ export function TextureListPage() {
         />
         <Pagination {...table.pagination} />
       </TableCard>
-
-      <TextureMatches textureId={selectedId} />
 
       {del.dialog}
       {/* add / update/:id render the form dialog over the list */}

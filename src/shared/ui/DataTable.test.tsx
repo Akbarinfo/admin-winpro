@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
@@ -120,5 +121,34 @@ describe('DataTable', () => {
 
     await userEvent.click(screen.getByText('USD'))
     expect(onRowClick).toHaveBeenCalledWith(rows[0])
+  })
+
+  it('expands a row to show a panel under it', async () => {
+    function Harness() {
+      const [open, setOpen] = useState<number | null>(null)
+      return (
+        <DataTable
+          columns={columns}
+          rows={rows}
+          getRowKey={(r) => r.id}
+          expandable={{
+            isExpanded: (r) => r.id === open,
+            onToggle: (r) => setOpen((v) => (v === r.id ? null : r.id)),
+            render: (r) => <p>panel of {r.name}</p>,
+            label: (r, o) => `${o ? 'Скрыть' : 'Показать'} ${r.name}`,
+          }}
+        />
+      )
+    }
+    render(<Harness />)
+    expect(screen.queryByText(/panel of/)).not.toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Показать EUR' }))
+    expect(screen.getByText('panel of EUR')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Скрыть EUR' })).toHaveAttribute(
+      'aria-expanded',
+      'true',
+    )
+    await userEvent.click(screen.getByRole('button', { name: 'Скрыть EUR' }))
+    expect(screen.queryByText(/panel of/)).not.toBeInTheDocument()
   })
 })

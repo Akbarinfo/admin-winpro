@@ -11,11 +11,12 @@
     "is_double": "Ikki tomonlama laminat",
     "empty": "Hozircha teksturalar yo'q. Birinchisini qo'shing.",
     "matches": "Mos teksturalar",
-    "matches_hint": "Mos teksturalarni ko'rish uchun yuqoridagi jadvaldan teksturani tanlang.",
     "match_add": "Moslik qo'shish",
     "match_edit": "Moslikni tahrirlash",
     "match_texture": "Tekstura",
     "side": "Tomon",
-    "matches_empty": "Hozircha mosliklar yo'q."
+    "matches_empty": "Hozircha mosliklar yo'q.",
+    "show_matches": "Mosliklarni ko'rsatish: {{name}}",
+    "hide_matches": "Mosliklarni yashirish: {{name}}"
   }
 }

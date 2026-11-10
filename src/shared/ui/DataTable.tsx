@@ -1,6 +1,6 @@
-import type { Key, ReactNode } from 'react'
+import { Fragment, type Key, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
+import { ArrowDown, ArrowUp, ArrowUpDown, ChevronRight } from 'lucide-react'
 import type { TableSort } from '@/shared/api/table'
 import { cn } from '@/shared/lib/cn'
 import { Highlight } from './Highlight'
@@ -45,6 +45,15 @@ type DataTableProps<T> = {
   /** Current search: matches are marked in plain cells. Custom cells use <Highlight>. */
   highlight?: string
   skeletonRows?: number
+  /** Rows that open a panel right under them; a column with a ▸ toggle is added in front. */
+  expandable?: {
+    isExpanded: (row: T) => boolean
+    onToggle: (row: T) => void
+    /** Content of the opened panel. */
+    render: (row: T) => ReactNode
+    /** Accessible name of the toggle: «Показать соответствия: Белый». */
+    label: (row: T, expanded: boolean) => string
+  }
 }
 
 export function DataTable<T>({
@@ -63,9 +72,10 @@ export function DataTable<T>({
   onRetry,
   highlight,
   skeletonRows = 5,
+  expandable,
 }: DataTableProps<T>) {
   const { t } = useTranslation()
-  const colCount = columns.length + (actions ? 1 : 0)
+  const colCount = columns.length + (actions ? 1 : 0) + (expandable ? 1 : 0)
   const cell = (align?: 'left' | 'right') =>
     cn('px-3.5 py-2.5 whitespace-nowrap', align === 'right' && 'text-right')
 
@@ -75,6 +85,14 @@ export function DataTable<T>({
       <table className="w-full border-collapse text-[13.5px]">
         <thead>
           <tr>
+            {expandable && (
+              <th
+                scope="col"
+                className="sticky top-0 z-10 w-11 bg-surface-2 shadow-[inset_0_-1px_0_var(--line)]"
+              >
+                <span className="sr-only">{t('common.expand')}</span>
+              </th>
+            )}
             {columns.map((col) => {
               const sortKey = col.sortKey ?? col.key
               const active = sort?.column === sortKey
@@ -161,37 +179,69 @@ export function DataTable<T>({
           ) : (
             rows.map((row, index) => {
               const key = getRowKey(row)
-              const selected = selectedKey !== undefined && selectedKey === key
+              const expanded = expandable?.isExpanded(row) ?? false
+              const selected = (selectedKey !== undefined && selectedKey === key) || expanded
               return (
-                <tr
-                  key={key}
-                  aria-selected={selected || undefined}
-                  onClick={onRowClick && (() => onRowClick(row))}
-                  className={cn(
-                    'border-b border-line transition-colors last:border-0 hover:bg-surface-2',
-                    onRowClick && 'cursor-pointer',
-                    selected &&
-                      'bg-primary-soft shadow-[inset_3px_0_0_var(--primary)] hover:bg-primary-soft',
+                <Fragment key={key}>
+                  <tr
+                    aria-selected={selected || undefined}
+                    onClick={onRowClick && (() => onRowClick(row))}
+                    className={cn(
+                      'border-b border-line transition-colors last:border-0',
+                      onRowClick && 'cursor-pointer',
+                      // hover is a lighter tint of the selected row's colour
+                      selected
+                        ? 'bg-primary-soft shadow-[inset_3px_0_0_var(--primary)]'
+                        : 'hover:bg-primary-soft/60',
+                    )}
+                  >
+                    {expandable && (
+                      <td className="w-11 py-2 pl-2" onClick={(e) => e.stopPropagation()}>
+                        <button
+                          type="button"
+                          aria-expanded={expanded}
+                          aria-label={expandable.label(row, expanded)}
+                          title={expandable.label(row, expanded)}
+                          onClick={() => expandable.onToggle(row)}
+                          className="grid size-7 place-items-center rounded-md text-muted hover:bg-line hover:text-fg"
+                        >
+                          <ChevronRight
+                            size={16}
+                            aria-hidden="true"
+                            className={cn('transition-transform', expanded && 'rotate-90')}
+                          />
+                        </button>
+                      </td>
+                    )}
+                    {columns.map((col) => (
+                      <td key={col.key} className={cn(cell(col.align), col.className)}>
+                        {col.render ? (
+                          col.render(row, index)
+                        ) : (
+                          <Highlight
+                            text={String((row as Record<string, unknown>)[col.key] ?? '')}
+                            query={highlight}
+                          />
+                        )}
+                      </td>
+                    ))}
+                    {actions && (
+                      <td className={cell('right')} onClick={(e) => e.stopPropagation()}>
+                        <div className="flex justify-end gap-0.5">{actions(row)}</div>
+                      </td>
+                    )}
+                  </tr>
+                  {expanded && expandable && (
+                    <tr className="border-b border-line">
+                      <td
+                        colSpan={colCount}
+                        className="bg-surface-2 py-3 pr-3.5 pl-12 shadow-[inset_3px_0_0_var(--primary)]"
+                      >
+                        {expandable.render(row)}
+                      </td>
+                    </tr>
                   )}
-                >
-                  {columns.map((col) => (
-                    <td key={col.key} className={cn(cell(col.align), col.className)}>
-                      {col.render ? (
-                        col.render(row, index)
-                      ) : (
-                        <Highlight
-                          text={String((row as Record<string, unknown>)[col.key] ?? '')}
-                          query={highlight}
-                        />
-                      )}
-                    </td>
-                  ))}
-                  {actions && (
-                    <td className={cell('right')} onClick={(e) => e.stopPropagation()}>
-                      <div className="flex justify-end gap-0.5">{actions(row)}</div>
-                    </td>
-                  )}
-                </tr>
+                </Fragment>
               )
             })
           )}

@@ -11,11 +11,12 @@
     "is_double": "Laminated on both sides",
     "empty": "No textures yet. Add the first one.",
     "matches": "Matching textures",
-    "matches_hint": "Pick a texture in the table above to see the ones that go with it.",
     "match_add": "Add match",
     "match_edit": "Edit match",
     "match_texture": "Texture",
     "side": "Side",
-    "matches_empty": "No matches yet."
+    "matches_empty": "No matches yet.",
+    "show_matches": "Show matches: {{name}}",
+    "hide_matches": "Hide matches: {{name}}"
   }
 }
