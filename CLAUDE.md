@@ -30,7 +30,7 @@ Testlar: Vitest + Testing Library (jsdom).
 ```
 src/
 ├── app/        ilovani yig'adi: providers, router, layout, styles
-├── shared/     umumiy poydevor: api, ui, hooks, lib, config, store, i18n — bo'limlarni bilmaydi
+├── shared/     umumiy poydevor: api, ui, hooks, lib, config, store, i18n, lookups, translations — bo'limlarni bilmaydi
 └── features/   biznes bo'limlar: exchange, product, akfa…
 ```
 
@@ -128,7 +128,7 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Страны (alohida forma sahifasi + kod provayderlari), Версии приложения, Пользователи, Mobile users.
    4-bosqich oddiy CRUD'lari tugadi. Qolgan oddiy ro'yxatlar (feedback, price-requests) 6-bosqich bilan birga.
 5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali (`features/product/groups.ts`).
-   Профили: ro'yxat va filtrlar ✅; forma sahifasi, narxlar paneli, Excel — navbatda
+   Профили: ro'yxat va filtrlar ✅, forma sahifasi + tarjimalar (`shared/translations`) ✅; narxlar paneli, Excel — navbatda
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.

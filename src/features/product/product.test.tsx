@@ -81,13 +81,13 @@ describe('Profiles list', () => {
     })
   })
 
-  it('sorts by the old panel column names', async () => {
+  it('sorts only by name and article', async () => {
     renderProfiles()
     await screen.findByText('Рама 60')
-    await userEvent.click(screen.getByRole('button', { name: /Имя в каталоге/ }))
-    await waitFor(() =>
-      expect(lastTableBody().order).toEqual([{ column: 'directory_name', dir: 'ASC' }]),
-    )
+    // the other old sortable headers are left without sorting on purpose
+    expect(screen.queryByRole('button', { name: /Имя в каталоге/ })).not.toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Артикул' }))
+    await waitFor(() => expect(lastTableBody().order).toEqual([{ column: 'article', dir: 'ASC' }]))
   })
 
   it('sends the filters in the table body and keeps them in the URL', async () => {

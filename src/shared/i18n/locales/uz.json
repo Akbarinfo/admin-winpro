@@ -136,5 +136,12 @@
     "aspect": "Nisbat",
     "zoom": "Masshtab",
     "failed": "Rasmni qirqib bo'lmadi. Aslini yuklang."
+  },
+  "translations": {
+    "title": "Davlatlar bo'yicha tarjimalar",
+    "country": "Davlat",
+    "enabled": "O'z matni",
+    "enable_for": "{{country}} uchun o'z matni",
+    "save_error": "Yozuv saqlandi, tarjimalar esa yo'q. Tarjimalar jadvalini tekshirib, qayta saqlang."
   }
 }

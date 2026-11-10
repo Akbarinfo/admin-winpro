@@ -1,6 +1,11 @@
 import { api } from '@/shared/api/client'
+import { multipartBody } from '@/shared/api/files'
 import type { TableBody, TablePage } from '@/shared/api/table'
-import type { ArticleType, GroupType, ProductRow } from './types'
+import type { ProfileValues } from './schema'
+import type { ArticleType, ChosenNames, GroupType, ProductDetail, ProductRow } from './types'
+
+/** The saved product, or { error } with status 206. */
+type SaveResponse = { id?: number; error?: string }
 
 export const productKeys = {
   all: ['product'] as const,
@@ -21,6 +26,55 @@ export const productApi = {
 
   /** Makes a copy of the product and returns it — the old panel opened the copy's form next. */
   copy: (id: number) => api.post<{ id: number }>(`/v1/product/copy/${id}`).then((r) => r.data),
+
+  get: (id: string, signal?: AbortSignal) =>
+    api.get<ProductDetail>(`/v1/product/${id}`, { signal }).then((r) => r.data),
+
+  /**
+   * multipart: «data» — the profile as JSON, «image» — a new drawing ("null" without one).
+   * POST and PUT both on /v1/product/profile; the id is the URL string, as in the old form.
+   * Empty numbers go as null — the old form sent "" (Jackson reads both as null).
+   * A 206 answer is a warning from the backend: the profile wasn't saved.
+   */
+  saveProfile: ({ drawing, ...v }: ProfileValues, names: ChosenNames, id?: string) => {
+    const data = {
+      id: id ?? null,
+      name: v.name,
+      nameInCatalog: v.nameInCatalog,
+      article: v.article,
+      length: v.length,
+      width: v.width,
+      thickness: v.thickness,
+      sizeB: v.sizeB,
+      sizeF: v.sizeF,
+      sizeN: v.sizeN,
+      comeIn: v.comeIn,
+      articleSpecificWeight: v.articleSpecificWeight,
+      momentJx: v.momentJx,
+      momentJy: v.momentJy,
+      sectionArea: v.sectionArea,
+      drawingId: v.drawingId,
+      productSeriesId: v.productSeriesId,
+      productSeriesName: names.productSeriesName,
+      unitId: v.unitId,
+      unitName: names.unitName,
+      supplierId: v.supplierId,
+      supplierName: names.supplierName,
+      profileType: v.profileType ?? '',
+      wastePercent: v.wastePercent,
+      usefulPiece: v.usefulPiece,
+      isArcProfile: v.isArcProfile,
+      isReinforced: v.isReinforced,
+      needCuttingOptimization: v.needCuttingOptimization,
+      trackCount: v.trackCount,
+      sashClearance: v.sashClearance,
+    }
+    const body = multipartBody(data, drawing)
+    const request = id
+      ? api.put<SaveResponse>('/v1/product/profile', body)
+      : api.post<SaveResponse>('/v1/product/profile', body)
+    return request.then((r) => ({ status: r.status, data: r.data }))
+  },
 
   remove: (id: number) => api.delete(`/v1/product/${id}`),
 }
