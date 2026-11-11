@@ -141,6 +141,8 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Заполнение (faqat ko'rish). Jadval parametrlari `?spec.*`, `?acc.*`; boshqa tizim tanlanganda tozalanadi.
    Шаблоны ✅: «Новые шаблоны» (`/templates`, ota + bola shablonlar) va «Шаблоны» (`/templetes`, chizma shablonlari).
    Ikkalasi oyna konstruktori `webcc` bilan (`shared/webcc`: `useWebcc`, `WebccCanvas`).
+   Переводы ✅ (`features/translationKeys`: `translations.*` kaliti davlat tarjimalarida band;
+   `POST /v1/translation/table` — DataTables emas, sahifa 1 dan, `filter: {query}`; Excel import/eksport).
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.
 

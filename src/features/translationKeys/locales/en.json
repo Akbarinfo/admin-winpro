@@ -1,0 +1,13 @@
+{
+  "translationKeys": {
+    "title": "Translations",
+    "key": "Key",
+    "add": "Add a translation",
+    "edit": "Edit the translation",
+    "empty": "No translations yet",
+    "key_locked": "The key can't change: the apps find the text by it",
+    "import": "Import Excel",
+    "export": "Export Excel",
+    "import_title": "Import translations from Excel"
+  }
+}

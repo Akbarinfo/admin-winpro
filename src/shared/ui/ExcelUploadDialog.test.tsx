@@ -65,6 +65,13 @@ describe('ExcelUploadDialog', () => {
     expect(onTemplate).toHaveBeenCalledOnce()
   })
 
+  it('has no template button when the import has no example file', () => {
+    renderWithProviders(
+      <ExcelUploadDialog title="Импорт переводов" onClose={vi.fn()} onUpload={vi.fn()} />,
+    )
+    expect(screen.queryByRole('button', { name: 'Скачать шаблон' })).not.toBeInTheDocument()
+  })
+
   it('shows a 4xx answer in the dialog and stays open', async () => {
     const { onClose } = setup(
       vi.fn<Upload>(async () => Promise.reject(new ApiError(400, 'Неверный формат'))),

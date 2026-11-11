@@ -9,8 +9,8 @@ import { Modal } from './Modal'
 type ExcelUploadDialogProps = {
   title: string
   onClose: () => void
-  /** Downloads the example file to fill in. */
-  onTemplate: () => Promise<unknown>
+  /** Downloads the example file to fill in; none — the import has no example file. */
+  onTemplate?: () => Promise<unknown>
   /** Sends the file; `onProgress` gets 0–100. Resolves when done — the dialog then closes. */
   onUpload: (file: File, onProgress: (percent: number) => void) => Promise<unknown>
   /** A line about what the import does, e.g. that it replaces unsaved edits. */
@@ -60,7 +60,7 @@ export function ExcelUploadDialog({
   const downloadTemplate = async () => {
     setTemplate(true)
     try {
-      await onTemplate()
+      await onTemplate?.()
     } catch (e) {
       if (isClientError(e)) setError(e.message)
     } finally {
@@ -147,16 +147,18 @@ export function ExcelUploadDialog({
         </div>
       )}
 
-      <Button
-        variant="ghost"
-        size="sm"
-        className="justify-self-start"
-        icon={<Download size={15} />}
-        loading={template}
-        onClick={downloadTemplate}
-      >
-        {t('excel.template')}
-      </Button>
+      {onTemplate && (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="justify-self-start"
+          icon={<Download size={15} />}
+          loading={template}
+          onClick={downloadTemplate}
+        >
+          {t('excel.template')}
+        </Button>
+      )}
     </Modal>
   )
 }

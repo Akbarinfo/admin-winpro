@@ -1,0 +1,13 @@
+{
+  "translationKeys": {
+    "title": "Tarjimalar",
+    "key": "Kalit",
+    "add": "Tarjima qo'shish",
+    "edit": "Tarjimani tahrirlash",
+    "empty": "Hozircha tarjimalar yo'q",
+    "key_locked": "Kalit o'zgarmaydi: ilovalar tarjimani u orqali topadi",
+    "import": "Excel import",
+    "export": "Excel eksport",
+    "import_title": "Tarjimalarni Excel'dan import qilish"
+  }
+}

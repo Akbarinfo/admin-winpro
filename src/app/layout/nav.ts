@@ -97,8 +97,8 @@ export const NAV: NavGroup[] = [
   {
     title: 'nav.group_templates',
     items: [
-      { to: '/templates', label: 'templates.title', icon: LayoutTemplate, status: 'new' },
-      { to: '/templetes', label: 'drawingTemplates.title', icon: FileStack, status: 'new' },
+      { to: '/templates', label: 'templates.title', icon: LayoutTemplate, status: 'ready' },
+      { to: '/templetes', label: 'drawingTemplates.title', icon: FileStack, status: 'ready' },
     ],
   },
   {
@@ -127,7 +127,7 @@ export const NAV: NavGroup[] = [
         icon: MonitorSmartphone,
         status: 'ready',
       },
-      { to: '/translations', label: 'sidebar_menu_translations', icon: Languages },
+      { to: '/translations', label: 'translationKeys.title', icon: Languages, status: 'new' },
       { to: '/languages', label: 'languages.title', icon: Type, status: 'ready' },
       {
         to: '/tariff-feature',
