@@ -29,6 +29,7 @@ import {
   Spinner,
   Switch,
   TableCard,
+  Tabs,
   TableToolbar,
   Textarea,
   ThemeToggle,
@@ -132,6 +133,7 @@ export function UiKitPage() {
   const [excel, setExcel] = useState(false)
   const [confirm, setConfirm] = useState(false)
   const [query, setQuery] = useState('')
+  const [tab, setTab] = useState<'spec' | 'acc' | 'fill'>('spec')
 
   const sorted = useMemo(() => {
     const dir = sort.dir === 'asc' ? 1 : -1
@@ -431,6 +433,21 @@ export function UiKitPage() {
           <p className="text-xs text-faint">
             Закрывается по Esc, крестику и клику по фону. Фокус остаётся внутри.
           </p>
+        </KitCard>
+        <KitCard title="Tabs" replaces="MUI Tabs (профильные системы)">
+          <Tabs
+            id="kit-tabs"
+            label="Разделы системы"
+            value={tab}
+            onChange={setTab}
+            items={[
+              { value: 'spec', label: 'Спецификация', count: 8 },
+              { value: 'acc', label: 'Фурнитура', count: 7 },
+              { value: 'fill', label: 'Заполнение' },
+            ]}
+          >
+            <p className="p-3 text-muted">Вкладка: {tab}. Стрелки ← → переключают.</p>
+          </Tabs>
         </KitCard>
         <KitCard title="ConfirmDialog" replaces="swal() — 73 вызова">
           <div className={row}>

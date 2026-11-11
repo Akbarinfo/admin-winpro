@@ -133,7 +133,8 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Уплотнения ✅, Заполнение ✅, Фурнитуры ✅ (podtip, ruchka rasmi). 5-bosqich tugadi.
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar.
    Feedback ✅ (chat: `/feedback?chat=<userId>`, admin xabari `userId: 10` — eski panel kabi).
-   Запросы цен ✅ (`GET /v1/price-requests` — DataTables emas, sahifa 0 dan; ommaviy tasdiqlash/rad etish)
+   Запросы цен ✅ (`GET /v1/price-requests` — DataTables emas, sahifa 0 dan; ommaviy tasdiqlash/rad etish).
+   Профильные системы: daraxt + tizim formasi ✅; keyin xususiyatlar (tarjima kalitlari), спецификация, фурнитура
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.
 

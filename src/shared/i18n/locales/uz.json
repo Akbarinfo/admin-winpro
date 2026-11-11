@@ -44,7 +44,8 @@
     "same_currency": "Valyutalar har xil bo'lishi kerak",
     "phone": "Raqamni to'liq kiriting",
     "color": "Rang #RRGGBB formatida",
-    "email": "To'g'ri email kiriting"
+    "email": "To'g'ri email kiriting",
+    "non_negative": "Noldan kichik bo'lishi mumkin emas"
   },
   "auth": {
     "brand_title": "Deraza biznesini boshqarish paneli",

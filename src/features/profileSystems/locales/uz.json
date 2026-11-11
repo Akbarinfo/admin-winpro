@@ -1,0 +1,53 @@
+{
+  "profileSystems": {
+    "title": "Profil tizimlari",
+    "add": "Tizim profilini qo'shish",
+    "edit": "Tizim profilini tahrirlash",
+    "empty": "Hozircha tizim yo'q",
+    "choose": "Chapdagi daraxtdan tizimni tanlang",
+    "expand": "Hammasini ochish",
+    "collapse": "Hammasini yopish",
+    "name": "Nomi",
+    "parent": "Ota tizim",
+    "supplier": "Ta'minotchi",
+    "image": "Kontent rasmi",
+    "default_filling": "Standart to'ldirish",
+    "glass": "Стеклопакет",
+    "panel": "Сэндвич",
+    "material_type": "Material turi",
+    "visible": "Ko'rinadigan",
+    "default": "Standart",
+    "testing": "Test rejimida",
+    "track_range": "1 dan 10 gacha butun son",
+    "visibility": "Ko'rinish",
+    "sliding_type": "Surma turi",
+    "client_scope": "Qaysi versiyada",
+    "client_scope_hint": "Faqat v2 — eski konstruktor (v1) ro'yxatlarida chiqmaydi",
+    "sash_clearance": "Sash zazori, mm",
+    "sash_clearance_hint": "Bo'sh — default 12 mm. Surma tizimlarda: 0",
+    "max_track_count": "Maksimal tracklar soni",
+    "max_track_count_hint": "Yonma-yon qo'yiladigan ramalarning maksimal soni (odatda 5)",
+    "max_track_count_from_frames": "Rama profillarining track sonidan hisoblanadi",
+    "search": "Tizimni topish…",
+    "not_found": "Hech narsa topilmadi",
+    "sections": "Tizim bo'limlari",
+    "tab_spec": "Spetsifikatsiya",
+    "tab_accessories": "Furnitura",
+    "tab_filling": "To'ldirish",
+    "next_step": "Bo'lim keyingi qadamda ko'chiriladi",
+    "filling_hint": "«Tahrirlash» orqali o'zgartiriladi — eski paneldagidek.",
+    "sliding_type_option": {
+      "NONE": "Surma emas",
+      "FRAME_PER_TRACK": "Oddiy — har track uchun alohida rama",
+      "MULTI_TRACK_FRAME": "Tepliy — track soni ramadan"
+    },
+    "client_scope_option": {
+      "ALL": "Hamma versiyalar (v1 va v2)",
+      "V2_ONLY": "Faqat yangi versiya (v2)"
+    },
+    "visibility_option": {
+      "PUBLIC": "Ochiq",
+      "PRIVATE": "Yopiq"
+    }
+  }
+}

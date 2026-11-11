@@ -2,7 +2,7 @@ import { api } from '@/shared/api/client'
 import { multipartBody } from '@/shared/api/files'
 import type { TableBody, TablePage } from '@/shared/api/table'
 import type { UserValues } from './schema'
-import { SUPPLIER_ROLES, type SupplierOption, type User, type UserRole } from './types'
+import { SUPPLIER_ROLES, type User, type UserRole } from './types'
 
 export const userKeys = { all: ['user'] as const }
 
@@ -16,25 +16,6 @@ export const userApi = {
 
   roles: (signal?: AbortSignal) =>
     api.get<UserRole[]>('/v1/user/enum/role/type', { signal }).then((r) => r.data),
-
-  /** All suppliers by name, for supplier staff — the same request as the old panel. */
-  suppliers: (signal?: AbortSignal) =>
-    api
-      .post<TablePage<SupplierOption>>(
-        '/v1/supplier/table',
-        {
-          draw: 1,
-          start: 0,
-          length: 1000,
-          recordsTotal: 0,
-          columns: [],
-          order: [{ column: 'name', dir: 'ASC' }],
-          search: { value: '', regex: false },
-          filter: {},
-        },
-        { signal },
-      )
-      .then((r) => r.data.data.map((s) => ({ id: s.id, name: s.name }))),
 
   /**
    * multipart: «data» — the user as JSON, «image» — the new photo. POST and PUT both on /v1/user/

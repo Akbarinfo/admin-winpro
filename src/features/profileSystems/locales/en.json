@@ -1,0 +1,53 @@
+{
+  "profileSystems": {
+    "title": "Profile systems",
+    "add": "Add profile system",
+    "edit": "Edit profile system",
+    "empty": "No systems yet",
+    "choose": "Choose a system in the tree on the left",
+    "expand": "Expand all",
+    "collapse": "Collapse all",
+    "name": "Name",
+    "parent": "Parent system",
+    "supplier": "Supplier",
+    "image": "Content image",
+    "default_filling": "Default filling",
+    "glass": "Double glazing",
+    "panel": "Sandwich",
+    "material_type": "Material type",
+    "visible": "Visible",
+    "default": "Default",
+    "testing": "Test mode",
+    "track_range": "A whole number from 1 to 10",
+    "visibility": "Visibility",
+    "sliding_type": "Sliding type",
+    "client_scope": "Available in",
+    "client_scope_hint": "V2 only — hidden in the old constructor (v1) lists",
+    "sash_clearance": "Sash clearance, mm",
+    "sash_clearance_hint": "Empty — default 12 mm. Sliding systems: 0",
+    "max_track_count": "Max track count",
+    "max_track_count_hint": "Maximum number of frames placed side by side (usually 5)",
+    "max_track_count_from_frames": "Derived from the frame profiles",
+    "search": "Find a system…",
+    "not_found": "Nothing found",
+    "sections": "System sections",
+    "tab_spec": "Specification",
+    "tab_accessories": "Hardware",
+    "tab_filling": "Filling",
+    "next_step": "This section is migrated in the next step",
+    "filling_hint": "Changed via «Edit» — as in the old panel.",
+    "sliding_type_option": {
+      "NONE": "Not sliding",
+      "FRAME_PER_TRACK": "Simple — a separate frame per track",
+      "MULTI_TRACK_FRAME": "Warm — track count from the frame profile"
+    },
+    "client_scope_option": {
+      "ALL": "All versions (v1 and v2)",
+      "V2_ONLY": "New version only (v2)"
+    },
+    "visibility_option": {
+      "PUBLIC": "Public",
+      "PRIVATE": "Private"
+    }
+  }
+}

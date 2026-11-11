@@ -1,9 +1,11 @@
 import { api } from '@/shared/api/client'
 import type { TableBody, TablePage } from '@/shared/api/table'
+import { materialTypeKeys } from '@/shared/lookups/materialTypes'
 import type { MaterialTypeValues } from './schema'
 import type { MaterialType } from './types'
 
-export const materialTypeKeys = { all: ['materialType'] as const }
+// Same key as the shared material-types lookup: saving here refreshes the lists elsewhere too.
+export { materialTypeKeys }
 
 // Endpoints and bodies match the old panel (layout/materialType).
 export const materialTypeApi = {

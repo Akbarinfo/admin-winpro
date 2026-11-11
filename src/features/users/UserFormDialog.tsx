@@ -7,6 +7,7 @@ import { useLocation, useNavigate, useParams } from 'react-router'
 import { fileUrl } from '@/shared/api/files'
 import { useEntityForm } from '@/shared/hooks/useEntityForm'
 import { usePhoneCountries } from '@/shared/lookups/countries'
+import { useSuppliersByName, type SupplierOption } from '@/shared/lookups/suppliers'
 import {
   Alert,
   Button,
@@ -22,7 +23,7 @@ import {
 } from '@/shared/ui'
 import { userApi, userKeys } from './api'
 import { userSchema, type UserForm } from './schema'
-import { SUPPLIER_ROLES, type SupplierOption, type User, type UserRole } from './types'
+import { SUPPLIER_ROLES, type User, type UserRole } from './types'
 
 const toForm = (u: User): UserForm => ({
   fullName: u.fullName ?? '',
@@ -50,11 +51,7 @@ export function UserFormDialog() {
     queryFn: ({ signal }) => userApi.roles(signal),
     staleTime: Infinity,
   })
-  const suppliers = useQuery({
-    queryKey: [...userKeys.all, 'suppliers'],
-    queryFn: ({ signal }) => userApi.suppliers(signal),
-    staleTime: 10 * 60_000,
-  })
+  const suppliers = useSuppliersByName()
 
   const isEditMode = id !== undefined
   const resolver = useMemo(

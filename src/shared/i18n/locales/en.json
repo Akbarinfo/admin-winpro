@@ -44,7 +44,8 @@
     "same_currency": "Currencies must be different",
     "phone": "Enter the full number",
     "color": "Colour as #RRGGBB",
-    "email": "Enter a valid email"
+    "email": "Enter a valid email",
+    "non_negative": "Can't be less than zero"
   },
   "auth": {
     "brand_title": "Control panel for the window business",
