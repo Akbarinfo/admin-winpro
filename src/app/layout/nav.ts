@@ -91,14 +91,14 @@ export const NAV: NavGroup[] = [
       { to: '/inserts', label: 'sidebar_menu_insert', icon: ListPlus },
       { to: '/filling', label: 'sidebar_menu_filling', icon: PanelsTopLeft },
       { to: '/furniture', label: 'sidebar_menu_accessories', icon: Settings2 },
-      { to: '/profile_system', label: 'profileSystems.title', icon: Layers3, status: 'new' },
+      { to: '/profile_system', label: 'profileSystems.title', icon: Layers3, status: 'ready' },
     ],
   },
   {
     title: 'nav.group_templates',
     items: [
-      { to: '/templates', label: 'sidebar_templates', icon: LayoutTemplate },
-      { to: '/templetes', label: 'sidebar_menu_templetes', icon: FileStack },
+      { to: '/templates', label: 'templates.title', icon: LayoutTemplate, status: 'new' },
+      { to: '/templetes', label: 'drawingTemplates.title', icon: FileStack, status: 'new' },
     ],
   },
   {

@@ -11,6 +11,8 @@ import { mobileUserRoutes } from '@/features/mobileUsers'
 import { priceRequestRoutes } from '@/features/priceRequests'
 import { productRoutes } from '@/features/product'
 import { profileSystemRoutes } from '@/features/profileSystems'
+import { templateRoutes } from '@/features/templates'
+import { drawingTemplateRoutes } from '@/features/drawingTemplates'
 import { salesCategoryRoutes } from '@/features/salesCategory'
 import { seriesRoutes } from '@/features/series'
 import { supplierRoutes } from '@/features/suppliers'
@@ -46,6 +48,8 @@ const featureRoutes = [
   ...feedbackRoutes,
   ...priceRequestRoutes,
   ...profileSystemRoutes,
+  ...templateRoutes,
+  ...drawingTemplateRoutes,
 ]
 
 // Dev-only pages; lazy so they never reach the production bundle.

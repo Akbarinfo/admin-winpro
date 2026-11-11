@@ -20,3 +20,16 @@ export function useTextures() {
     staleTime: 10 * 60_000,
   })
 }
+
+/** The textures a profile system comes in (/v1/texture/list/system/{id}); none until one is chosen. */
+export function useSystemTextures(systemId: number | null) {
+  return useQuery({
+    queryKey: [...textureKeys.all, 'system', systemId],
+    queryFn: ({ signal }) =>
+      api
+        .get<TextureOption[]>(`/v1/texture/list/system/${systemId}`, { signal })
+        .then((r) => r.data),
+    enabled: systemId !== null,
+    staleTime: 10 * 60_000,
+  })
+}

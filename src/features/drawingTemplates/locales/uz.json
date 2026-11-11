@@ -1,0 +1,18 @@
+{
+  "drawingTemplates": {
+    "title": "Shablonlar",
+    "add": "Shablon qo'shish",
+    "edit": "Shablonni yangilash",
+    "back": "Shablonlar ro'yxatiga",
+    "empty": "Hozircha shablonlar yo'q",
+    "image": "Rasm",
+    "name": "Nomi",
+    "profile_system": "Profil tizimi",
+    "texture": "Tekstura",
+    "type": "Turi",
+    "width": "Eni",
+    "height": "Bo'yi",
+    "area": "Maydoni",
+    "sizes_hint": "O'lchamlar, tizim va tekstura konstruktor ostidagi tugma bilan chizmadan olinadi"
+  }
+}

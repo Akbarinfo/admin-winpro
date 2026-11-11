@@ -1,0 +1,19 @@
+{
+  "templates": {
+    "title": "New templates",
+    "add": "Add a template",
+    "edit": "Edit the template",
+    "add_child": "Add a child template",
+    "edit_child": "Edit the child template",
+    "back": "Back to templates",
+    "back_to_parent": "Back to the parent template",
+    "empty": "No templates yet",
+    "children": "Child templates",
+    "no_children": "No child templates",
+    "image": "Image",
+    "name": "Name",
+    "type": "Type",
+    "width": "Width",
+    "height": "Height"
+  }
+}

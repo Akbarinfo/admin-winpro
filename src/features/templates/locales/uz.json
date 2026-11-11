@@ -1,0 +1,19 @@
+{
+  "templates": {
+    "title": "Yangi shablonlar",
+    "add": "Shablon qo'shish",
+    "edit": "Shablonni tahrirlash",
+    "add_child": "Bola shablon qo'shish",
+    "edit_child": "Bola shablonni tahrirlash",
+    "back": "Shablonlar ro'yxatiga",
+    "back_to_parent": "Ota shablonga",
+    "empty": "Hozircha shablonlar yo'q",
+    "children": "Bola shablonlar",
+    "no_children": "Bola shablonlar yo'q",
+    "image": "Rasm",
+    "name": "Nomi",
+    "type": "Turi",
+    "width": "Eni",
+    "height": "Bo'yi"
+  }
+}

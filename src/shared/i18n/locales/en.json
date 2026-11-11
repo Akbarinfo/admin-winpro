@@ -167,5 +167,11 @@
     "failed_rows": "Some rows were not imported — their list has been downloaded",
     "imported": "File imported",
     "failed_rows_no_file": "Some rows were not imported"
+  },
+  "webcc": {
+    "no_token": "The constructor is off: no token set (VITE_WEBCC_TOKEN).",
+    "load_error": "The constructor failed to start.",
+    "get_sizes": "Take the sizes from the constructor",
+    "json_file": "Drawing file (JSON)"
   }
 }

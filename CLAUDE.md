@@ -61,6 +61,8 @@ Feature ichida nisbiy import (`./api`), boshqa joyda `@/` alias (`@/shared/ui`).
 - **Query key**: har resursning bazaviy kaliti `api.ts`da (`exchangeKeys.all = ['exchange']`). Jadval, detail va
   invalidatsiya shu kalitdan boshlanadi.
 - **Env** faqat `@/shared/config/env` orqali o'qiladi. `.env*` fayllar gitga tushmaydi (`.env.example` bundan mustasno).
+- **webcc** (oyna konstruktori) npm'dan o'rnatilmaydi: `vendor/webcc` (`"webcc": "file:vendor/webcc"`, tiplari `index.d.ts`).
+  Faqat `@/shared/webcc` orqali, dinamik import bilan (alohida chunk). Token — `VITE_WEBCC_TOKEN`; testlarda `vi.mock('webcc')`.
 - **Matnlar** i18n kalitlari orqali (ru, uz, en). Interfeysning asosiy tili rus.
   `shared/i18n/locales/legacy/*.json` — eski paneldan o'zgarishsiz ko'chirilgan (`sidebar_menu_currency` kabi tekis kalitlar),
   ularni o'zgartirmang. Umumiy yangi matnlar (`common.*`, `validation.*`) `shared/i18n/locales/{ru,uz,en}.json`da.
@@ -137,6 +139,8 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Профильные системы: daraxt + tizim formasi ✅, xususiyatlar (tarjima kalitlari, `shared/translations` → `TranslationKeyInput`) ✅;
    tablar: Спецификация ✅ (artikul backend qidiruvi — `Combobox onQueryChange`), Фурнитура ✅ (`/accessories/up/{id}`),
    Заполнение (faqat ko'rish). Jadval parametrlari `?spec.*`, `?acc.*`; boshqa tizim tanlanganda tozalanadi.
+   Шаблоны ✅: «Новые шаблоны» (`/templates`, ota + bola shablonlar) va «Шаблоны» (`/templetes`, chizma shablonlari).
+   Ikkalasi oyna konstruktori `webcc` bilan (`shared/webcc`: `useWebcc`, `WebccCanvas`).
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.
 

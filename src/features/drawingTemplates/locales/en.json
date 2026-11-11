@@ -1,0 +1,18 @@
+{
+  "drawingTemplates": {
+    "title": "Templates",
+    "add": "Add a template",
+    "edit": "Update the template",
+    "back": "Back to templates",
+    "empty": "No templates yet",
+    "image": "Image",
+    "name": "Name",
+    "profile_system": "Profile system",
+    "texture": "Texture",
+    "type": "Type",
+    "width": "Width",
+    "height": "Height",
+    "area": "Area",
+    "sizes_hint": "Sizes, system and texture come from the drawing with the button under the constructor"
+  }
+}

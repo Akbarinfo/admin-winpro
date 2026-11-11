@@ -167,5 +167,11 @@
     "failed_rows": "Ba'zi qatorlar yuklanmadi — ularning ro'yxati faylga yuklab olindi",
     "imported": "Fayl yuklandi",
     "failed_rows_no_file": "Ba'zi qatorlar yuklanmadi"
+  },
+  "webcc": {
+    "no_token": "Konstruktor ulanmagan: token berilmagan (VITE_WEBCC_TOKEN).",
+    "load_error": "Konstruktorni ishga tushirib bo'lmadi.",
+    "get_sizes": "O'lchamlarni konstruktordan olish",
+    "json_file": "Chizma fayli (JSON)"
   }
 }

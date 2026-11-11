@@ -1,0 +1,8 @@
+{
+  "name": "webcc",
+  "version": "1.16.14",
+  "description": "wikywin window constructor (webcc), vendored: the package can't be installed from npm. The bundle is self-contained (konva and the rest are inside), so no dependencies are listed.",
+  "main": "dist/webcc.min.js",
+  "types": "index.d.ts",
+  "private": true
+}

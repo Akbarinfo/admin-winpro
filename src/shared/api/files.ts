@@ -7,6 +7,8 @@ export type FileKind =
   | 'user'
   | 'product'
   | 'template'
+  /** Drawing templates (/templetes) — the old panel's spelling */
+  | 'templete'
   | 'connection'
   | 'profile'
   /** Pictures sent in feedback chats */

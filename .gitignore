@@ -32,3 +32,6 @@ dist-ssr
 .claude/settings.local.json
 CLAUDE.local.md
 graphify-out/
+
+# webcc bundle (vendor/webcc/dist) gitga tushadi
+!vendor/**/dist
