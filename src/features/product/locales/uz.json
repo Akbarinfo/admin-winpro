@@ -78,6 +78,11 @@
       "add": "Zichlagich qo'shish",
       "edit": "Zichlagichni tahrirlash"
     },
-    "waste": "Chiqindi, %"
+    "waste": "Chiqindi, %",
+    "filling": {
+      "title": "To'ldirish",
+      "add": "To'ldirish qo'shish",
+      "edit": "To'ldirishni tahrirlash"
+    }
   }
 }

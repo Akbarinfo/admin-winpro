@@ -56,6 +56,21 @@ export const SEAL_GROUP: ProductGroup = {
   loadForm: () => import('./forms/seal').then((m) => m.sealForm),
 }
 
-export const PRODUCT_GROUPS = [PROFILE_GROUP, SEAL_GROUP]
+/** Fillings: no series, no profile-system filter (layout/product/filling). */
+export const FILLING_GROUP: ProductGroup = {
+  key: 'filling',
+  groupType: 'FILLINGS',
+  title: 'product.filling.title',
+  addLabel: 'product.filling.add',
+  columns: { series: false, usefulPiece: false, wastePercent: false },
+  filters: { series: false, profileSystem: false },
+  excel: {
+    upload: '/v1/product/filling/upload',
+    template: '/v1/product/excel/filling/example',
+  },
+  loadForm: () => import('./forms/filling').then((m) => m.fillingForm),
+}
+
+export const PRODUCT_GROUPS = [PROFILE_GROUP, SEAL_GROUP, FILLING_GROUP]
 
 export const groupPath = (group: ProductGroup) => `/product/${group.key}`

@@ -137,3 +137,30 @@ export const emptySeal = (): SealForm => ({
   articleSpecificWeight: null,
   waste: null,
 })
+
+// ── Fillings (layout/product/filling/AddFillingType.js) ──
+
+/** Sizes and «Отход %» are required in the old filling form. */
+export const fillingSchema = z.object({
+  ...baseProductShape,
+  length: requiredNumber(),
+  width: requiredNumber(),
+  thickness: requiredNumber(),
+  articleSpecificWeight: optionalNumber(),
+  waste: requiredNumber(),
+  needCuttingOptimization: z.boolean(),
+})
+
+export type FillingForm = z.input<typeof fillingSchema>
+export type FillingValues = z.output<typeof fillingSchema>
+
+export const emptyFilling = (): FillingForm => ({
+  ...emptyBase(),
+  length: null,
+  width: null,
+  thickness: null,
+  articleSpecificWeight: null,
+  waste: null,
+  // Off for a new filling, as in the old form (profiles start with it on).
+  needCuttingOptimization: false,
+})

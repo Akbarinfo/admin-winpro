@@ -78,6 +78,11 @@
       "add": "Add seal",
       "edit": "Edit seal"
     },
-    "waste": "Waste, %"
+    "waste": "Waste, %",
+    "filling": {
+      "title": "Fillings",
+      "add": "Add filling",
+      "edit": "Edit filling"
+    }
   }
 }

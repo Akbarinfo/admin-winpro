@@ -74,8 +74,8 @@ export const NAV: NavGroup[] = [
     items: [
       { to: '/product/profile', label: 'product.profile.title', icon: Frame, status: 'ready' },
       { to: '/product/accessories', label: 'sidebar_menu_accessories', icon: Wrench },
-      { to: '/product/seal', label: 'product.seal.title', icon: Grip, status: 'new' },
-      { to: '/product/filling', label: 'sidebar_menu_filling', icon: Square },
+      { to: '/product/seal', label: 'product.seal.title', icon: Grip, status: 'ready' },
+      { to: '/product/filling', label: 'product.filling.title', icon: Square, status: 'new' },
     ],
   },
   {

@@ -130,7 +130,7 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali (`features/product/groups.ts`).
    Профили ✅ (ro'yxat, filtrlar, forma + tarjimalar `shared/translations`, narxlar qator ichida, Excel).
    Forma — bitta qolip `ProductFormPage` + har guruhning `forms/<guruh>.ts` (spec) va `<Guruh>Fields.tsx`.
-   Уплотнители ✅. Keyin: Заполнения, Фурнитура — `groups.ts`ga config + `forms/<guruh>`
+   Уплотнения ✅, Заполнение ✅. Keyin: Фурнитура — `groups.ts`ga config + `forms/<guruh>`
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.
