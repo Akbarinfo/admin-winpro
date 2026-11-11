@@ -48,6 +48,12 @@ export function ProductListPage({ group }: { group: ProductGroup }) {
   const openForm = (to: string) => navigate(to, { state: { from: pathname + search } })
 
   const { filters, setFilters, clear, active } = useTableFilters(group.key, PRODUCT_FILTERS)
+  // A filter the group doesn't have is sent as null, as the old pages did (even if the URL has it).
+  const groupFilters = {
+    ...filters,
+    productSeriesId: group.filters.series ? filters.productSeriesId : null,
+    profileSystemId: group.filters.profileSystem ? filters.profileSystemId : null,
+  }
 
   // The product whose prices are open under the list: ?profile.selected=41 (a link keeps it).
   // The old panel used ?selected= and ?page=; here every table's params carry its prefix.
@@ -71,7 +77,7 @@ export function ProductListPage({ group }: { group: ProductGroup }) {
     key: group.key,
     queryKey: productKeys.all,
     fetchPage: productApi.table,
-    filter: { ...filters, groupType: group.groupType },
+    filter: { ...groupFilters, groupType: group.groupType },
     defaultSort: DEFAULT_SORT,
   })
 
@@ -172,7 +178,7 @@ export function ProductListPage({ group }: { group: ProductGroup }) {
         title={t(group.title)}
         actions={
           <>
-            <ProductExcel group={group} filters={filters} />
+            <ProductExcel group={group} filters={groupFilters} />
             <Button icon={<Plus size={16} />} onClick={() => openForm(`${groupPath(group)}/add`)}>
               {t(group.addLabel)}
             </Button>

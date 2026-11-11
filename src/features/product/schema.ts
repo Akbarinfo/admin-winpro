@@ -1,23 +1,62 @@
 import { z } from 'zod'
 import { requiredNumber, requiredText } from '@/shared/lib/zod'
+import type { ProductDetail } from './types'
 
 const optionalNumber = () => z.number().nullable()
+
+// ── Common to every group: the part of the form the shell (ProductFormPage) renders ──
+
+/** Name, catalog name and article are required in every old product form. */
+export const baseProductShape = {
+  name: requiredText(),
+  nameInCatalog: requiredText(),
+  article: requiredText(),
+  profileType: z.string().nullable(),
+  unitId: z.number().nullable(),
+  supplierId: z.number().nullable(),
+  /** The saved drawing; kept unless a new file is chosen */
+  drawingId: z.number().nullable(),
+  drawing: z.instanceof(File).nullable(),
+}
+
+const baseSchema = z.object(baseProductShape)
+export type BaseProductForm = z.input<typeof baseSchema>
+/** What every group's validated values have at least: the shell reads these when saving. */
+export type BaseProductValues = z.output<typeof baseSchema>
+
+export const emptyBase = (): BaseProductForm => ({
+  name: '',
+  nameInCatalog: '',
+  article: '',
+  profileType: null,
+  unitId: null,
+  supplierId: null,
+  drawingId: null,
+  drawing: null,
+})
+
+export const baseToForm = (p: ProductDetail): BaseProductForm => ({
+  name: p.name ?? '',
+  nameInCatalog: p.nameInCatalog ?? '',
+  article: p.article ?? '',
+  profileType: p.profileType || null,
+  unitId: p.unitId ?? null,
+  supplierId: p.supplierId ?? null,
+  drawingId: p.drawingId ?? null,
+  drawing: null,
+})
+
+// ── Profiles (layout/product/profile/AddProfile.js) ──
 
 /** Profile types that have their own extra field (the old form showed them only for these). */
 export const TRACK_TYPES = ['FRAME']
 export const SASH_CLEARANCE_TYPES = ['SASH', 'MULLION']
 
-// The old form (layout/product/profile/AddProfile.js): name, catalog name, article and the three sizes
-// are required; the rest may stay empty.
+// The three sizes are required too; the rest may stay empty.
 export const profileSchema = z
   .object({
-    name: requiredText(),
-    nameInCatalog: requiredText(),
-    article: requiredText(),
-    profileType: z.string().nullable(),
+    ...baseProductShape,
     productSeriesId: z.number().nullable(),
-    unitId: z.number().nullable(),
-    supplierId: z.number().nullable(),
     length: requiredNumber(),
     width: requiredNumber(),
     thickness: requiredNumber(),
@@ -38,9 +77,6 @@ export const profileSchema = z
     isReinforced: z.boolean(),
     needCuttingOptimization: z.boolean(),
     isArcProfile: z.boolean(),
-    /** The saved drawing; kept unless a new file is chosen */
-    drawingId: z.number().nullable(),
-    drawing: z.instanceof(File).nullable(),
   })
   // A hidden field is neither checked nor sent.
   .superRefine((v, ctx) => {
@@ -62,13 +98,8 @@ export type ProfileForm = z.input<typeof profileSchema>
 export type ProfileValues = z.output<typeof profileSchema>
 
 export const emptyProfile = (): ProfileForm => ({
-  name: '',
-  nameInCatalog: '',
-  article: '',
-  profileType: null,
+  ...emptyBase(),
   productSeriesId: null,
-  unitId: null,
-  supplierId: null,
   length: null,
   width: null,
   thickness: null,
@@ -87,6 +118,22 @@ export const emptyProfile = (): ProfileForm => ({
   isReinforced: false,
   needCuttingOptimization: true,
   isArcProfile: false,
-  drawingId: null,
-  drawing: null,
+})
+
+// ── Seals (layout/product/seal/AddSealType.js) ──
+
+/** «Отход %» is required in the old seal form (any number, as there). */
+export const sealSchema = z.object({
+  ...baseProductShape,
+  articleSpecificWeight: optionalNumber(),
+  waste: requiredNumber(),
+})
+
+export type SealForm = z.input<typeof sealSchema>
+export type SealValues = z.output<typeof sealSchema>
+
+export const emptySeal = (): SealForm => ({
+  ...emptyBase(),
+  articleSpecificWeight: null,
+  waste: null,
 })

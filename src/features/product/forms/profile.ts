@@ -1,0 +1,78 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import {
+  baseToForm,
+  emptyProfile,
+  profileSchema,
+  type ProfileForm,
+  type ProfileValues,
+} from '../schema'
+import { ProfileFields } from './ProfileFields'
+import type { ProductFormSpec } from './types'
+
+export const profileForm: ProductFormSpec<ProfileForm, ProfileValues> = {
+  resolver: zodResolver(profileSchema),
+  empty: emptyProfile,
+  toForm: (p) => ({
+    ...emptyProfile(),
+    ...baseToForm(p),
+    productSeriesId: p.productSeriesId ?? null,
+    length: p.length ?? null,
+    width: p.width ?? null,
+    thickness: p.thickness ?? null,
+    sizeB: p.sizeB ?? null,
+    sizeN: p.sizeN ?? null,
+    sizeF: p.sizeF ?? null,
+    trackCount: p.trackCount ?? null,
+    sashClearance: p.sashClearance ?? null,
+    comeIn: p.comeIn ?? null,
+    articleSpecificWeight: p.articleSpecificWeight ?? null,
+    sectionArea: p.sectionArea ?? null,
+    momentJx: p.momentJx ?? null,
+    momentJy: p.momentJy ?? null,
+    // The old form showed (and sent back) 0 for these two when they were empty.
+    usefulPiece: p.usefulPiece || 0,
+    wastePercent: p.wastePercent || 0,
+    isReinforced: !!p.isReinforced,
+    needCuttingOptimization: !!p.needCuttingOptimization,
+    isArcProfile: !!p.isArcProfile,
+  }),
+  saveUrl: '/v1/product/profile',
+  editTitle: 'product.profile.edit',
+  withSeries: true,
+  /**
+   * The old form's body. Empty numbers go as null — the old form sent "" (Jackson reads both as null).
+   */
+  toBody: (v, { id, names }) => ({
+    id: id ?? null,
+    name: v.name,
+    nameInCatalog: v.nameInCatalog,
+    article: v.article,
+    length: v.length,
+    width: v.width,
+    thickness: v.thickness,
+    sizeB: v.sizeB,
+    sizeF: v.sizeF,
+    sizeN: v.sizeN,
+    comeIn: v.comeIn,
+    articleSpecificWeight: v.articleSpecificWeight,
+    momentJx: v.momentJx,
+    momentJy: v.momentJy,
+    sectionArea: v.sectionArea,
+    drawingId: v.drawingId,
+    productSeriesId: v.productSeriesId,
+    productSeriesName: names.productSeriesName,
+    unitId: v.unitId,
+    unitName: names.unitName,
+    supplierId: v.supplierId,
+    supplierName: names.supplierName,
+    profileType: v.profileType ?? '',
+    wastePercent: v.wastePercent,
+    usefulPiece: v.usefulPiece,
+    isArcProfile: v.isArcProfile,
+    isReinforced: v.isReinforced,
+    needCuttingOptimization: v.needCuttingOptimization,
+    trackCount: v.trackCount,
+    sashClearance: v.sashClearance,
+  }),
+  Fields: ProfileFields,
+}

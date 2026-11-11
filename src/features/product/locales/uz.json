@@ -72,6 +72,12 @@
       "prices": "Narxlar",
       "translations": "Tarjimalar",
       "import_title": "Import: {{what}}"
-    }
+    },
+    "seal": {
+      "title": "Zichlagichlar",
+      "add": "Zichlagich qo'shish",
+      "edit": "Zichlagichni tahrirlash"
+    },
+    "waste": "Chiqindi, %"
   }
 }

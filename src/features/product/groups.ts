@@ -1,3 +1,4 @@
+import type { AnyProductFormSpec } from './forms/types'
 import type { GroupType } from './types'
 
 /**
@@ -16,6 +17,8 @@ export type ProductGroup = {
   filters: { series: boolean; profileSystem: boolean }
   /** The group's own product import and its example file (prices and translations are common). */
   excel: { upload: string; template: string }
+  /** The group's own part of the form (forms/<group>.tsx), loaded with the form page. */
+  loadForm: () => Promise<AnyProductFormSpec>
 }
 
 /** Imports every group shares. */
@@ -35,8 +38,24 @@ export const PROFILE_GROUP: ProductGroup = {
     upload: '/v1/product/profiles/upload',
     template: '/v1/product/excel/profile/example',
   },
+  loadForm: () => import('./forms/profile').then((m) => m.profileForm),
 }
 
-export const PRODUCT_GROUPS = [PROFILE_GROUP]
+/** Seals: no series, no useful piece; a profile-system filter like profiles (layout/product/seal). */
+export const SEAL_GROUP: ProductGroup = {
+  key: 'seal',
+  groupType: 'SEAL',
+  title: 'product.seal.title',
+  addLabel: 'product.seal.add',
+  columns: { series: false, usefulPiece: false, wastePercent: false },
+  filters: { series: false, profileSystem: true },
+  excel: {
+    upload: '/v1/product/seal/upload',
+    template: '/v1/product/excel/seal/example',
+  },
+  loadForm: () => import('./forms/seal').then((m) => m.sealForm),
+}
+
+export const PRODUCT_GROUPS = [PROFILE_GROUP, SEAL_GROUP]
 
 export const groupPath = (group: ProductGroup) => `/product/${group.key}`

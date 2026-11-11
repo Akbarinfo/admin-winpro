@@ -72,6 +72,12 @@
       "prices": "Prices",
       "translations": "Translations",
       "import_title": "Import: {{what}}"
-    }
+    },
+    "seal": {
+      "title": "Seals",
+      "add": "Add seal",
+      "edit": "Edit seal"
+    },
+    "waste": "Waste, %"
   }
 }

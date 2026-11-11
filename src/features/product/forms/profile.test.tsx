@@ -4,7 +4,7 @@ import { toast } from 'sonner'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { api } from '@/shared/api/client'
 import { renderWithProviders } from '@/test/render'
-import { productRoutes } from './index'
+import { productRoutes } from '../index'
 
 // The real productApi runs against a mocked HTTP client, so endpoints and bodies are checked too.
 vi.mock('@/shared/api/client', () => ({

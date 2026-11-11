@@ -21,7 +21,7 @@ export type ProductRow = {
 /** An item of /v1/product/enum/article/type/{groupType}; `name` is the enum value. */
 export type ArticleType = { id: number | string; name: string }
 
-/** GET /v1/product/{id} — the fields the profile form uses. */
+/** GET /v1/product/{id} — the fields the product forms use. */
 export type ProductDetail = {
   id: number
   name: string
@@ -53,6 +53,8 @@ export type ProductDetail = {
   needCuttingOptimization?: boolean | null
   isArcProfile?: boolean | null
   drawingId?: number | null
+  /** «Отход %» of seals and fillings */
+  waste?: number | null
 }
 
 /** Names of the chosen series, unit and supplier — the old form sent them next to the ids. */
