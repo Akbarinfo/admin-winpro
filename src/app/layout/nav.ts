@@ -77,7 +77,7 @@ export const NAV: NavGroup[] = [
         to: '/product/accessories',
         label: 'product.accessories.title',
         icon: Wrench,
-        status: 'new',
+        status: 'ready',
       },
       { to: '/product/seal', label: 'product.seal.title', icon: Grip, status: 'ready' },
       { to: '/product/filling', label: 'product.filling.title', icon: Square, status: 'ready' },
@@ -114,7 +114,7 @@ export const NAV: NavGroup[] = [
     items: [
       { to: '/user', label: 'users.title', icon: Users, status: 'ready' },
       { to: '/mobile_user', label: 'mobileUsers.title', icon: Smartphone, status: 'ready' },
-      { to: '/feedback', label: 'nav.feedback', icon: MessageSquare },
+      { to: '/feedback', label: 'feedback.title', icon: MessageSquare, status: 'new' },
     ],
   },
   {

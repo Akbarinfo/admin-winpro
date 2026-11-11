@@ -131,7 +131,8 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Профили ✅ (ro'yxat, filtrlar, forma + tarjimalar `shared/translations`, narxlar qator ichida, Excel).
    Forma — bitta qolip `ProductFormPage` + har guruhning `forms/<guruh>.ts` (spec) va `<Guruh>Fields.tsx`.
    Уплотнения ✅, Заполнение ✅, Фурнитуры ✅ (podtip, ruchka rasmi). 5-bosqich tugadi.
-6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar
+6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar.
+   Feedback ✅ (chat: `/feedback?chat=<userId>`, admin xabari `userId: 10` — eski panel kabi)
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.
 

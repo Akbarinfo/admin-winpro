@@ -1,0 +1,21 @@
+{
+  "feedback": {
+    "title": "Fikr-mulohaza",
+    "chats": "Foydalanuvchilar",
+    "empty_chats": "Hozircha xabar yo'q",
+    "choose": "Yozishmani ochish uchun foydalanuvchini tanlang",
+    "empty_chat": "Bu yozishmada hozircha xabar yo'q",
+    "unread": "O'qilmagan: {{count}}",
+    "message": "Xabar",
+    "placeholder": "Xabar yozing…",
+    "send": "Yuborish",
+    "send_image": "Rasm yuborish",
+    "image": "Rasm",
+    "caption": "Izoh",
+    "read": "O'qilgan",
+    "delivered": "Yuborilgan",
+    "back": "Ro'yxatga",
+    "refresh": "Yangilash",
+    "open_image": "Rasmni ochish"
+  }
+}

@@ -2,7 +2,15 @@ import { env } from '@/shared/config/env'
 
 /** Folders of /v1/file/{kind}/{id} used by the old panel. */
 export type FileKind =
-  'supplier' | 'texture' | 'user' | 'product' | 'template' | 'connection' | 'profile'
+  | 'supplier'
+  | 'texture'
+  | 'user'
+  | 'product'
+  | 'template'
+  | 'connection'
+  | 'profile'
+  /** Pictures sent in feedback chats */
+  | 'message/img'
 
 /** URL of a stored file (logo, texture image…), or undefined when there is none. Public, no token needed. */
 export const fileUrl = (kind: FileKind, id: number | string | null | undefined) =>

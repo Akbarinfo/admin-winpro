@@ -1,0 +1,21 @@
+{
+  "feedback": {
+    "title": "Feedback",
+    "chats": "Users",
+    "empty_chats": "No messages yet",
+    "choose": "Choose a user to open the conversation",
+    "empty_chat": "No messages in this conversation yet",
+    "unread": "Unread: {{count}}",
+    "message": "Message",
+    "placeholder": "Write a message…",
+    "send": "Send",
+    "send_image": "Send an image",
+    "image": "Image",
+    "caption": "Caption",
+    "read": "Read",
+    "delivered": "Sent",
+    "back": "Back to list",
+    "refresh": "Refresh",
+    "open_image": "Open image"
+  }
+}

@@ -4,6 +4,7 @@ import { AuthLayout, authRoutes } from '@/features/auth'
 import { countryRoutes } from '@/features/countries'
 import { currencyRoutes } from '@/features/currency'
 import { exchangeRoutes } from '@/features/exchange'
+import { feedbackRoutes } from '@/features/feedback'
 import { languageRoutes } from '@/features/languages'
 import { materialTypeRoutes } from '@/features/materialType'
 import { mobileUserRoutes } from '@/features/mobileUsers'
@@ -40,6 +41,7 @@ const featureRoutes = [
   ...userRoutes,
   ...mobileUserRoutes,
   ...productRoutes,
+  ...feedbackRoutes,
 ]
 
 // Dev-only pages; lazy so they never reach the production bundle.
