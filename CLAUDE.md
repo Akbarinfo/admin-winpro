@@ -126,13 +126,14 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Поставщики, Услуги мастерской, Тарифные функции, Текстуры (+ соответствия; `/texturegroup` → `/textures`),
    Категория продаж (`TreeSelect` — profil tizimlari daraxti, `shared/lookups/profileSystems`).
    Страны (alohida forma sahifasi + kod provayderlari), Версии приложения, Пользователи, Mobile users.
-   4-bosqich oddiy CRUD'lari tugadi. Qolgan oddiy ro'yxatlar (feedback, price-requests) 6-bosqich bilan birga.
+   4-bosqich oddiy CRUD'lari tugadi. Feedback va price-requests 6-bosqichda qilindi.
 5. Mahsulot moduli — ✅: avval profil, keyin qolgan 3 guruh config orqali (`features/product/groups.ts`).
    Профили ✅ (ro'yxat, filtrlar, forma + tarjimalar `shared/translations`, narxlar qator ichida, Excel).
    Forma — bitta qolip `ProductFormPage` + har guruhning `forms/<guruh>.ts` (spec) va `<Guruh>Fields.tsx`.
    Уплотнения ✅, Заполнение ✅, Фурнитуры ✅ (podtip, ruchka rasmi). 5-bosqich tugadi.
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar.
-   Feedback ✅ (chat: `/feedback?chat=<userId>`, admin xabari `userId: 10` — eski panel kabi)
+   Feedback ✅ (chat: `/feedback?chat=<userId>`, admin xabari `userId: 10` — eski panel kabi).
+   Запросы цен ✅ (`GET /v1/price-requests` — DataTables emas, sahifa 0 dan; ommaviy tasdiqlash/rad etish)
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.
 

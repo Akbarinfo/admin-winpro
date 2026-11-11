@@ -104,7 +104,7 @@ export const NAV: NavGroup[] = [
   {
     title: 'nav.group_integrations',
     items: [
-      { to: '/price-requests', label: 'sidebar_price_requests', icon: BellRing },
+      { to: '/price-requests', label: 'priceRequests.title', icon: BellRing, status: 'new' },
       { to: '/integrations/akfa', label: 'sidebar_menu_integrations_akfa', icon: Plug },
       { to: '/integrations/unit', label: 'nav.akfa_units', icon: Scale },
     ],
@@ -114,7 +114,7 @@ export const NAV: NavGroup[] = [
     items: [
       { to: '/user', label: 'users.title', icon: Users, status: 'ready' },
       { to: '/mobile_user', label: 'mobileUsers.title', icon: Smartphone, status: 'ready' },
-      { to: '/feedback', label: 'feedback.title', icon: MessageSquare, status: 'new' },
+      { to: '/feedback', label: 'feedback.title', icon: MessageSquare, status: 'ready' },
     ],
   },
   {

@@ -1,0 +1,41 @@
+{
+  "priceRequests": {
+    "title": "Price requests",
+    "product": "Product",
+    "supplier": "Supplier",
+    "texture": "Texture",
+    "current_price": "Current price",
+    "requested_price": "Requested price",
+    "change": "Change: {{value}}",
+    "created_at": "Date",
+    "status_label": "Status",
+    "all_statuses": "All statuses",
+    "search_placeholder": "Product, article, supplier",
+    "empty": "No requests found",
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "select": "Select request: {{name}}",
+    "select_all": "Select all pending",
+    "selected_count": "Selected: {{count}}",
+    "approve": "Approve",
+    "reject": "Reject",
+    "approve_all": "Approve selected",
+    "reject_all": "Reject selected",
+    "approve_confirm_title": "Approve the request?",
+    "approve_confirm_text": "The price of «{{name}}» becomes {{price}}.",
+    "approve_all_confirm_title": "Approve the selected?",
+    "approve_all_confirm_text": "Requests to approve: {{count}}.",
+    "approve_success": "Request approved",
+    "approve_all_success": "Selected requests approved",
+    "reject_success": "Request rejected",
+    "reject_all_success": "Selected requests rejected",
+    "partly": "Done {{done}} of {{total}}",
+    "reject_modal_title": "Reason for rejection",
+    "reject_all_modal_title": "Reason for rejection ({{count}} requests)",
+    "reject_reason": "Reason",
+    "reject_reason_placeholder": "Enter the reason for rejection…"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "priceRequests": {
+    "title": "Narx so'rovlari",
+    "product": "Mahsulot",
+    "supplier": "Ta'minotchi",
+    "texture": "Tekstura",
+    "current_price": "Joriy narx",
+    "requested_price": "So'ralgan narx",
+    "change": "O'zgarish: {{value}}",
+    "created_at": "Sana",
+    "status_label": "Holat",
+    "all_statuses": "Barcha holatlar",
+    "search_placeholder": "Mahsulot, artikul, ta'minotchi",
+    "empty": "So'rovlar topilmadi",
+    "status": {
+      "pending": "Kutilmoqda",
+      "approved": "Tasdiqlangan",
+      "rejected": "Rad etilgan"
+    },
+    "select": "So'rovni tanlash: {{name}}",
+    "select_all": "Kutilayotganlarning hammasini tanlash",
+    "selected_count": "Tanlangan: {{count}}",
+    "approve": "Tasdiqlash",
+    "reject": "Rad etish",
+    "approve_all": "Tanlanganlarni tasdiqlash",
+    "reject_all": "Tanlanganlarni rad etish",
+    "approve_confirm_title": "So'rov tasdiqlansinmi?",
+    "approve_confirm_text": "«{{name}}» narxi {{price}} bo'ladi.",
+    "approve_all_confirm_title": "Tanlanganlar tasdiqlansinmi?",
+    "approve_all_confirm_text": "Tasdiqlanadigan so'rovlar: {{count}}.",
+    "approve_success": "So'rov tasdiqlandi",
+    "approve_all_success": "Tanlangan so'rovlar tasdiqlandi",
+    "reject_success": "So'rov rad etildi",
+    "reject_all_success": "Tanlangan so'rovlar rad etildi",
+    "partly": "{{total}} tadan {{done}} tasi bajarildi",
+    "reject_modal_title": "Rad etish sababi",
+    "reject_all_modal_title": "Rad etish sababi ({{count}} ta so'rov)",
+    "reject_reason": "Sabab",
+    "reject_reason_placeholder": "Rad etish sababini yozing…"
+  }
+}

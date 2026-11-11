@@ -1,0 +1,41 @@
+{
+  "priceRequests": {
+    "title": "Запросы цен",
+    "product": "Продукт",
+    "supplier": "Поставщик",
+    "texture": "Текстура",
+    "current_price": "Текущая цена",
+    "requested_price": "Запрашиваемая цена",
+    "change": "Изменение: {{value}}",
+    "created_at": "Дата",
+    "status_label": "Статус",
+    "all_statuses": "Все статусы",
+    "search_placeholder": "Продукт, артикул, поставщик",
+    "empty": "Запросы не найдены",
+    "status": {
+      "pending": "Ожидает",
+      "approved": "Одобрен",
+      "rejected": "Отклонён"
+    },
+    "select": "Выбрать запрос: {{name}}",
+    "select_all": "Выбрать все ожидающие",
+    "selected_count": "Выбрано: {{count}}",
+    "approve": "Одобрить",
+    "reject": "Отклонить",
+    "approve_all": "Одобрить выбранные",
+    "reject_all": "Отклонить выбранные",
+    "approve_confirm_title": "Одобрить запрос?",
+    "approve_confirm_text": "Цена «{{name}}» станет {{price}}.",
+    "approve_all_confirm_title": "Одобрить выбранные?",
+    "approve_all_confirm_text": "Будет одобрено запросов: {{count}}.",
+    "approve_success": "Запрос одобрен",
+    "approve_all_success": "Выбранные запросы одобрены",
+    "reject_success": "Запрос отклонён",
+    "reject_all_success": "Выбранные запросы отклонены",
+    "partly": "Выполнено {{done}} из {{total}}",
+    "reject_modal_title": "Причина отклонения",
+    "reject_all_modal_title": "Причина отклонения (запросов: {{count}})",
+    "reject_reason": "Причина",
+    "reject_reason_placeholder": "Введите причину отклонения…"
+  }
+}
