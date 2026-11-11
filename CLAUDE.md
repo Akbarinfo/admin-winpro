@@ -127,10 +127,10 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Категория продаж (`TreeSelect` — profil tizimlari daraxti, `shared/lookups/profileSystems`).
    Страны (alohida forma sahifasi + kod provayderlari), Версии приложения, Пользователи, Mobile users.
    4-bosqich oddiy CRUD'lari tugadi. Qolgan oddiy ro'yxatlar (feedback, price-requests) 6-bosqich bilan birga.
-5. Mahsulot moduli: avval profil, keyin qolgan 3 guruh config orqali (`features/product/groups.ts`).
+5. Mahsulot moduli — ✅: avval profil, keyin qolgan 3 guruh config orqali (`features/product/groups.ts`).
    Профили ✅ (ro'yxat, filtrlar, forma + tarjimalar `shared/translations`, narxlar qator ichida, Excel).
    Forma — bitta qolip `ProductFormPage` + har guruhning `forms/<guruh>.ts` (spec) va `<Guruh>Fields.tsx`.
-   Уплотнения ✅, Заполнение ✅. Keyin: Фурнитура — `groups.ts`ga config + `forms/<guruh>`
+   Уплотнения ✅, Заполнение ✅, Фурнитуры ✅ (podtip, ruchka rasmi). 5-bosqich tugadi.
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.

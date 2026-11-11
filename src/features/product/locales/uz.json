@@ -83,6 +83,13 @@
       "title": "To'ldirish",
       "add": "To'ldirish qo'shish",
       "edit": "To'ldirishni tahrirlash"
-    }
+    },
+    "accessories": {
+      "title": "Aksessuarlar",
+      "add": "Aksessuar qo'shish",
+      "edit": "Aksessuarni tahrirlash"
+    },
+    "subtype": "Kichik tur",
+    "handle": "Tutqich"
   }
 }

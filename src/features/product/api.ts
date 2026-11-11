@@ -17,6 +17,7 @@ type SaveResponse = { id?: number; error?: string }
 export const productKeys = {
   all: ['product'] as const,
   articleTypes: (groupType: GroupType) => ['product', 'article-types', groupType] as const,
+  subtypes: ['product', 'article-subtypes'] as const,
 }
 
 // Endpoints and bodies match the old panel (layout/product/<group>/*.js).
@@ -30,6 +31,10 @@ export const productApi = {
     api
       .get<ArticleType[]>(`/v1/product/enum/article/type/${groupType}`, { signal })
       .then((r) => r.data),
+
+  /** Subtypes of fittings (HANDLE…), enum values translated by the legacy keys. */
+  subtypes: (signal?: AbortSignal) =>
+    api.get<ArticleType[]>('/v1/product/enum/article/subtype', { signal }).then((r) => r.data),
 
   /** Makes a copy of the product and returns it — the old panel opened the copy's form next. */
   copy: (id: number) => api.post<{ id: number }>(`/v1/product/copy/${id}`).then((r) => r.data),

@@ -83,6 +83,13 @@
       "title": "Fillings",
       "add": "Add filling",
       "edit": "Edit filling"
-    }
+    },
+    "accessories": {
+      "title": "Accessories",
+      "add": "Add accessory",
+      "edit": "Edit accessory"
+    },
+    "subtype": "Subtype",
+    "handle": "Handle"
   }
 }

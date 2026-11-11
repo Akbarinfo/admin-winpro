@@ -55,6 +55,9 @@ export type ProductDetail = {
   drawingId?: number | null
   /** «Отход %» of seals and fillings */
   waste?: number | null
+  /** Accessories: the subtype of fittings (HANDLE…) and the handle picture's name */
+  subtype?: string | null
+  handleType?: string | null
 }
 
 /** Names of the chosen series, unit and supplier — the old form sent them next to the ids. */

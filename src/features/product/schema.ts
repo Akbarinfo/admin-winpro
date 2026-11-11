@@ -164,3 +164,27 @@ export const emptyFilling = (): FillingForm => ({
   // Off for a new filling, as in the old form (profiles start with it on).
   needCuttingOptimization: false,
 })
+
+// ── Accessories (layout/product/accessories/AddAccessoriesType.js) ──
+
+/** Fittings have a subtype; a handle (subtype HANDLE) has a handle picture. */
+export const FITTINGS_TYPE = 'FITTINGS'
+export const HANDLE_SUBTYPE = 'HANDLE'
+
+export const accessoriesSchema = z.object({
+  ...baseProductShape,
+  articleSpecificWeight: optionalNumber(),
+  subtype: z.string().nullable(),
+  handleType: z.string().nullable(),
+})
+
+export type AccessoriesForm = z.input<typeof accessoriesSchema>
+export type AccessoriesValues = z.output<typeof accessoriesSchema>
+
+/** A new accessory starts with "" subtype and handle, as the old form did (they're sent so). */
+export const emptyAccessories = (): AccessoriesForm => ({
+  ...emptyBase(),
+  articleSpecificWeight: null,
+  subtype: '',
+  handleType: '',
+})

@@ -71,6 +71,21 @@ export const FILLING_GROUP: ProductGroup = {
   loadForm: () => import('./forms/filling').then((m) => m.fillingForm),
 }
 
-export const PRODUCT_GROUPS = [PROFILE_GROUP, SEAL_GROUP, FILLING_GROUP]
+/** Accessories: a profile-system filter like profiles, no series (layout/product/accessories). */
+export const ACCESSORIES_GROUP: ProductGroup = {
+  key: 'accessories',
+  groupType: 'ACCESSORIES',
+  title: 'product.accessories.title',
+  addLabel: 'product.accessories.add',
+  columns: { series: false, usefulPiece: false, wastePercent: false },
+  filters: { series: false, profileSystem: true },
+  excel: {
+    upload: '/v1/product/accessories/upload',
+    template: '/v1/product/excel/accessories/example',
+  },
+  loadForm: () => import('./forms/accessories').then((m) => m.accessoriesForm),
+}
+
+export const PRODUCT_GROUPS = [PROFILE_GROUP, SEAL_GROUP, FILLING_GROUP, ACCESSORIES_GROUP]
 
 export const groupPath = (group: ProductGroup) => `/product/${group.key}`
