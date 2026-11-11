@@ -6,7 +6,7 @@ import { toast } from 'sonner'
 import { isClientError } from '@/shared/api/errors'
 import type { FilterValues } from '@/shared/hooks/tableFilters'
 import { base64ToBlob, saveBlob, XLSX_TYPE } from '@/shared/lib/download'
-import { TRANSLATION_EXCEL, translationKeys } from '@/shared/translations'
+import { TRANSLATION_EXCEL, countryTranslationKeys } from '@/shared/translations'
 import { ExcelUploadDialog, Menu } from '@/shared/ui'
 import { priceKeys, productApi, productKeys } from './api'
 import type { PRODUCT_FILTERS } from './filters'
@@ -69,7 +69,7 @@ export function ProductExcel({
     await Promise.all([
       queryClient.invalidateQueries({ queryKey: productKeys.all }),
       queryClient.invalidateQueries({ queryKey: priceKeys.all }),
-      queryClient.invalidateQueries({ queryKey: translationKeys.all }),
+      queryClient.invalidateQueries({ queryKey: countryTranslationKeys.all }),
     ])
   }
 

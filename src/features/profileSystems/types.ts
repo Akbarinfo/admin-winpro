@@ -26,3 +26,44 @@ export type ProfileSystem = {
 
 /** An item of the enum lists (/enum/sliding/type, /enum/client/scope). */
 export type EnumItem = { id?: number; name: string }
+
+/** A row of POST /v1/profile/system/specification/table. Enum values are legacy i18n keys. */
+export type SpecificationRow = {
+  id: number
+  priority?: number | null
+  article?: string | null
+  name?: string | null
+  applicationType?: string | null
+  sideType?: string | null
+}
+
+/** GET /v1/profile/system/specification/{id}. */
+export type Specification = {
+  id: number
+  priority?: number | null
+  productId?: number | null
+  supplierId?: number | null
+  applicationType?: string | null
+  sideType?: string | null
+}
+
+/** A row of POST /v1/profile/system/accessories/table. */
+export type SystemAccessoryRow = {
+  id: number
+  accessoryName?: string | null
+  openingType?: string | null
+  handleType?: string | null
+}
+
+/** GET /v1/profile/system/accessories/{id}. */
+export type SystemAccessory = {
+  id: number
+  accessoryId?: number | null
+  openingType?: string | null
+  handleType?: string | null
+  productId?: number | null
+  supplierId?: number | null
+}
+
+/** A product found by /v1/product/article/product, or an accessory of /v1/accessories/list. */
+export type NamedOption = { id: number; name: string }

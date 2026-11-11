@@ -34,8 +34,13 @@
     "tab_spec": "Specification",
     "tab_accessories": "Hardware",
     "tab_filling": "Filling",
-    "next_step": "This section is migrated in the next step",
     "filling_hint": "Changed via «Edit» — as in the old panel.",
+    "characteristics": "Characteristics",
+    "characteristic": "Characteristic",
+    "characteristic_value": "Value",
+    "add_characteristic": "Add a row",
+    "remove_characteristic": "Remove the row",
+    "no_characteristics": "No characteristics",
     "sliding_type_option": {
       "NONE": "Not sliding",
       "FRAME_PER_TRACK": "Simple — a separate frame per track",
@@ -48,6 +53,32 @@
     "visibility_option": {
       "PUBLIC": "Public",
       "PRIVATE": "Private"
+    },
+    "spec": {
+      "add": "Add profile",
+      "edit": "Edit system profile",
+      "empty": "No profiles in the system",
+      "search": "Search by article or name",
+      "priority": "Priority",
+      "article": "Article",
+      "name": "Name",
+      "application": "Application",
+      "side": "Side",
+      "supplier": "Supplier",
+      "all_suppliers": "All suppliers",
+      "priority_hint": "The row with the lowest priority is the default profile for its application",
+      "product_type_hint": "Only products of type «{{type}}» are shown"
+    },
+    "acc": {
+      "add": "Add accessory",
+      "edit": "Edit system accessory",
+      "empty": "No accessories in the system",
+      "search": "Search accessories",
+      "accessory": "Accessory",
+      "name": "Accessory name",
+      "opening": "Opening",
+      "handle": "Handle",
+      "up": "Move up"
     }
   }
 }

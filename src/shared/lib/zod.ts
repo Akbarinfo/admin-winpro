@@ -21,5 +21,18 @@ export const requiredNumber = () =>
 export const positiveNumber = () =>
   requiredNumber().pipe(z.number().positive('validation.positive'))
 
+/** Required choice from a Combobox of names (an enum value): string | null → string. */
+export const requiredChoice = () =>
+  z
+    .string()
+    .nullable()
+    .transform((value, ctx) => {
+      if (!value) {
+        ctx.addIssue({ code: 'custom', message: 'validation.required' })
+        return z.NEVER
+      }
+      return value
+    })
+
 /** Required trimmed text. */
 export const requiredText = () => z.string().trim().min(1, 'validation.required')

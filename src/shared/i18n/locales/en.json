@@ -145,7 +145,13 @@
     "enable_for": "Own text for {{country}}",
     "save_error": "The record was saved, but its translations were not. Check the translations table and save again.",
     "import": "Import from Excel",
-    "import_hint": "The table reloads from the server: unsaved edits in it are lost."
+    "import_hint": "The table reloads from the server: unsaved edits in it are lost.",
+    "key": "Key",
+    "key_placeholder": "Find or type a key…",
+    "key_view": "View the key's translation",
+    "key_create": "Create the key's translation",
+    "key_view_title": "Key translation",
+    "key_create_title": "New translation"
   },
   "excel": {
     "file": "Excel file",

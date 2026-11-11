@@ -1,16 +1,17 @@
 import { api } from '@/shared/api/client'
+import { fetchLanguages, languageKeys } from '@/shared/lookups/languages'
 import type { LanguageValues } from './schema'
 import type { Language } from './types'
 
-export const languageKeys = { all: ['language'] as const }
+// Same key as the shared lookup (the translation-key dialog): saving here refreshes it.
+export { languageKeys }
 
 const path = (code: string) => `/v1/language/${encodeURIComponent(code)}`
 
 // Endpoints and bodies match the old panel (layout/language, services/languageService.js).
 // There is no /table endpoint: the whole list comes at once.
 export const languageApi = {
-  list: (signal?: AbortSignal) =>
-    api.get<Language[]>('/v1/language', { signal }).then((r) => r.data),
+  list: fetchLanguages,
 
   get: (code: string, signal?: AbortSignal) =>
     api.get<Language>(path(code), { signal }).then((r) => r.data),

@@ -35,6 +35,11 @@ type ComboboxProps<T> = {
   ref?: Ref<HTMLInputElement>
   /** Accessible name when there is no <label> — e.g. a filter in a table toolbar. */
   'aria-label'?: string
+  /**
+   * The typed text, for a list searched on the backend (too long to load whole). With it the
+   * options are shown as given — the caller already filtered them. Called with '' on close.
+   */
+  onQueryChange?: (query: string) => void
 }
 
 /** Searchable single select. Typing filters the options; ↑ ↓ Enter Escape work as in a native select. */
@@ -56,6 +61,7 @@ export function Combobox<T>({
   invalid,
   ref,
   'aria-label': ariaLabel,
+  onQueryChange,
 }: ComboboxProps<T>) {
   const { t } = useTranslation()
   const autoId = useId()
@@ -69,10 +75,17 @@ export function Combobox<T>({
   const [query, setQuery] = useState('')
   const [active, setActive] = useState(0)
 
+  const searchedOutside = onQueryChange !== undefined
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
-    return q ? options.filter((o) => getLabel(o).toLowerCase().includes(q)) : options
-  }, [options, query, getLabel])
+    if (!q || searchedOutside) return options
+    return options.filter((o) => getLabel(o).toLowerCase().includes(q))
+  }, [options, query, getLabel, searchedOutside])
+
+  // A list searched outside follows the typed text (and '' once the list closes).
+  useEffect(() => {
+    onQueryChange?.(query)
+  }, [query, onQueryChange])
 
   const close = () => {
     setOpen(false)

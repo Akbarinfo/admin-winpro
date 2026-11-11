@@ -36,6 +36,28 @@ function Harness({
 }
 
 describe('Combobox', () => {
+  it('leaves filtering to the caller when it searches on the backend', async () => {
+    const onQueryChange = vi.fn()
+    render(
+      <Combobox
+        options={OPTIONS}
+        value={null}
+        onChange={vi.fn()}
+        getKey={(o) => o.id}
+        getLabel={(o) => o.name}
+        onQueryChange={onQueryChange}
+      />,
+    )
+    const input = screen.getByRole('combobox')
+    await userEvent.type(input, 'reh')
+    expect(onQueryChange).toHaveBeenLastCalledWith('reh')
+    // the options are shown as given: the caller's search may match more than the label
+    expect(screen.getAllByRole('option')).toHaveLength(3)
+
+    await userEvent.keyboard('{Escape}')
+    expect(onQueryChange).toHaveBeenLastCalledWith('')
+  })
+
   it('filters options by typed text and selects with a click', async () => {
     const onChange = vi.fn()
     render(<Harness onChange={onChange} />)

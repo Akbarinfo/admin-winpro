@@ -40,6 +40,7 @@ import {
   VISIBILITIES,
   type ProfileSystemForm,
 } from './schema'
+import { CharacteristicsFields } from './CharacteristicsFields'
 import { flattenWithPath } from './tree'
 import type { ProfileSystem } from './types'
 
@@ -63,6 +64,11 @@ const toForm = (s: ProfileSystem): ProfileSystemForm => ({
   isVisible: !!s.isVisible,
   isDefault: !!s.isDefault,
   isTesting: !!s.isTesting,
+  characteristics: (s.profileSystemFullInfo?.characteristics ?? []).map((c) => ({
+    ...c,
+    key: c.key ?? '',
+    value: c.value ?? '',
+  })),
 })
 
 /** The system's own name per country (entity type PROFILE_SYSTEM). */
@@ -72,7 +78,7 @@ type IdName = { id: number; name: string }
 
 /**
  * Add or edit a profile system (the old ModalAddProfileSystem). Saves the system, then its
- * characteristics (kept as loaded until they get their own editor), then its translations.
+ * characteristics, then its translations.
  */
 export function SystemFormDialog({ id, onClose }: { id?: string; onClose: () => void }) {
   const { t } = useTranslation()
@@ -113,13 +119,14 @@ export function SystemFormDialog({ id, onClose }: { id?: string; onClose: () => 
     onSaved: onClose,
     // The system, then its characteristics and translations: a new one has its id only after saving.
     save: async (values, recordId) => {
-      const fullInfo = entity?.profileSystemFullInfo
-      const characteristics = fullInfo?.characteristics ?? []
-      const saved = await profileSystemApi.save(values, characteristics, recordId)
+      const saved = await profileSystemApi.save(values, recordId)
       const systemId = recordId ? Number(recordId) : saved?.id
       if (systemId === undefined) return
-      if (characteristics.length > 0)
-        await profileSystemApi.saveFullInfo(fullInfo?.id ?? null, systemId, characteristics)
+      const fullInfoId = entity?.profileSystemFullInfo?.id ?? null
+      // The old modal skipped an empty list, so the last row could never be removed:
+      // a system that has its record gets the empty list too.
+      if (values.characteristics.length > 0 || fullInfoId !== null)
+        await profileSystemApi.saveFullInfo(fullInfoId, systemId, values.characteristics)
       try {
         await translations.save(systemId)
       } catch (error) {
@@ -314,6 +321,8 @@ export function SystemFormDialog({ id, onClose }: { id?: string; onClose: () => 
               />
             )}
           </FormField>
+
+          <CharacteristicsFields control={form.control} />
 
           <div className="grid gap-2">
             <h3 className="font-semibold">{t('translations.title')}</h3>

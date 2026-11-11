@@ -4,16 +4,31 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { ChevronsDownUp, ChevronsUpDown, Layers3, Pencil, Plus, Trash2 } from 'lucide-react'
 import { useConfirmDelete } from '@/shared/hooks/useConfirmDelete'
+import { useServerTable } from '@/shared/hooks/useServerTable'
+import { useTableFilters } from '@/shared/hooks/useTableFilters'
 import { useFillingArticles, useFillingGroups } from '@/shared/lookups/fillings'
 import { useProfileSystemTree } from '@/shared/lookups/profileSystems'
 import { Alert, Button, Card, IconButton, SearchInput, Spinner, Tabs } from '@/shared/ui'
-import { profileSystemApi, profileSystemKeys } from './api'
+import {
+  profileSystemApi,
+  profileSystemKeys,
+  specificationApi,
+  specificationKeys,
+  systemAccessoryApi,
+  systemAccessoryKeys,
+} from './api'
+import { SpecificationTab } from './SpecificationTab'
+import { SystemAccessoriesTab } from './SystemAccessoriesTab'
 import { SystemFormDialog } from './SystemFormDialog'
 import { SystemTree } from './SystemTree'
 import { branchIds, filterTree, findNode, pathTo } from './tree'
+import type { SpecificationRow, SystemAccessoryRow } from './types'
 
 const TABS = ['spec', 'accessories', 'filling'] as const
 type Tab = (typeof TABS)[number]
+/** URL prefixes of the tabs' tables: ?spec.page=2&spec.supplierId=4&acc.q=… */
+const TABLE_KEYS = ['spec', 'acc']
+const SPEC_FILTERS = { supplierId: 'number' } as const
 
 /**
  * Profile systems (the old ProfileSystemPageLayout): the tree on the left; the chosen system on
@@ -35,7 +50,20 @@ export function ProfileSystemsPage() {
       },
       { replace: true },
     )
-  const select = (id: number | null) => setParam('system', id === null ? null : String(id))
+  // Another system: its tables start from page 1, unfiltered — the old one's page may not exist.
+  const select = (id: number | null) =>
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev)
+        for (const key of [...next.keys()]) {
+          if (TABLE_KEYS.some((table) => key.startsWith(`${table}.`))) next.delete(key)
+        }
+        if (id === null) next.delete('system')
+        else next.set('system', String(id))
+        return next
+      },
+      { replace: true },
+    )
 
   const tree = useProfileSystemTree()
   const nodes = useMemo(() => tree.data ?? [], [tree.data])
@@ -79,89 +107,92 @@ export function ProfileSystemsPage() {
       ? ''
       : (pathTo(nodes, selectedId) ?? []).map((id) => findNode(nodes, id)?.name).join(' / ')
 
+  // Two cards side by side, each as tall as its content; on a wide screen neither grows past the
+  // window — the tree and the tab's table scroll inside their cards.
   return (
-    <div className="flex min-h-full flex-col lg:h-full lg:min-h-0">
-      <Card className="grid overflow-hidden lg:min-h-0 lg:flex-1 lg:grid-cols-[320px_minmax(0,1fr)] lg:grid-rows-[minmax(0,1fr)]">
-        <section
-          aria-labelledby="ps-title"
-          className="flex min-h-0 flex-col border-line bg-surface-2 max-lg:max-h-[420px] max-lg:border-b lg:border-r"
-        >
-          <div className="grid gap-2.5 border-b border-line p-3.5">
-            <div className="flex items-center gap-1.5">
-              <h1 id="ps-title" className="flex-1 text-base font-semibold">
-                {t('profileSystems.title')}
-              </h1>
-              <IconButton
-                bordered
-                label={t(allOpen ? 'profileSystems.collapse' : 'profileSystems.expand')}
-                disabled={allBranches.length === 0 || searching}
-                onClick={() => setExpanded(allOpen ? new Set() : new Set(allBranches))}
-              >
-                {allOpen ? <ChevronsDownUp size={16} /> : <ChevronsUpDown size={16} />}
-              </IconButton>
-              <Button
-                size="sm"
-                className="size-8 px-0"
-                aria-label={t('profileSystems.add')}
-                title={t('profileSystems.add')}
-                icon={<Plus size={16} />}
-                onClick={() => setDialog('new')}
-              />
-            </div>
-            <SearchInput
-              value={query}
-              onChange={setQuery}
-              placeholder={t('profileSystems.search')}
-              minLength={1}
-              delay={150}
-              className="max-w-none"
-            />
+    <div className="grid gap-4 lg:h-full lg:min-h-0 lg:grid-cols-[320px_minmax(0,1fr)] lg:items-start">
+      <Card
+        role="region"
+        aria-labelledby="ps-title"
+        className="flex min-h-0 flex-col overflow-hidden max-lg:max-h-105 lg:max-h-full"
+      >
+        <div className="grid gap-2.5 border-b border-line p-3.5">
+          <h1 id="ps-title" className="text-base font-semibold">
+            {t('profileSystems.title')}
+          </h1>
+          <div className="flex items-center gap-1.5">
+            <Button
+              size="sm"
+              aria-label={t('profileSystems.add')}
+              title={t('profileSystems.add')}
+              icon={<Plus size={16} />}
+              onClick={() => setDialog('new')}
+            >
+              {t('common.add')}
+            </Button>
+            <IconButton
+              bordered
+              className="ml-auto"
+              label={t(allOpen ? 'profileSystems.collapse' : 'profileSystems.expand')}
+              disabled={allBranches.length === 0 || searching}
+              onClick={() => setExpanded(allOpen ? new Set() : new Set(allBranches))}
+            >
+              {allOpen ? <ChevronsDownUp size={16} /> : <ChevronsUpDown size={16} />}
+            </IconButton>
           </div>
-          <div className="min-h-0 flex-1 overflow-y-auto p-1.5">
-            {tree.isPending ? (
-              <div className="grid place-items-center py-10 text-primary">
-                <Spinner />
-              </div>
-            ) : tree.error ? (
-              <Alert>{t('common.load_error')}</Alert>
-            ) : nodes.length === 0 ? (
-              <p className="p-3 text-muted">{t('profileSystems.empty')}</p>
-            ) : shown.length === 0 ? (
-              <p className="p-3 text-muted">{t('profileSystems.not_found')}</p>
-            ) : (
-              <SystemTree
-                label={t('profileSystems.title')}
-                nodes={shown}
-                selectedId={selectedId}
-                onSelect={select}
-                expanded={shownExpanded}
-                onToggle={toggle}
-              />
-            )}
-          </div>
-        </section>
-
-        <section className="flex min-h-0 min-w-0 flex-col">
-          {selectedId === null ? (
-            <div className="grid flex-1 place-items-center px-6 py-20 text-center text-muted">
-              <div className="grid justify-items-center gap-2.5">
-                <Layers3 size={36} className="text-primary" aria-hidden="true" />
-                <p className="font-semibold text-fg">{t('profileSystems.choose')}</p>
-              </div>
+          <SearchInput
+            value={query}
+            onChange={setQuery}
+            placeholder={t('profileSystems.search')}
+            minLength={1}
+            delay={150}
+            className="max-w-none"
+          />
+        </div>
+        <div className="min-h-0 flex-1 overflow-y-auto p-1.5">
+          {tree.isPending ? (
+            <div className="grid place-items-center py-10 text-primary">
+              <Spinner />
             </div>
+          ) : tree.error ? (
+            <Alert>{t('common.load_error')}</Alert>
+          ) : nodes.length === 0 ? (
+            <p className="p-3 text-muted">{t('profileSystems.empty')}</p>
+          ) : shown.length === 0 ? (
+            <p className="p-3 text-muted">{t('profileSystems.not_found')}</p>
           ) : (
-            <SystemDetails
-              key={selectedId}
-              id={selectedId}
-              name={findNode(nodes, selectedId)?.name}
-              parentPath={parentPath}
-              tab={tab}
-              onTab={(x) => setParam('tab', x === 'spec' ? null : x)}
-              onEdit={() => setDialog('edit')}
-              onDelete={() => del.request(selectedId)}
+            <SystemTree
+              label={t('profileSystems.title')}
+              nodes={shown}
+              selectedId={selectedId}
+              onSelect={select}
+              expanded={shownExpanded}
+              onToggle={toggle}
             />
           )}
-        </section>
+        </div>
+      </Card>
+
+      <Card className="flex min-h-0 flex-col overflow-hidden lg:max-h-full">
+        {selectedId === null ? (
+          <div className="grid flex-1 place-items-center px-6 py-20 text-center text-muted">
+            <div className="grid justify-items-center gap-2.5">
+              <Layers3 size={36} className="text-primary" aria-hidden="true" />
+              <p className="font-semibold text-fg">{t('profileSystems.choose')}</p>
+            </div>
+          </div>
+        ) : (
+          <SystemDetails
+            key={selectedId}
+            id={selectedId}
+            name={findNode(nodes, selectedId)?.name}
+            parentPath={parentPath}
+            tab={tab}
+            onTab={(x) => setParam('tab', x === 'spec' ? null : x)}
+            onEdit={() => setDialog('edit')}
+            onDelete={() => del.request(selectedId)}
+          />
+        )}
       </Card>
 
       {del.dialog}
@@ -195,6 +226,27 @@ function SystemDetails({ id, name, parentPath, tab, onTab, onEdit, onDelete }: S
     queryFn: ({ signal }) => profileSystemApi.get(String(id), signal),
   })
 
+  // Both tables load at once, so both tabs show their counts; only the chosen one is drawn.
+  const specFilters = useTableFilters('spec', SPEC_FILTERS)
+  const spec = useServerTable<SpecificationRow>({
+    key: 'spec',
+    queryKey: specificationKeys.all,
+    fetchPage: specificationApi.table,
+    filter: { profileSystemId: id, supplierId: specFilters.filters.supplierId },
+    defaultSize: 10,
+  })
+  const accessories = useServerTable<SystemAccessoryRow>({
+    key: 'acc',
+    queryKey: systemAccessoryKeys.all,
+    fetchPage: systemAccessoryApi.table,
+    filter: { profileSystemId: id },
+    // The old panel's default order for this table.
+    defaultSort: { column: 'updated_date', dir: 'desc' },
+    defaultSize: 10,
+  })
+  const count = (table: { isLoading: boolean; error: unknown; pagination: { total: number } }) =>
+    table.isLoading || table.error ? null : table.pagination.total
+
   return (
     <>
       <div className="flex flex-wrap items-center gap-2.5 border-b border-line px-4 py-3.5">
@@ -225,8 +277,12 @@ function SystemDetails({ id, name, parentPath, tab, onTab, onEdit, onDelete }: S
         onChange={onTab}
         className="flex-1"
         items={[
-          { value: 'spec', label: t('profileSystems.tab_spec') },
-          { value: 'accessories', label: t('profileSystems.tab_accessories') },
+          { value: 'spec', label: t('profileSystems.tab_spec'), count: count(spec) },
+          {
+            value: 'accessories',
+            label: t('profileSystems.tab_accessories'),
+            count: count(accessories),
+          },
           { value: 'filling', label: t('profileSystems.tab_filling') },
         ]}
       >
@@ -245,9 +301,15 @@ function SystemDetails({ id, name, parentPath, tab, onTab, onEdit, onDelete }: S
               fillingGroupId={system.data.fillingGroupId}
             />
           )
+        ) : tab === 'accessories' ? (
+          <SystemAccessoriesTab systemId={id} table={accessories} />
         ) : (
-          // Спецификация and Фурнитура come in the next steps of the migration.
-          <p className="px-4 py-10 text-center text-muted">{t('profileSystems.next_step')}</p>
+          <SpecificationTab
+            systemId={id}
+            table={spec}
+            supplierId={specFilters.filters.supplierId}
+            onSupplierChange={(supplierId) => specFilters.setFilters({ supplierId })}
+          />
         )}
       </Tabs>
     </>

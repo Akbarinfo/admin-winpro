@@ -1,4 +1,6 @@
 export { CountryTranslations } from './CountryTranslations'
 export { useCountryTranslations } from './useCountryTranslations'
 export type { TranslationField } from './helpers'
-export { TRANSLATION_EXCEL, translationKeys } from './api'
+export { TRANSLATION_EXCEL, countryTranslationKeys } from './api'
+export { TranslationKeyInput } from './TranslationKeyInput'
+export { translationKeyKeys } from './keys'

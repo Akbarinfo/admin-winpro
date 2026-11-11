@@ -134,7 +134,9 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 6. Murakkab bo'limlar: Akfa integratsiyasi, profil tizimlari, shablonlar, tarjimalar.
    Feedback ✅ (chat: `/feedback?chat=<userId>`, admin xabari `userId: 10` — eski panel kabi).
    Запросы цен ✅ (`GET /v1/price-requests` — DataTables emas, sahifa 0 dan; ommaviy tasdiqlash/rad etish).
-   Профильные системы: daraxt + tizim formasi ✅; keyin xususiyatlar (tarjima kalitlari), спецификация, фурнитура
+   Профильные системы: daraxt + tizim formasi ✅, xususiyatlar (tarjima kalitlari, `shared/translations` → `TranslationKeyInput`) ✅;
+   tablar: Спецификация ✅ (artikul backend qidiruvi — `Combobox onQueryChange`), Фурнитура ✅ (`/accessories/up/{id}`),
+   Заполнение (faqat ko'rish). Jadval parametrlari `?spec.*`, `?acc.*`; boshqa tizim tanlanganda tozalanadi.
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.
 

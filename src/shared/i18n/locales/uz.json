@@ -145,7 +145,13 @@
     "enable_for": "{{country}} uchun o'z matni",
     "save_error": "Yozuv saqlandi, tarjimalar esa yo'q. Tarjimalar jadvalini tekshirib, qayta saqlang.",
     "import": "Excel'dan import",
-    "import_hint": "Jadval bazadan qayta yuklanadi: undagi saqlanmagan o'zgarishlar yo'qoladi."
+    "import_hint": "Jadval bazadan qayta yuklanadi: undagi saqlanmagan o'zgarishlar yo'qoladi.",
+    "key": "Kalit",
+    "key_placeholder": "Kalitni qidiring yoki yozing…",
+    "key_view": "Kalit tarjimasini ko'rish",
+    "key_create": "Kalit tarjimasini yaratish",
+    "key_view_title": "Kalit tarjimasi",
+    "key_create_title": "Yangi tarjima"
   },
   "excel": {
     "file": "Excel fayli",

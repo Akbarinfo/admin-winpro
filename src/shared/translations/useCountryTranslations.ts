@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useMemo, useState } from 'react'
 import { useCountries } from '@/shared/lookups/countries'
-import { translationApi, translationKeys } from './api'
+import { translationApi, countryTranslationKeys } from './api'
 import {
   buildTranslationRows,
   planTranslationSave,
@@ -23,7 +23,7 @@ export function useCountryTranslations(
   const queryClient = useQueryClient()
   const countries = useCountries()
   const saved = useQuery({
-    queryKey: translationKeys.of(entityType, entityId ?? 0),
+    queryKey: countryTranslationKeys.of(entityType, entityId ?? 0),
     queryFn: ({ signal }) => translationApi.byEntity(entityType, entityId!, signal),
     enabled: entityId !== undefined,
     staleTime: Infinity, // don't reset the table under the user's hands
@@ -54,7 +54,9 @@ export function useCountryTranslations(
       if (entityId === undefined) return
       await translationApi.importExcel(entityType, entityId, file, onProgress)
       setEdited(null)
-      await queryClient.invalidateQueries({ queryKey: translationKeys.of(entityType, entityId) })
+      await queryClient.invalidateQueries({
+        queryKey: countryTranslationKeys.of(entityType, entityId),
+      })
     },
     isLoading: countries.isPending || (entityId !== undefined && saved.isPending),
     error: countries.error ?? saved.error,
@@ -77,7 +79,7 @@ export function useCountryTranslations(
         for (const trId of deleteIds) await translationApi.remove(trId)
       } finally {
         setEdited(null)
-        await queryClient.invalidateQueries({ queryKey: translationKeys.of(entityType, id) })
+        await queryClient.invalidateQueries({ queryKey: countryTranslationKeys.of(entityType, id) })
       }
     },
   }

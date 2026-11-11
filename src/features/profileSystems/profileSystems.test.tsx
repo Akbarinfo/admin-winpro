@@ -1,7 +1,8 @@
-import { screen, waitFor, within } from '@testing-library/react'
+import { fireEvent, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { api } from '@/shared/api/client'
+import { ApiError } from '@/shared/api/errors'
 import { renderWithProviders } from '@/test/render'
 import { profileSystemRoutes } from './index'
 
@@ -43,11 +44,29 @@ const TERMO_70 = {
   imageId: 900,
   profileSystemFullInfo: {
     id: 55,
-    characteristics: [{ key: 'char.depth', value: 'char.depth.70' }],
+    characteristics: [{ id: 3, key: 'char.depth', value: 'char.depth.70' }],
   },
 }
 
+// Translation keys known to the backend (/v1/translation/search, /by-key).
+const KEYS = [
+  {
+    key: 'char.depth',
+    translations: [
+      { code: 'ru', value: 'Глубина' },
+      { code: 'uz', value: 'Chuqurlik' },
+    ],
+  },
+  { key: 'char.depth.70', translations: [{ code: 'uz', value: '70 mm' }] },
+  { key: 'char.width', translations: [{ code: 'uz', value: 'Kenglik' }] },
+]
+
 const GETS: Record<string, unknown> = {
+  '/v1/language': [
+    { code: 'ru', name: 'Русский', active: true, default: true },
+    { code: 'uz', name: 'Oʻzbekcha', active: true, default: false },
+    { code: 'en', name: 'English', active: false, default: false },
+  ],
   '/v1/profile/system/list/tree': TREE,
   '/v1/profile/system/11': TERMO_70,
   '/v1/profile/system/111': { id: 111, name: 'Termo 70 Lux' },
@@ -78,6 +97,17 @@ beforeEach(() => {
   vi.clearAllMocks()
   http.get.mockImplementation(async (url: string) => {
     if (url in GETS) return { data: GETS[url] }
+    const search = url.match(/^\/v1\/translation\/search\?key=(.*)$/)
+    if (search) {
+      const q = decodeURIComponent(search[1])
+      return { data: KEYS.filter((k) => k.key.includes(q)) }
+    }
+    const byKey = url.match(/^\/v1\/translation\/by-key\/(.*)$/)
+    if (byKey) {
+      const found = KEYS.find((k) => k.key === decodeURIComponent(byKey[1]))
+      if (!found) throw new ApiError(404, 'Not found')
+      return { data: found }
+    }
     throw new Error(`unexpected GET ${url}`)
   })
   http.post.mockImplementation(async (url: string) => {
@@ -111,9 +141,12 @@ describe('Profile systems', () => {
     )
     expect(screen.getByRole('heading', { name: 'Termo 70' })).toBeInTheDocument()
     expect(screen.getByText('Akfa', { selector: 'p' })).toBeInTheDocument() // its parent
-    // the parts come later in the migration; the defaults are in their own tab
-    expect(screen.getByRole('tab', { name: 'Спецификация' })).toHaveAttribute('aria-selected', 'true')
-    expect(screen.getByRole('tabpanel')).toHaveTextContent('Раздел переносится на следующем шаге')
+    // the profiles first; the defaults are in their own tab (the parts: systemParts.test.tsx)
+    expect(screen.getByRole('tab', { name: /^Спецификация/ })).toHaveAttribute(
+      'aria-selected',
+      'true',
+    )
+    expect(await screen.findByText('Профилей в системе нет')).toBeInTheDocument()
     await userEvent.click(screen.getByRole('tab', { name: 'Заполнение' }))
     expect(router.state.location.search).toBe('?system=11&tab=filling')
     expect(await screen.findByText('Стеклопакет 4-16-4')).toBeInTheDocument()
@@ -125,9 +158,11 @@ describe('Profile systems', () => {
     const tree = await screen.findByRole('tree')
     await userEvent.type(screen.getByRole('searchbox', { name: 'Найти систему…' }), 'lux')
     await waitFor(() =>
-      expect(within(tree).getAllByRole('treeitem').map((n) => n.getAttribute('aria-level'))).toEqual(
-        ['1', '2', '3'],
-      ),
+      expect(
+        within(tree)
+          .getAllByRole('treeitem')
+          .map((n) => n.getAttribute('aria-level')),
+      ).toEqual(['1', '2', '3']),
     )
     expect(within(tree).getByRole('treeitem', { name: 'Termo 70 Lux' })).toBeInTheDocument()
     expect(within(tree).queryByRole('treeitem', { name: 'Enwin' })).not.toBeInTheDocument()
@@ -237,15 +272,209 @@ describe('Profile systems', () => {
       clientScope: 'V2_ONLY',
       sashClearance: 0,
       maxTrackCount: 3,
-      specifications: [{ key: 'char.depth', value: 'char.depth.70' }],
+      specifications: [{ id: 3, key: 'char.depth', value: 'char.depth.70' }],
     })
     await waitFor(() =>
       expect(http.put).toHaveBeenCalledWith('/v1/profile-system-full-info', {
         id: 55,
         profileSystemId: 11,
-        characteristics: [{ key: 'char.depth', value: 'char.depth.70' }],
+        characteristics: [{ id: 3, key: 'char.depth', value: 'char.depth.70' }],
       }),
     )
+  })
+
+  it('shows the characteristics as keys, and a known key’s texts read-only', async () => {
+    render('/profile_system?system=11')
+    await userEvent.click(await screen.findByRole('button', { name: 'Изменить' }))
+    const dialog = await screen.findByRole('dialog')
+    const key = await within(dialog).findByRole('combobox', { name: 'Характеристика 1' })
+    expect(key).toHaveValue('char.depth')
+    expect(within(dialog).getByRole('combobox', { name: 'Значение 1' })).toHaveValue(
+      'char.depth.70',
+    )
+    expect(http.get).toHaveBeenCalledWith('/v1/translation/search?key=char.depth', {
+      signal: expect.anything(),
+    })
+
+    // found by the search: the button opens its texts
+    const button = await within(key.parentElement!).findByRole('button', {
+      name: 'Посмотреть перевод ключа',
+    })
+    await userEvent.click(button)
+    const view = await screen.findByRole('dialog', { name: 'Перевод ключа' })
+    expect(await within(view).findByLabelText('Русский')).toHaveValue('Глубина')
+    expect(within(view).getByLabelText('Русский')).toBeDisabled()
+    expect(within(view).getByLabelText('Oʻzbekcha')).toHaveValue('Chuqurlik')
+    // only the active languages
+    expect(within(view).queryByLabelText('English')).not.toBeInTheDocument()
+    expect(within(view).queryByRole('button', { name: 'Сохранить' })).not.toBeInTheDocument()
+    // the footer's button (the × in the title has the same name)
+    await userEvent.click(within(view).getAllByRole('button', { name: 'Закрыть' }).at(-1)!)
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: 'Перевод ключа' })).not.toBeInTheDocument(),
+    )
+    expect(screen.getByRole('dialog')).toBeInTheDocument() // the system's form stays
+  })
+
+  it('adds a row: its key is required, suggested as typed, and created when missing', async () => {
+    render('/profile_system?system=11')
+    await userEvent.click(await screen.findByRole('button', { name: 'Изменить' }))
+    const dialog = await screen.findByRole('dialog')
+    await within(dialog).findByRole('combobox', { name: 'Характеристика 1' })
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Добавить строку' }))
+    const key = within(dialog).getByRole('combobox', { name: 'Характеристика 2' })
+    expect(key).toHaveFocus()
+
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Сохранить' }))
+    expect(await within(dialog).findByText('Заполните это поле')).toBeInTheDocument()
+    expect(http.put).not.toHaveBeenCalled()
+
+    // a suggestion, with its Uzbek text under the key
+    await userEvent.type(key, 'char.w')
+    const option = await screen.findByRole('option', { name: /char\.width/ })
+    expect(option).toHaveTextContent('Kenglik')
+    await userEvent.click(option)
+    expect(key).toHaveValue('char.width')
+
+    // a key nobody has yet: create its texts without leaving the form
+    const value = within(dialog).getByRole('combobox', { name: 'Значение 2' })
+    await userEvent.type(value, 'char.width.new')
+    await userEvent.click(
+      await within(value.parentElement!).findByRole('button', { name: 'Создать перевод ключа' }),
+    )
+    const create = await screen.findByRole('dialog', { name: 'Новый перевод' })
+    expect(within(create).getByLabelText('Ключ')).toHaveValue('char.width.new')
+    await userEvent.type(await within(create).findByLabelText('Русский'), 'Ширина 70{Enter}')
+    await waitFor(() =>
+      expect(http.post).toHaveBeenCalledWith('/v1/translation', {
+        key: 'char.width.new',
+        translations: [
+          { code: 'ru', value: 'Ширина 70' },
+          { code: 'uz', value: '' },
+        ],
+      }),
+    )
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: 'Новый перевод' })).not.toBeInTheDocument(),
+    )
+    // Enter there didn't submit the system's form around it
+    expect(http.put).not.toHaveBeenCalled()
+
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Сохранить' }))
+    await waitFor(() =>
+      expect(http.put).toHaveBeenCalledWith('/v1/profile-system-full-info', {
+        id: 55,
+        profileSystemId: 11,
+        characteristics: [
+          { id: 3, key: 'char.depth', value: 'char.depth.70' },
+          { key: 'char.width', value: 'char.width.new' },
+        ],
+      }),
+    )
+  })
+
+  it('adds a new system with characteristics: their record is created for the new id', async () => {
+    render()
+    await screen.findByRole('tree')
+    await userEvent.click(screen.getByRole('button', { name: 'Добавить системный профиль' }))
+    const dialog = await screen.findByRole('dialog')
+    await userEvent.type(within(dialog).getByLabelText(NAME), 'Termo 80')
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Добавить строку' }))
+    await userEvent.type(
+      within(dialog).getByRole('combobox', { name: 'Характеристика 1' }),
+      '  char.depth  ',
+    )
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Сохранить' }))
+
+    await waitFor(() =>
+      expect(http.post).toHaveBeenCalledWith('/v1/profile-system-full-info', {
+        id: null,
+        profileSystemId: 13,
+        // trimmed
+        characteristics: [{ key: 'char.depth', value: '' }],
+      }),
+    )
+    const system = http.post.mock.calls.find(([u]) => u === '/v1/profile/system')!
+    expect((await dataPart(system[1] as FormData)).specifications).toEqual([
+      { key: 'char.depth', value: '' },
+    ])
+  })
+
+  it('asks nothing about characteristics for a system that has neither them nor their record', async () => {
+    render('/profile_system?system=111')
+    await userEvent.click(await screen.findByRole('button', { name: 'Изменить' }))
+    const dialog = await screen.findByRole('dialog')
+    await waitFor(() => expect(within(dialog).getByLabelText(NAME)).toHaveValue('Termo 70 Lux'))
+    expect(within(dialog).getByText('Характеристик нет')).toBeInTheDocument()
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Сохранить' }))
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+    expect(http.put).toHaveBeenCalledWith('/v1/profile/system', expect.any(FormData))
+    expect(http.put).not.toHaveBeenCalledWith('/v1/profile-system-full-info', expect.anything())
+    expect(http.post).not.toHaveBeenCalledWith('/v1/profile-system-full-info', expect.anything())
+  })
+
+  it('Escape closes only the suggestions, then only the key’s dialog', async () => {
+    render('/profile_system?system=11')
+    await userEvent.click(await screen.findByRole('button', { name: 'Изменить' }))
+    const dialog = await screen.findByRole('dialog')
+    const key = await within(dialog).findByRole('combobox', { name: 'Характеристика 1' })
+    await userEvent.clear(key)
+    await userEvent.type(key, 'char')
+    await screen.findByRole('listbox')
+    await userEvent.keyboard('{Escape}')
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+
+    await userEvent.type(key, '.new')
+    await userEvent.click(
+      await within(key.parentElement!).findByRole('button', { name: 'Создать перевод ключа' }),
+    )
+    const create = await screen.findByRole('dialog', { name: 'Новый перевод' })
+    await userEvent.type(await within(create).findByLabelText('Русский'), 'x')
+    // Escape: the browser fires «cancel» at the top dialog (jsdom doesn't, see Modal.test)
+    fireEvent(create, new Event('cancel', { cancelable: true }))
+    await waitFor(() =>
+      expect(screen.queryByRole('dialog', { name: 'Новый перевод' })).not.toBeInTheDocument(),
+    )
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
+  })
+
+  it('keeps the new key’s dialog open with the reason when the backend refuses it', async () => {
+    http.post.mockImplementation(async (url: string) => {
+      if (url === '/v1/translation') throw new ApiError(400, 'Ключ уже существует')
+      return { data: {} }
+    })
+    render('/profile_system?system=11')
+    await userEvent.click(await screen.findByRole('button', { name: 'Изменить' }))
+    const dialog = await screen.findByRole('dialog')
+    const value = await within(dialog).findByRole('combobox', { name: 'Значение 1' })
+    await userEvent.type(value, '.x')
+    await userEvent.click(
+      await within(value.parentElement!).findByRole('button', { name: 'Создать перевод ключа' }),
+    )
+    const create = await screen.findByRole('dialog', { name: 'Новый перевод' })
+    await within(create).findByLabelText('Русский')
+    await userEvent.click(within(create).getByRole('button', { name: 'Сохранить' }))
+    expect(await within(create).findByText('Ключ уже существует')).toBeInTheDocument()
+    expect(screen.getByRole('dialog', { name: 'Новый перевод' })).toBeInTheDocument()
+  })
+
+  it('saves an empty list when the last characteristic is removed', async () => {
+    render('/profile_system?system=11')
+    await userEvent.click(await screen.findByRole('button', { name: 'Изменить' }))
+    const dialog = await screen.findByRole('dialog')
+    await within(dialog).findByRole('combobox', { name: 'Характеристика 1' })
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Удалить строку 1' }))
+    expect(within(dialog).getByText('Характеристик нет')).toBeInTheDocument()
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Сохранить' }))
+    await waitFor(() =>
+      expect(http.put).toHaveBeenCalledWith('/v1/profile-system-full-info', {
+        id: 55,
+        profileSystemId: 11,
+        characteristics: [],
+      }),
+    )
+    expect((await dataPart(http.put.mock.calls[0][1] as FormData)).specifications).toEqual([])
   })
 
   it('sends no track limit for a warm sliding system', async () => {

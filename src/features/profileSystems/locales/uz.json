@@ -34,8 +34,13 @@
     "tab_spec": "Spetsifikatsiya",
     "tab_accessories": "Furnitura",
     "tab_filling": "To'ldirish",
-    "next_step": "Bo'lim keyingi qadamda ko'chiriladi",
     "filling_hint": "«Tahrirlash» orqali o'zgartiriladi — eski paneldagidek.",
+    "characteristics": "Xususiyatlar",
+    "characteristic": "Xususiyat",
+    "characteristic_value": "Qiymat",
+    "add_characteristic": "Qator qo'shish",
+    "remove_characteristic": "Qatorni o'chirish",
+    "no_characteristics": "Xususiyatlar yo'q",
     "sliding_type_option": {
       "NONE": "Surma emas",
       "FRAME_PER_TRACK": "Oddiy — har track uchun alohida rama",
@@ -48,6 +53,32 @@
     "visibility_option": {
       "PUBLIC": "Ochiq",
       "PRIVATE": "Yopiq"
+    },
+    "spec": {
+      "add": "Profil qo'shish",
+      "edit": "Tizim profilini tahrirlash",
+      "empty": "Tizimda profillar yo'q",
+      "search": "Artikul yoki nom bo'yicha qidirish",
+      "priority": "Ustuvorlik",
+      "article": "Artikul",
+      "name": "Nomi",
+      "application": "Qo'llanilishi",
+      "side": "Tomoni",
+      "supplier": "Yetkazib beruvchi",
+      "all_suppliers": "Barcha yetkazib beruvchilar",
+      "priority_hint": "Ustuvorligi eng kichik qator — o'z qo'llanilishi uchun standart profil",
+      "product_type_hint": "Faqat «{{type}}» turidagi mahsulotlar ko'rsatilgan"
+    },
+    "acc": {
+      "add": "Furnitura qo'shish",
+      "edit": "Tizim furniturasini tahrirlash",
+      "empty": "Tizimda furnitura yo'q",
+      "search": "Furnitura qidirish",
+      "accessory": "Furnitura",
+      "name": "Furnitura nomi",
+      "opening": "Ochilishi",
+      "handle": "Dastak",
+      "up": "Yuqoriga ko'tarish"
     }
   }
 }

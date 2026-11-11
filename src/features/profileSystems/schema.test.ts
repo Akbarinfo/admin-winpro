@@ -30,4 +30,27 @@ describe('profileSystemSchema', () => {
     expect(parse({ sashClearance: 0 }).success).toBe(true)
     expect(issues({ sashClearance: -1 })).toEqual([['sashClearance', 'validation.non_negative']])
   })
+
+  it('needs the first key of every characteristic row, and trims both', () => {
+    const r = profileSystemSchema.safeParse({
+      ...emptyProfileSystem(),
+      name: 'Termo',
+      characteristics: [
+        { key: ' width ', value: ' w70 ' },
+        { key: 'depth', value: '' },
+      ],
+    })
+    expect(r.success && r.data.characteristics).toEqual([
+      { key: 'width', value: 'w70' },
+      { key: 'depth', value: '' },
+    ])
+    const bad = profileSystemSchema.safeParse({
+      ...emptyProfileSystem(),
+      name: 'Termo',
+      characteristics: [{ key: ' ', value: 'w70' }],
+    })
+    expect(bad.success ? [] : bad.error.issues.map((i) => [i.path.join('.'), i.message])).toEqual([
+      ['characteristics.0.key', 'validation.required'],
+    ])
+  })
 })

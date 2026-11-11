@@ -3,7 +3,7 @@ import type { Translation, TranslationDto } from './helpers'
 
 const all = ['country-translation'] as const
 
-export const translationKeys = {
+export const countryTranslationKeys = {
   all,
   of: (entityType: string, entityId: number) => [...all, entityType, entityId] as const,
 }
