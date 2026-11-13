@@ -1,7 +1,9 @@
+import { useQuery } from '@tanstack/react-query'
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Pencil, Plus, Trash2 } from 'lucide-react'
 import { useConfirmDelete } from '@/shared/hooks/useConfirmDelete'
+import type { TableSort } from '@/shared/api/table'
 import { useServerTable } from '@/shared/hooks/useServerTable'
 import { Button, DataTable, IconButton, Pagination, Panel, type Column } from '@/shared/ui'
 import { parameterApi, parameterKeys, type ParameterEndpoint, type ParameterRow } from './api'
@@ -25,6 +27,8 @@ export function ParameterPanel({ parentId, ...props }: ParameterPanelProps) {
     <PanelFrame title={props.title} disabled>
       <p className="px-4 py-10 text-center text-muted">{props.hint}</p>
     </PanelFrame>
+  ) : props.endpoint.list ? (
+    <ParameterList key={parentId} parentId={parentId} {...props} />
   ) : (
     <ParameterTable key={parentId} parentId={parentId} {...props} />
   )
@@ -56,24 +60,86 @@ function PanelFrame({
   )
 }
 
-function ParameterTable({
+type OwnerProps = Omit<ParameterPanelProps, 'parentId' | 'hint'> & { parentId: number }
+
+/** Paged and sorted on the server: POST `${base}/table`. */
+function ParameterTable({ title, endpoint, parentId, tableKey }: OwnerProps) {
+  const table = useServerTable<ParameterRow>({
+    key: tableKey,
+    queryKey: parameterKeys.of(endpoint.base),
+    fetchPage: (body, signal) => parameterApi.table(endpoint.base, body, signal),
+    filter: { [endpoint.filterField]: parentId },
+    defaultSize: 10,
+  })
+
+  return (
+    <ParameterView
+      title={title}
+      endpoint={endpoint}
+      parentId={parentId}
+      rows={table.rows}
+      loading={table.isLoading}
+      fetching={table.isFetching}
+      error={table.error}
+      onRetry={() => table.refetch()}
+      sort={{ value: table.sort, onChange: table.onSortChange }}
+      footer={<Pagination {...table.pagination} />}
+    />
+  )
+}
+
+/** All at once: a plain GET list (endpoint.list). */
+function ParameterList({ title, endpoint, parentId }: OwnerProps) {
+  const url = endpoint.list!(parentId)
+  const list = useQuery({
+    queryKey: [...parameterKeys.of(endpoint.base), 'list', parentId],
+    queryFn: ({ signal }) => parameterApi.list(url, signal),
+  })
+
+  return (
+    <ParameterView
+      title={title}
+      endpoint={endpoint}
+      parentId={parentId}
+      rows={list.data ?? []}
+      loading={list.isPending}
+      fetching={list.isFetching}
+      error={list.error}
+      onRetry={() => list.refetch()}
+    />
+  )
+}
+
+type ParameterViewProps = {
+  title: ReactNode
+  endpoint: ParameterEndpoint
+  parentId: number
+  rows: ParameterRow[]
+  loading: boolean
+  fetching: boolean
+  error: unknown
+  onRetry: () => void
+  /** Only a server table sorts. */
+  sort?: { value: TableSort | undefined; onChange: (sort: TableSort) => void }
+  footer?: ReactNode
+}
+
+function ParameterView({
   title,
   endpoint,
   parentId,
-  tableKey,
-}: Omit<ParameterPanelProps, 'parentId' | 'hint'> & { parentId: number }) {
+  rows,
+  loading,
+  fetching,
+  error,
+  onRetry,
+  sort,
+  footer,
+}: ParameterViewProps) {
   const { t } = useTranslation()
-  const { base, kindField, filterField, translateValue } = endpoint
+  const { base, kindField, translateValue } = endpoint
   // null — closed; 'new' — adding; otherwise the row's id.
   const [dialog, setDialog] = useState<string | null>(null)
-
-  const table = useServerTable<ParameterRow>({
-    key: tableKey,
-    queryKey: parameterKeys.of(base),
-    fetchPage: (body, signal) => parameterApi.table(base, body, signal),
-    filter: { [filterField]: parentId },
-    defaultSize: 10,
-  })
 
   const kindOf = (row: ParameterRow) =>
     typeof row[kindField] === 'string' ? t(row[kindField] as string) : ''
@@ -90,13 +156,13 @@ function ParameterTable({
       key: kindField,
       sortKey: 'name',
       title: t('parameters.parameter'),
-      sortable: true,
+      sortable: !!sort,
       render: kindOf,
     },
     {
       key: 'value',
       title: t('parameters.value'),
-      sortable: true,
+      sortable: !!sort,
       render: (row) => (row.value && translateValue ? t(row.value) : (row.value ?? '')),
     },
   ]
@@ -105,14 +171,14 @@ function ParameterTable({
     <PanelFrame title={title} onAdd={() => setDialog('new')}>
       <DataTable
         columns={columns}
-        rows={table.rows}
+        rows={rows}
         getRowKey={(row) => row.id}
-        loading={table.isLoading}
-        fetching={table.isFetching}
-        sort={table.sort}
-        onSortChange={table.onSortChange}
-        error={table.error}
-        onRetry={() => table.refetch()}
+        loading={loading}
+        fetching={fetching}
+        sort={sort?.value}
+        onSortChange={sort?.onChange}
+        error={error}
+        onRetry={onRetry}
         empty={t('parameters.empty')}
         skeletonRows={3}
         actions={(row) => (
@@ -126,7 +192,7 @@ function ParameterTable({
           </>
         )}
       />
-      <Pagination {...table.pagination} />
+      {footer}
 
       {del.dialog}
       {dialog !== null && (

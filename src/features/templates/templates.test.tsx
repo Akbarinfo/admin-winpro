@@ -252,13 +252,15 @@ describe('Templates', () => {
       return { data: { data: [], recordsFiltered: 0 } }
     })
     render('/templates/update/5')
+    // Answer only once the record was asked for: a fixed pause raced the lazy page under load
+    // (answering before the request left it pending for ever).
+    await waitFor(() => expect(http.get).toHaveBeenCalledWith('/v1/templates/5', expect.anything()))
     await new Promise((r) => setTimeout(r, 30))
     expect(cc.started).toEqual([])
     answer({ data: PARENT })
-    // the lazy page and the constructor's dynamic import: slow when the whole suite runs
-    await waitFor(() => expect(cc.opened).toEqual(['{"shapes":[1]}']), { timeout: 8000 })
+    await waitFor(() => expect(cc.opened).toEqual(['{"shapes":[1]}']))
     expect(screen.queryByText('Не удалось запустить конструктор.')).not.toBeInTheDocument()
-  }, 15_000)
+  })
 
   it('starts the parent over after saving: the drawing opens again, the old canvas goes', async () => {
     render('/templates/update/5')

@@ -33,6 +33,11 @@ export type ParameterEndpoint = {
   filterField: string
   /** Show the value through t() (some old panels did, e.g. filling and inserts parameters). */
   translateValue?: boolean
+  /**
+   * The owner's parameters as a plain GET list (no paging or sorting) instead of `${base}/table`,
+   * e.g. /v1/accessories/parameter/list/{id}.
+   */
+  list?: (parentId: number) => string
 }
 
 export const parameterKeys = {
@@ -44,6 +49,9 @@ export const parameterKeys = {
 export const parameterApi = {
   table: (base: string, body: TableBody, signal?: AbortSignal) =>
     api.post<TablePage<ParameterRow>>(`${base}/table`, body, { signal }).then((r) => r.data),
+
+  list: (url: string, signal?: AbortSignal) =>
+    api.get<ParameterRow[]>(url, { signal }).then((r) => r.data ?? []),
 
   get: (base: string, id: string, signal?: AbortSignal) =>
     api.get<ParameterRow>(`${base}/${id}`, { signal }).then((r) => r.data),
