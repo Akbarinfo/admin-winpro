@@ -13,3 +13,13 @@ export const formatPrice = (price?: number | null, currency?: string | null) =>
 export const toastClientError = (error: unknown, fallback: string) => {
   if (isClientError(error) && error.status !== 420) toast.error(error.message || fallback)
 }
+
+/**
+ * The texture an Akfa name points to: its last (…) part, not «A» or «Adt».
+ * «(A) Qanot (SW306G)» → «SW306G».
+ */
+export const guessTextureName = (akfaName?: string | null) =>
+  (akfaName?.match(/\(([^()]+)\)/g) ?? [])
+    .map((part) => part.slice(1, -1).trim())
+    .filter((part) => part !== 'A' && part !== 'Adt')
+    .pop() ?? ''

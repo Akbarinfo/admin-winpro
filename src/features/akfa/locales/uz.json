@@ -285,7 +285,6 @@
       "conflict_text": "to'qnashuvlar aniqlandi — hech narsa saqlanmadi:",
       "conflict_hint": "Faylni qayta tayyorlang: yuqoridagi tugma orqali yangi shablon yuklab oling va qayta urinib ko'ring."
     },
-    "step_later": "Bu tab keyingi qadamda ko'chiriladi",
     "last_message_at": "oxirgi xabar: {{at}}",
     "filter_label": "Ko'rsatish",
     "export_failed": "Faylni yuklab bo'lmadi",
@@ -316,6 +315,9 @@
       "empty": "Moslashtiruvlar yo'q"
     },
     "message_status": "Xabar holati",
-    "message_type": "Xabar turi"
+    "message_type": "Xabar turi",
+    "link_checked": "Bog'lash ({{count}})",
+    "mapping_filter": "Bog'lanish",
+    "add_mapping_button": "Mapping"
   }
 }

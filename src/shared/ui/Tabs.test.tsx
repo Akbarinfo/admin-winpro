@@ -58,4 +58,22 @@ describe('Tabs', () => {
     await userEvent.keyboard('{Home}')
     expect(tabs[0]).toHaveAttribute('aria-selected', 'true')
   })
+
+  it('puts buttons on the right of the tab row, outside the tab list', () => {
+    render(
+      <Tabs
+        id="a"
+        label="Разделы"
+        value="x"
+        onChange={() => {}}
+        items={[{ value: 'x', label: 'Икс' }]}
+        aside={<button>Маппинг</button>}
+      >
+        <p>Панель</p>
+      </Tabs>,
+    )
+    const button = screen.getByRole('button', { name: 'Маппинг' })
+    expect(screen.getByRole('tablist')).not.toContainElement(button)
+    expect(screen.getByRole('tabpanel')).not.toContainElement(button)
+  })
 })

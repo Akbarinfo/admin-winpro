@@ -147,7 +147,9 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    `POST /v1/translation/table` — DataTables emas, sahifa 1 dan, `filter: {query}`; Excel import/eksport).
    Akfa integratsiyasi (`features/akfa`, `/v1/akfa/**` — DataTables emas, sahifa 1 dan, `{data,total}`):
    skelet + xulosa + «Новые товары» ✅, «Изменения цен» ✅ (stale → 409 → `force=true`), «Журнал» ✅;
-   keyin «Сопоставление», `/integrations/unit`. Ketma-ket so'rovlar — `shared/hooks/useConfirm`.
+   «Сопоставление» ✅ (bog'lash modali: `@dnd-kit/core` bilan sudrash + «Привязать (n)» tugmasi, qoralama →
+   `PUT /mappings/batch`, 409 — to'qnashuvlar; Excel import); keyin `/integrations/unit`.
+   Ketma-ket so'rovlar — `shared/hooks/useConfirm`.
    Qator tanlash — `shared/hooks/useRowSelection`.
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.

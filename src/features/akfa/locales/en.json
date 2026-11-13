@@ -285,7 +285,6 @@
       "conflict_text": "conflicts detected — nothing was saved:",
       "conflict_hint": "Re-prepare the file: download a fresh template above and try again."
     },
-    "step_later": "This tab is migrated in the next step",
     "last_message_at": "last message: {{at}}",
     "filter_label": "Show",
     "export_failed": "The file couldn't be downloaded",
@@ -316,6 +315,9 @@
       "empty": "No mappings"
     },
     "message_status": "Message status",
-    "message_type": "Message type"
+    "message_type": "Message type",
+    "link_checked": "Link ({{count}})",
+    "mapping_filter": "Link",
+    "add_mapping_button": "Mapping"
   }
 }

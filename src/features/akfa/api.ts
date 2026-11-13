@@ -1,6 +1,12 @@
 import { api } from '@/shared/api/client'
 import type {
   AkfaMapping,
+  MappingAkfaProduct,
+  MappingChange,
+  MappingConflict,
+  MappingImportResult,
+  TextureOption,
+  WinproProduct,
   AkfaMessage,
   AkfaPosition,
   AkfaProduct,
@@ -158,4 +164,67 @@ export const akfaApi = {
 
   /** Recalculates every WinPro price from the Akfa rates (runs on the server). */
   recalculateRates: () => api.post(`${A}/rates/recalculate`),
+
+  /** WinPro products with their link state; linkStatus: all | mapped | unmapped. */
+  winproProducts: (
+    params: { search?: string; linkStatus?: string; page?: number; size?: number },
+    signal?: AbortSignal,
+  ) =>
+    api
+      .get<HubPage<WinproProduct>>(`${A}/winpro-products`, { params: query(params), signal })
+      .then((r) => r.data),
+
+  textureOptions: (productId: number, signal?: AbortSignal) =>
+    api
+      .get<TextureOption[] | { data: TextureOption[] }>(
+        `${A}/winpro-products/${productId}/texture-options`,
+        { signal },
+      )
+      .then((r) => (Array.isArray(r.data) ? r.data : (r.data?.data ?? []))),
+
+  /** Akfa products with the textures linked to them; linkStatus: all | unmapped. */
+  mappingAkfaProducts: (
+    params: { search?: string; linkStatus?: string; page?: number; size?: number },
+    signal?: AbortSignal,
+  ) =>
+    api
+      .get<HubPage<MappingAkfaProduct>>(`${A}/mappings/akfa-products`, {
+        params: query(params),
+        signal,
+      })
+      .then((r) => r.data),
+
+  /**
+   * Only the changed links. 409 — another admin changed some meanwhile: its body (the conflicts)
+   * is needed, so it isn't turned into an error here.
+   */
+  saveMappings: (changes: MappingChange[]) =>
+    api
+      .put<{ conflicts?: MappingConflict[] | null; message?: string | null }>(
+        `${A}/mappings/batch`,
+        { changes },
+        { validateStatus: (s) => (s >= 200 && s < 300) || s === 409 },
+      )
+      .then((r) => ({ conflict: r.status === 409, body: r.data })),
+
+  /** The current links as Excel, to fill in «Akfa External ID». */
+  mappingTemplate: () =>
+    api.get<Blob>(`${A}/mappings/export-template`, { responseType: 'blob' }).then((r) => ({
+      blob: r.data,
+      fileName: fileNameOf(
+        r.headers?.['content-disposition'] as string | undefined,
+        'akfa-mapping-template.xlsx',
+      ),
+    })),
+
+  /** 409 comes with the conflicts (nothing saved): read like a result. */
+  importMappings: (file: File) => {
+    const form = new FormData()
+    form.append('file', file)
+    return api
+      .post<MappingImportResult>(`${A}/mappings/import/excel`, form, {
+        validateStatus: (s) => (s >= 200 && s < 300) || s === 409,
+      })
+      .then((r) => ({ conflict: r.status === 409, result: r.data ?? {} }))
+  },
 }

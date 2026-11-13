@@ -50,4 +50,29 @@ describe('Modal', () => {
     fireEvent.click(screen.getByRole('dialog'))
     expect(onClose).toHaveBeenCalledTimes(1)
   })
+
+  it('shows a description and header buttons, and stays hidden while closed', () => {
+    const { rerender } = render(
+      <Modal
+        open
+        onClose={vi.fn()}
+        title="Маппинг"
+        description="привязано 1/2"
+        headerActions={<button>Развернуть</button>}
+        bodyClassName="flex min-h-0 flex-1 flex-col"
+      >
+        <p>body</p>
+      </Modal>,
+    )
+    // the name is the title only; the description sits beside it
+    expect(screen.getByRole('dialog', { name: 'Маппинг' })).toHaveTextContent('привязано 1/2')
+    expect(screen.getByRole('button', { name: 'Развернуть' })).toBeInTheDocument()
+    rerender(
+      <Modal open={false} onClose={vi.fn()} title="Маппинг" bodyClassName="flex">
+        <p>body</p>
+      </Modal>,
+    )
+    expect(document.querySelector('dialog')).not.toHaveAttribute('open')
+    expect(screen.queryByText('body')).not.toBeInTheDocument()
+  })
 })

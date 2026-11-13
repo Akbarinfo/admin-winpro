@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router'
 import { PageHeader, Tabs } from '@/shared/ui'
 import { ListenerState, SummaryCards } from './AkfaSummary'
 import { LogTab } from './LogTab'
+import { MappingTab } from './MappingTab'
 import { NewProductsTab } from './NewProductsTab'
 import { PriceChangesTab } from './PriceChangesTab'
 import { useAkfaSummary } from './useAkfaSummary'
@@ -47,7 +48,7 @@ export function AkfaPage() {
           ) : tab === 'log' ? (
             <LogTab />
           ) : (
-            <p className="py-10 text-center text-muted">{t('akfa.step_later')}</p>
+            <MappingTab />
           )}
         </div>
       </Tabs>

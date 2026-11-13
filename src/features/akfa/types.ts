@@ -123,3 +123,84 @@ export type AkfaMessage = {
   /** The message itself (JSON text or an object), in the detail only. */
   body?: unknown
 }
+
+/** A WinPro product in the mapping tab (GET /v1/akfa/winpro-products). */
+export type WinproProduct = {
+  productId: number
+  productName?: string | null
+  article?: string | null
+  unitName?: string | null
+  articleGroupType?: string | null
+  supplierName?: string | null
+  productSeriesName?: string | null
+  price?: number | null
+  currencySymbol?: string | null
+  hasPrice?: boolean | null
+  mappedTextureCount?: number | null
+  totalTextureCount?: number | null
+}
+
+/** A texture of a WinPro product and the Akfa product it's linked to (…/texture-options). */
+export type TextureOption = {
+  textureId: number
+  textureName?: string | null
+  priceOne?: number | null
+  price?: number | null
+  currencySymbol?: string | null
+  currency?: string | null
+  mappedToAkfaProductId?: number | null
+  mappedToAkfaName?: string | null
+}
+
+/** An Akfa product with the textures linked to it (GET /v1/akfa/mappings/akfa-products). */
+export type MappingAkfaProduct = {
+  id: number
+  externalId?: string | number | null
+  name?: string | null
+  groupName?: string | null
+  price?: number | null
+  currency?: string | null
+  linkedTextures?:
+    | {
+        productId: number
+        productName?: string | null
+        textureId: number
+        textureName?: string | null
+      }[]
+    | null
+}
+
+/** One changed link for PUT /mappings/batch; `expected` is what it was when loaded. */
+export type MappingChange = {
+  productId: number
+  textureId: number
+  akfaProductId: number | null
+  expectedAkfaProductId: number | null
+}
+
+/** 409 of the batch save or the Excel import: rows another admin changed meanwhile. */
+export type MappingConflict = {
+  productId: number
+  textureId: number
+  productName?: string | null
+  textureName?: string | null
+  currentAkfaProductName?: string | null
+}
+
+/** POST /mappings/import/excel (200, or 409 with conflicts and nothing saved). */
+export type MappingImportResult = {
+  total?: number | null
+  applied?: number | null
+  skipped?: number | null
+  errors?:
+    | {
+        row: number
+        productId?: number | null
+        textureId?: number | null
+        field?: string | null
+        value?: string | null
+        message: string
+      }[]
+    | null
+  conflicts?: MappingConflict[] | null
+}

@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { requiredText } from '@/shared/lib/zod'
+import { requiredNumber, requiredText } from '@/shared/lib/zod'
 
 /**
  * A new WinPro product made from an Akfa one (the old AkfaCreateProductForm): name, article and
@@ -29,3 +29,14 @@ export const emptyAkfaProduct = (): AkfaProductForm => ({
   productSeriesId: null,
   textureIds: [],
 })
+
+/** A WinPro product made straight from an Akfa product (the old AkfaCreateFromAkfaModal). */
+export const quickProductSchema = z.object({
+  name: requiredText(),
+  article: z.string().trim(),
+  articleGroupType: z.string(),
+  textureId: requiredNumber(),
+})
+
+export type QuickProductForm = z.input<typeof quickProductSchema>
+export type QuickProductValues = z.output<typeof quickProductSchema>
