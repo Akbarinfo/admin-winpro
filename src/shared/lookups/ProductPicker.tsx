@@ -2,8 +2,7 @@ import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useEffect, useState, type Ref } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Combobox } from '@/shared/ui'
-import { specificationApi, specificationKeys } from './api'
-import type { NamedOption } from './types'
+import { productSearchApi, productSearchKeys, type ProductOption } from './products'
 
 type ProductPickerProps = {
   id?: string
@@ -18,7 +17,7 @@ type ProductPickerProps = {
 }
 
 /**
- * The specification's product (the old ProductSearchCombobox): the list is searched on the backend,
+ * A product (the old ProductSearchCombobox): the list is searched on the backend,
  * 200 at a time, so a catalogue of thousands stays quick. The chosen one is loaded by id on edit.
  */
 export function ProductPicker({ value, onChange, profileType, ...field }: ProductPickerProps) {
@@ -31,8 +30,8 @@ export function ProductPicker({ value, onChange, profileType, ...field }: Produc
   }, [query])
 
   const list = useQuery({
-    queryKey: [...specificationKeys.all, 'products', profileType ?? null, search],
-    queryFn: ({ signal }) => specificationApi.searchProducts(search, profileType, signal),
+    queryKey: [...productSearchKeys.all, 'list', profileType ?? null, search],
+    queryFn: ({ signal }) => productSearchApi.search(search, profileType, signal),
     placeholderData: keepPreviousData,
     staleTime: 60_000,
   })
@@ -40,12 +39,12 @@ export function ProductPicker({ value, onChange, profileType, ...field }: Produc
   const listed = value === null ? undefined : options.find((o) => o.id === value)
 
   const chosen = useQuery({
-    queryKey: [...specificationKeys.all, 'product', value],
-    queryFn: ({ signal }) => specificationApi.product(value!, signal),
+    queryKey: [...productSearchKeys.all, 'one', value],
+    queryFn: ({ signal }) => productSearchApi.get(value!, signal),
     enabled: value !== null && !list.isPending && listed === undefined,
     staleTime: Infinity,
   })
-  const selected: NamedOption | null = value === null ? null : (listed ?? chosen.data ?? null)
+  const selected: ProductOption | null = value === null ? null : (listed ?? chosen.data ?? null)
 
   return (
     <Combobox

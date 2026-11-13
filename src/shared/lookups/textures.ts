@@ -33,3 +33,16 @@ export function useSystemTextures(systemId: number | null) {
     staleTime: 10 * 60_000,
   })
 }
+
+/** The textures a product comes in (/v1/texture/list/by/productId/{id}); none until one is chosen. */
+export function useProductTextures(productId: number | null) {
+  return useQuery({
+    queryKey: [...textureKeys.all, 'product', productId],
+    queryFn: ({ signal }) =>
+      api
+        .get<TextureOption[]>(`/v1/texture/list/by/productId/${productId}`, { signal })
+        .then((r) => r.data),
+    enabled: productId !== null,
+    staleTime: 60_000,
+  })
+}

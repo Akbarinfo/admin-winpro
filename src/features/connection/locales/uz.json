@@ -1,0 +1,38 @@
+{
+  "connection": {
+    "title": "Birikma",
+    "add": "Birikma qo'shish",
+    "edit": "Birikmani tahrirlash",
+    "empty": "Birikmalar yo'q",
+    "article_1": "Artikul 1",
+    "article_2": "Artikul 2",
+    "name": "Nomi",
+    "product_1": "Mahsulot 1",
+    "product_2": "Mahsulot 2",
+    "variants": "Birikma variantlari",
+    "back": "Birikmalar ro'yxatiga",
+    "types": {
+      "title": "Birikma variantlari",
+      "add": "Variant qo'shish",
+      "empty": "Variantlar yo'q",
+      "name": "Nomi",
+      "priority": "Ustuvorlik",
+      "icon": "Belgi",
+      "default": "Standart"
+    },
+    "spec": {
+      "title": "Variant spetsifikatsiyasi",
+      "add": "Spetsifikatsiya qo'shish",
+      "edit": "Spetsifikatsiyani tahrirlash",
+      "empty": "Spetsifikatsiya yo'q",
+      "texture": "Rang",
+      "article": "Artikul",
+      "product": "Mahsulot",
+      "supplier": "Yetkazib beruvchi",
+      "pick_type": "Birikma variantini tanlang"
+    },
+    "type_params": "Variant parametrlari",
+    "spec_params": "Spetsifikatsiya parametrlari",
+    "pick_spec": "Spetsifikatsiya qatorini tanlang"
+  }
+}

@@ -151,6 +151,10 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    `PUT /mappings/batch`, 409 — to'qnashuvlar; Excel import);
    «Сопоставление единиц» ✅ (`/integrations/unit`, `/v1/akfa/unit-mappings` — GET by id yo'q, dialog yozuvni ro'yxatdan oladi).
    Akfa integratsiyasi tugadi; keyin katalog: `/connection`, `/inserts`, `/filling`, `/furniture`.
+7. Katalog: Соединение ✅ (`/connection` + `/connection/type/:id` — 4 bog'langan panel, tanlov URL'da `?typeId&specId`),
+   keyin `/inserts`, `/filling`, `/furniture`. Umumiy qismlar: parametr panellari — `shared/parameters`
+   (`ParameterPanel`, eski `AddParamComponent`: saqlash doim POST), mahsulot tanlash — `shared/lookups/ProductPicker`,
+   nusxa olish — `useConfirmCopy`, panel ramkasi — `Panel`.
    Ketma-ket so'rovlar — `shared/hooks/useConfirm`.
    Qator tanlash — `shared/hooks/useRowSelection`.
 

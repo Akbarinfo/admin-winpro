@@ -7,7 +7,7 @@ import { useEntityForm } from '@/shared/hooks/useEntityForm'
 import { useSuppliers } from '@/shared/lookups/suppliers'
 import { Alert, Button, Combobox, FormField, Modal, NumberInput, Spinner } from '@/shared/ui'
 import { specificationApi, specificationKeys } from './api'
-import { ProductPicker } from './ProductPicker'
+import { ProductPicker } from '@/shared/lookups/ProductPicker'
 import {
   PRODUCT_TYPE_BY_APPLICATION,
   specificationSchema,

@@ -28,6 +28,7 @@ import {
   Select,
   Spinner,
   Switch,
+  Panel,
   TableCard,
   Tabs,
   TableToolbar,
@@ -420,6 +421,36 @@ export function UiKitPage() {
             />
             <Pagination page={page.page} size={page.size} total={318} onChange={setPage} />
           </TableCard>
+        </KitCard>
+        <KitCard
+          title="Panel"
+          replaces="заголовки «Варианты соединений», «Параметр…» над связанными таблицами"
+          wide
+        >
+          <div className="grid gap-4 md:grid-cols-2">
+            <Panel
+              title="Варианты соединений"
+              actions={
+                <Button size="sm" icon={<Plus size={16} />}>
+                  Добавить
+                </Button>
+              }
+            >
+              <p className="px-4 py-10 text-center text-muted">
+                Строка выбрана — справа её параметры
+              </p>
+            </Panel>
+            <Panel
+              title="Параметры варианта"
+              actions={
+                <Button size="sm" icon={<Plus size={16} />} disabled>
+                  Добавить
+                </Button>
+              }
+            >
+              <p className="px-4 py-10 text-center text-muted">Выберите вариант соединения</p>
+            </Panel>
+          </div>
         </KitCard>
       </Section>
 

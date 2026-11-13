@@ -87,7 +87,7 @@ export const NAV: NavGroup[] = [
     title: 'nav.group_catalog',
     items: [
       { to: '/textures', label: 'textures.title', icon: Palette, status: 'ready' },
-      { to: '/connection', label: 'sidebar_menu_connection', icon: Link2 },
+      { to: '/connection', label: 'connection.title', icon: Link2, status: 'new' },
       { to: '/inserts', label: 'sidebar_menu_insert', icon: ListPlus },
       { to: '/filling', label: 'sidebar_menu_filling', icon: PanelsTopLeft },
       { to: '/furniture', label: 'sidebar_menu_accessories', icon: Settings2 },
@@ -105,8 +105,8 @@ export const NAV: NavGroup[] = [
     title: 'nav.group_integrations',
     items: [
       { to: '/price-requests', label: 'priceRequests.title', icon: BellRing, status: 'ready' },
-      { to: '/integrations/akfa', label: 'akfa.title', icon: Plug, status: 'new' },
-      { to: '/integrations/unit', label: 'nav.akfa_units', icon: Scale, status: 'new' },
+      { to: '/integrations/akfa', label: 'akfa.title', icon: Plug, status: 'ready' },
+      { to: '/integrations/unit', label: 'nav.akfa_units', icon: Scale, status: 'ready' },
     ],
   },
   {

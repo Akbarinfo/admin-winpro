@@ -86,9 +86,6 @@ export const profileSystemApi = {
 const enumNames = (url: string, signal?: AbortSignal) =>
   api.get<EnumItem[]>(url, { signal }).then((r) => r.data.map((x) => x.name))
 
-/** Products to choose in a specification: searched on the backend, 200 at a time (the old panel's size). */
-export const PRODUCT_SEARCH_SIZE = 200
-
 /** The system's profiles (the old ProfileSystemSpecificationLayout and its modal). */
 export const specificationKeys = { all: ['profile-system-specification'] as const }
 
@@ -118,20 +115,6 @@ export const specificationApi = {
   },
 
   remove: (id: number) => api.delete(`${SPEC}/${id}`),
-
-  /** GET /v1/product/article/product?page=0&size=200[&search][&profileType] */
-  searchProducts: (search: string, profileType: string | undefined, signal?: AbortSignal) => {
-    const params = new URLSearchParams({ page: '0', size: String(PRODUCT_SEARCH_SIZE) })
-    if (search.trim()) params.set('search', search.trim())
-    if (profileType) params.set('profileType', profileType)
-    return api
-      .get<NamedOption[]>(`/v1/product/article/product?${params}`, { signal })
-      .then((r) => r.data)
-  },
-
-  /** The chosen product, so the field shows it on edit even if it isn't in the first 200. */
-  product: (id: number, signal?: AbortSignal) =>
-    api.get<NamedOption>(`/v1/product/article/product/${id}`, { signal }).then((r) => r.data),
 }
 
 /** The system's accessories (the old ProfileSystemAccessoriesLayout and its modal). */

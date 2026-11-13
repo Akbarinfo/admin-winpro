@@ -42,6 +42,37 @@ export function TableCard({ className, ...rest }: ComponentProps<'div'>) {
   )
 }
 
+/**
+ * One table of a page with several linked ones (variants → parameters…): a titled card
+ * with its actions in the header. The table inside scrolls on its own.
+ */
+export function Panel({
+  title,
+  actions,
+  children,
+  className,
+}: {
+  title: ReactNode
+  actions?: ReactNode
+  children: ReactNode
+  className?: string
+}) {
+  return (
+    <section
+      className={cn(
+        'flex min-h-[18rem] min-w-0 flex-col overflow-hidden rounded-lg border border-line bg-surface',
+        className,
+      )}
+    >
+      <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-2">
+        <h2 className="font-semibold">{title}</h2>
+        {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
+      </header>
+      {children}
+    </section>
+  )
+}
+
 /** Row above the table inside a TableCard: search, filters, bulk actions. */
 export function TableToolbar({ className, ...rest }: ComponentProps<'div'>) {
   return (

@@ -27,7 +27,12 @@
     "retry": "Qayta urinish",
     "search": "Qidirish",
     "number": "№",
-    "expand": "Ochish"
+    "expand": "Ochish",
+    "copy": "Nusxa olish",
+    "copied": "Nusxa yaratildi",
+    "copy_title": "Nusxa olinsinmi?",
+    "copy_text": "Yozuvning nusxasi yaratiladi.",
+    "copy_named": "«{{name}}» nusxasi yaratiladi."
   },
   "errors": {
     "network": "Server bilan aloqa yo'q. Internetni tekshirib, qayta urinib ko'ring.",
@@ -174,5 +179,12 @@
     "load_error": "Konstruktorni ishga tushirib bo'lmadi.",
     "get_sizes": "O'lchamlarni konstruktordan olish",
     "json_file": "Chizma fayli (JSON)"
+  },
+  "parameters": {
+    "parameter": "Parametr",
+    "value": "Qiymat",
+    "add": "Parametr qo'shish",
+    "edit": "Parametrni tahrirlash",
+    "empty": "Parametrlar yo'q"
   }
 }

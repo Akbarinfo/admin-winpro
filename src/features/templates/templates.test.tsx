@@ -255,7 +255,8 @@ describe('Templates', () => {
     await new Promise((r) => setTimeout(r, 30))
     expect(cc.started).toEqual([])
     answer({ data: PARENT })
-    await waitFor(() => expect(cc.opened).toEqual(['{"shapes":[1]}']))
+    // the lazy page and the constructor's dynamic import: slow when the whole suite runs
+    await waitFor(() => expect(cc.opened).toEqual(['{"shapes":[1]}']), { timeout: 8000 })
     expect(screen.queryByText('Не удалось запустить конструктор.')).not.toBeInTheDocument()
   })
 

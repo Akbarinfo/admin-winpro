@@ -1,0 +1,38 @@
+{
+  "connection": {
+    "title": "Connections",
+    "add": "Add connection",
+    "edit": "Edit connection",
+    "empty": "No connections",
+    "article_1": "Article 1",
+    "article_2": "Article 2",
+    "name": "Name",
+    "product_1": "Product 1",
+    "product_2": "Product 2",
+    "variants": "Connection variants",
+    "back": "Back to connections",
+    "types": {
+      "title": "Connection variants",
+      "add": "Add variant",
+      "empty": "No variants",
+      "name": "Name",
+      "priority": "Priority",
+      "icon": "Icon",
+      "default": "Default"
+    },
+    "spec": {
+      "title": "Variant specification",
+      "add": "Add specification",
+      "edit": "Edit specification",
+      "empty": "No specification",
+      "texture": "Colour",
+      "article": "Article",
+      "product": "Product",
+      "supplier": "Supplier",
+      "pick_type": "Choose a connection variant"
+    },
+    "type_params": "Variant parameters",
+    "spec_params": "Specification parameters",
+    "pick_spec": "Choose a specification row"
+  }
+}

@@ -27,7 +27,12 @@
     "retry": "Retry",
     "search": "Search",
     "number": "#",
-    "expand": "Expand"
+    "expand": "Expand",
+    "copy": "Copy",
+    "copied": "Copy created",
+    "copy_title": "Make a copy?",
+    "copy_text": "A copy of the record will be made.",
+    "copy_named": "A copy of «{{name}}» will be made."
   },
   "errors": {
     "network": "Can't reach the server. Check your connection and try again.",
@@ -174,5 +179,12 @@
     "load_error": "The constructor failed to start.",
     "get_sizes": "Take the sizes from the constructor",
     "json_file": "Drawing file (JSON)"
+  },
+  "parameters": {
+    "parameter": "Parameter",
+    "value": "Value",
+    "add": "Add parameter",
+    "edit": "Edit parameter",
+    "empty": "No parameters"
   }
 }
