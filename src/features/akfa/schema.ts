@@ -40,3 +40,13 @@ export const quickProductSchema = z.object({
 
 export type QuickProductForm = z.input<typeof quickProductSchema>
 export type QuickProductValues = z.output<typeof quickProductSchema>
+
+/** An Akfa unit ↔ WinPro unit (the old AkfaUnitMappingLayout): the Akfa id and name are required. */
+export const unitMappingSchema = z.object({
+  akfaUnitId: requiredNumber(),
+  akfaUnitName: requiredText(),
+  unitId: z.number().nullable(),
+})
+
+export type UnitMappingForm = z.input<typeof unitMappingSchema>
+export type UnitMappingValues = z.output<typeof unitMappingSchema>

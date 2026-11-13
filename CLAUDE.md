@@ -148,7 +148,9 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Akfa integratsiyasi (`features/akfa`, `/v1/akfa/**` — DataTables emas, sahifa 1 dan, `{data,total}`):
    skelet + xulosa + «Новые товары» ✅, «Изменения цен» ✅ (stale → 409 → `force=true`), «Журнал» ✅;
    «Сопоставление» ✅ (bog'lash modali: `@dnd-kit/core` bilan sudrash + «Привязать (n)» tugmasi, qoralama →
-   `PUT /mappings/batch`, 409 — to'qnashuvlar; Excel import); keyin `/integrations/unit`.
+   `PUT /mappings/batch`, 409 — to'qnashuvlar; Excel import);
+   «Сопоставление единиц» ✅ (`/integrations/unit`, `/v1/akfa/unit-mappings` — GET by id yo'q, dialog yozuvni ro'yxatdan oladi).
+   Akfa integratsiyasi tugadi; keyin katalog: `/connection`, `/inserts`, `/filling`, `/furniture`.
    Ketma-ket so'rovlar — `shared/hooks/useConfirm`.
    Qator tanlash — `shared/hooks/useRowSelection`.
 

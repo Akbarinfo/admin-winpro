@@ -312,7 +312,8 @@
       "delete": "O'chirish",
       "delete_confirm_title": "Bu moslashtiruvni o'chirasizmi?",
       "delete_success": "Moslashtiruv o'chirildi",
-      "empty": "Moslashtiruvlar yo'q"
+      "empty": "Moslashtiruvlar yo'q",
+      "not_found": "Moslashtirish topilmadi"
     },
     "message_status": "Xabar holati",
     "message_type": "Xabar turi",

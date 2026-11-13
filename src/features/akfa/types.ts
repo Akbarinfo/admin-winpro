@@ -204,3 +204,13 @@ export type MappingImportResult = {
     | null
   conflicts?: MappingConflict[] | null
 }
+
+/** GET /v1/akfa/unit-mappings: an Akfa dealer unit and the WinPro unit it stands for. */
+export type AkfaUnitMapping = {
+  id: number
+  akfaUnitId: number
+  akfaUnitName: string
+  unitId?: number | null
+  unitName?: string | null
+  unitShortName?: string | null
+}

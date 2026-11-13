@@ -312,7 +312,8 @@
       "delete": "Delete",
       "delete_confirm_title": "Delete this mapping?",
       "delete_success": "Mapping deleted",
-      "empty": "No mappings"
+      "empty": "No mappings",
+      "not_found": "Mapping not found"
     },
     "message_status": "Message status",
     "message_type": "Message type",

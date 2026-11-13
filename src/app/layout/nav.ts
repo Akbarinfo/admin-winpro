@@ -106,7 +106,7 @@ export const NAV: NavGroup[] = [
     items: [
       { to: '/price-requests', label: 'priceRequests.title', icon: BellRing, status: 'ready' },
       { to: '/integrations/akfa', label: 'akfa.title', icon: Plug, status: 'new' },
-      { to: '/integrations/unit', label: 'nav.akfa_units', icon: Scale },
+      { to: '/integrations/unit', label: 'nav.akfa_units', icon: Scale, status: 'new' },
     ],
   },
   {

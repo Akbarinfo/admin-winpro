@@ -1,4 +1,5 @@
 import { api } from '@/shared/api/client'
+import type { UnitMappingValues } from './schema'
 import type {
   AkfaMapping,
   MappingAkfaProduct,
@@ -11,6 +12,7 @@ import type {
   AkfaPosition,
   AkfaProduct,
   AkfaSummary,
+  AkfaUnitMapping,
   BulkResult,
   HubPage,
   IgnoreResult,
@@ -28,6 +30,8 @@ export const akfaKeys = {
   mappings: ['akfa', 'mappings'] as const,
   /** The inbound message log. */
   messages: ['akfa', 'messages'] as const,
+  /** Akfa units ↔ WinPro units (/integrations/unit). */
+  units: ['akfa', 'units'] as const,
 }
 
 /** The old tabs' page size. */
@@ -227,4 +231,15 @@ export const akfaApi = {
       })
       .then((r) => ({ conflict: r.status === 409, result: r.data ?? {} }))
   },
+
+  unitMappings: (signal?: AbortSignal) =>
+    api.get<AkfaUnitMapping[]>(`${A}/unit-mappings`, { signal }).then((r) => r.data ?? []),
+
+  /** POST without id, PUT with it (its body carries the id too, as the old panel's did). */
+  saveUnitMapping: (values: UnitMappingValues, id?: string) =>
+    id === undefined
+      ? api.post(`${A}/unit-mappings`, values)
+      : api.put(`${A}/unit-mappings/${id}`, { id: Number(id), ...values }),
+
+  removeUnitMapping: (id: number) => api.delete(`${A}/unit-mappings/${id}`),
 }
