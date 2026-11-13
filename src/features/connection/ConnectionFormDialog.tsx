@@ -26,7 +26,7 @@ export function ConnectionFormDialog() {
 
   const [defaultValues] = useState<ConnectionForm>(() => ({ product1: null, product2: null }))
 
-  const { form, isEdit, isLoading, isSaving, submit } = useEntityForm({
+  const { form, isEdit, isLoading, isSaving, loadError, submit } = useEntityForm({
     id,
     queryKey: connectionKeys.all,
     fetchOne: connectionApi.get,
@@ -64,13 +64,16 @@ export function ConnectionFormDialog() {
           <Button variant="outline" onClick={close} disabled={isSaving}>
             {t('common.cancel')}
           </Button>
-          <Button type="submit" loading={isSaving} disabled={isLoading}>
+          <Button type="submit" loading={isSaving} disabled={isLoading || !!loadError}>
             {t(isSaving ? 'common.saving' : 'common.save')}
           </Button>
         </>
       }
     >
-      {isLoading ? (
+      {/* The record couldn't be loaded: say so instead of an empty form that would save over it. */}
+      {loadError ? (
+        <Alert>{t('common.load_error')}</Alert>
+      ) : isLoading ? (
         <div className="grid place-items-center py-10 text-primary">
           <Spinner className="size-6" />
         </div>

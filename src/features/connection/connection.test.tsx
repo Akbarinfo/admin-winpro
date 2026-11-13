@@ -181,14 +181,17 @@ describe('Connection variants page', () => {
     )
   })
 
-  it('takes the name from the list, or shows the articles when the record has no names', async () => {
+  it('takes the name from the list, without loading the record', async () => {
     const { router } = renderAt('/connection')
     const row = (await screen.findByText('Rama-Impost')).closest('tr')!
     await userEvent.click(within(row).getByRole('button', { name: 'Варианты соединения' }))
     await waitFor(() => expect(router.state.location.pathname).toBe('/connection/type/7'))
-    expect(await screen.findByText('Rama-Impost')).toBeInTheDocument()
+    const heading = await screen.findByRole('heading', { name: 'Варианты соединения' })
+    expect(heading.parentElement).toHaveTextContent('Rama-Impost')
     expect(http.get).not.toHaveBeenCalledWith('/v1/connection/7', expect.anything())
+  })
 
+  it('shows the articles when the loaded record has no product names', async () => {
     http.get.mockImplementation(async (url: string) => {
       if (url === '/v1/connection/8')
         return { data: { id: 8, product1: 1, product2: 2, article1: '6042', article2: '6043' } }

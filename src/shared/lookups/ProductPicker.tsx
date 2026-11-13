@@ -9,7 +9,8 @@ type ProductPickerProps = {
   name?: string
   ref?: Ref<HTMLInputElement>
   value: number | null
-  onChange: (id: number | null) => void
+  /** The id, and the chosen product itself (e.g. for its name). */
+  onChange: (id: number | null, product: ProductOption | null) => void
   onBlur?: () => void
   /** Only products of this type (a joining profile); undefined — any. */
   profileType?: string
@@ -51,7 +52,7 @@ export function ProductPicker({ value, onChange, profileType, ...field }: Produc
       {...field}
       options={options}
       value={selected}
-      onChange={(o) => onChange(o?.id ?? null)}
+      onChange={(o) => onChange(o?.id ?? null, o ?? null)}
       getKey={(o) => o.id}
       getLabel={(o) => t(o.name)}
       loading={list.isFetching}

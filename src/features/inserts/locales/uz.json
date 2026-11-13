@@ -1,0 +1,42 @@
+{
+  "inserts": {
+    "title": "Qo'shimchalar",
+    "add": "Qo'shish",
+    "add_title": "Qo'shimchali mahsulot qo'shish",
+    "edit_title": "Mahsulotni o'zgartirish",
+    "empty": "Yozuvlar yo'q",
+    "name": "Nomi",
+    "article": "Artikul",
+    "supplier": "Yetkazib beruvchi",
+    "product": "Mahsulot",
+    "open": "Mahsulot qo'shimchalari",
+    "back": "Qo'shimchalar ro'yxatiga",
+    "additional": {
+      "title": "Qo'shimchalar",
+      "add": "Qo'shimcha qo'shish",
+      "edit": "Qo'shimchani tahrirlash",
+      "empty": "Qo'shimchalar yo'q",
+      "name": "Nomi",
+      "default": "Standart",
+      "necessarily": "Majburiy",
+      "copy_to_product": "Boshqa mahsulotga nusxalash",
+      "copy_to_product_choose": "Mahsulotni tanlang",
+      "copy_to_product_submit": "Nusxalash",
+      "copy_to_product_done": "Qo'shimcha nusxalandi"
+    },
+    "params": "Qo'shimcha parametrlari",
+    "spec": {
+      "title": "Qo'shimcha spetsifikatsiyasi",
+      "add": "Spetsifikatsiya qo'shish",
+      "edit": "Spetsifikatsiyani tahrirlash",
+      "empty": "Spetsifikatsiya yo'q",
+      "texture": "Rang",
+      "article": "Artikul",
+      "product": "Mahsulot",
+      "supplier": "Yetkazib beruvchi"
+    },
+    "spec_params": "Spetsifikatsiya parametrlari",
+    "pick_additional": "Qo'shimchani tanlang",
+    "pick_spec": "Spetsifikatsiya qatorini tanlang"
+  }
+}

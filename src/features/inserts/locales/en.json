@@ -1,0 +1,42 @@
+{
+  "inserts": {
+    "title": "Inserts",
+    "add": "Add",
+    "add_title": "Add a product with inserts",
+    "edit_title": "Edit product",
+    "empty": "No records",
+    "name": "Name",
+    "article": "Article",
+    "supplier": "Supplier",
+    "product": "Product",
+    "open": "Product inserts",
+    "back": "Back to inserts",
+    "additional": {
+      "title": "Inserts",
+      "add": "Add insert",
+      "edit": "Edit insert",
+      "empty": "No inserts",
+      "name": "Name",
+      "default": "Default",
+      "necessarily": "Required",
+      "copy_to_product": "Copy to another product",
+      "copy_to_product_choose": "Choose a product",
+      "copy_to_product_submit": "Copy",
+      "copy_to_product_done": "Insert copied"
+    },
+    "params": "Insert parameters",
+    "spec": {
+      "title": "Insert specification",
+      "add": "Add specification",
+      "edit": "Edit specification",
+      "empty": "No specification",
+      "texture": "Colour",
+      "article": "Article",
+      "product": "Product",
+      "supplier": "Supplier"
+    },
+    "spec_params": "Specification parameters",
+    "pick_additional": "Choose an insert",
+    "pick_spec": "Choose a specification row"
+  }
+}
