@@ -296,6 +296,26 @@
     "unit": "Unit",
     "supplier": "Supplier",
     "length": "Length",
-    "all_textures_of": "All textures: {{name}}"
+    "all_textures_of": "All textures: {{name}}",
+    "big_delta": "A big change",
+    "delta_filter": "Price change",
+    "units": {
+      "title": "AKFA unit mapping",
+      "description": "Link AKFA dealer units to WinPro units. When a product is created from a new item, its unit is filled from this table.",
+      "add": "Add",
+      "add_title": "Add unit mapping",
+      "edit_title": "Edit unit mapping",
+      "col_akfa_id": "AKFA ID",
+      "col_akfa_name": "AKFA name",
+      "col_winpro_unit": "WinPro unit",
+      "not_selected": "Not selected",
+      "unmapped_warning": "{{count}} AKFA unit(s) are not mapped to a WinPro unit — products in those units will have an empty unitId.",
+      "delete": "Delete",
+      "delete_confirm_title": "Delete this mapping?",
+      "delete_success": "Mapping deleted",
+      "empty": "No mappings"
+    },
+    "message_status": "Message status",
+    "message_type": "Message type"
   }
 }

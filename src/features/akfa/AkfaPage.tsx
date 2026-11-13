@@ -2,7 +2,9 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { PageHeader, Tabs } from '@/shared/ui'
 import { ListenerState, SummaryCards } from './AkfaSummary'
+import { LogTab } from './LogTab'
 import { NewProductsTab } from './NewProductsTab'
+import { PriceChangesTab } from './PriceChangesTab'
 import { useAkfaSummary } from './useAkfaSummary'
 
 const TABS = ['new', 'prices', 'mapping', 'log'] as const
@@ -40,6 +42,10 @@ export function AkfaPage() {
         <div className="flex min-h-0 flex-1 flex-col">
           {tab === 'new' ? (
             <NewProductsTab />
+          ) : tab === 'prices' ? (
+            <PriceChangesTab />
+          ) : tab === 'log' ? (
+            <LogTab />
           ) : (
             <p className="py-10 text-center text-muted">{t('akfa.step_later')}</p>
           )}

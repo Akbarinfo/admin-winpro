@@ -146,7 +146,8 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Переводы ✅ (`features/translationKeys`: `translations.*` kaliti davlat tarjimalarida band;
    `POST /v1/translation/table` — DataTables emas, sahifa 1 dan, `filter: {query}`; Excel import/eksport).
    Akfa integratsiyasi (`features/akfa`, `/v1/akfa/**` — DataTables emas, sahifa 1 dan, `{data,total}`):
-   skelet + xulosa + «Новые товары» ✅; keyin «Изменения цен», «Журнал», «Сопоставление», `/integrations/unit`.
+   skelet + xulosa + «Новые товары» ✅, «Изменения цен» ✅ (stale → 409 → `force=true`), «Журнал» ✅;
+   keyin «Сопоставление», `/integrations/unit`. Ketma-ket so'rovlar — `shared/hooks/useConfirm`.
    Qator tanlash — `shared/hooks/useRowSelection`.
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.

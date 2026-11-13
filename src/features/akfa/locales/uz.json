@@ -296,6 +296,26 @@
     "unit": "O'lchov birligi",
     "supplier": "Yetkazib beruvchi",
     "length": "Uzunligi",
-    "all_textures_of": "Barcha teksturalar: {{name}}"
+    "all_textures_of": "Barcha teksturalar: {{name}}",
+    "big_delta": "Katta o'zgarish",
+    "delta_filter": "Narx o'zgarishi",
+    "units": {
+      "title": "AKFA birlik moslashtirish",
+      "description": "AKFA dilleri birliklarini WinPro birliklariga bog'lang. Yangi tovardan mahsulot yaratishda birlik shu jadval orqali to'ldiriladi.",
+      "add": "Qo'shish",
+      "add_title": "Birlik moslashtirish qo'shish",
+      "edit_title": "Birlik moslashtirishni tahrirlash",
+      "col_akfa_id": "AKFA ID",
+      "col_akfa_name": "AKFA nomi",
+      "col_winpro_unit": "WinPro birligi",
+      "not_selected": "Tanlanmagan",
+      "unmapped_warning": "{{count}} ta AKFA birligi WinPro birligiga bog'lanmagan — shu birlikdagi tovarlarda unitId bo'sh qoladi.",
+      "delete": "O'chirish",
+      "delete_confirm_title": "Bu moslashtiruvni o'chirasizmi?",
+      "delete_success": "Moslashtiruv o'chirildi",
+      "empty": "Moslashtiruvlar yo'q"
+    },
+    "message_status": "Xabar holati",
+    "message_type": "Xabar turi"
   }
 }

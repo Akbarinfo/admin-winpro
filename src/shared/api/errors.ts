@@ -12,13 +12,22 @@ export class ApiError extends Error {
    * that may sit in any of them (e.g. Spring: { error: "Bad Request", message: "bucket.not.found" }).
    */
   readonly details: string
+  /** The backend's own text, if it sent one (`message` falls back to a generic one). */
+  readonly backendMessage?: string
 
-  constructor(status: number, message: string, fields?: Record<string, string>, details = message) {
+  constructor(
+    status: number,
+    message: string,
+    fields?: Record<string, string>,
+    details = message,
+    backendMessage?: string,
+  ) {
     super(message)
     this.name = 'ApiError'
     this.status = status
     this.fields = fields
     this.details = details
+    this.backendMessage = backendMessage
   }
 }
 
@@ -65,7 +74,13 @@ export function normalizeError(error: AxiosError<ErrorBody>): ApiError {
   ]
     .filter((v): v is string => typeof v === 'string' && v !== '')
     .join(' ')
-  return new ApiError(status, message, body?.errors, details || message)
+  return new ApiError(
+    status,
+    message,
+    body?.errors,
+    details || message,
+    backendMessage || undefined,
+  )
 }
 
 /**

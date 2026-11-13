@@ -1,8 +1,11 @@
 import { api } from '@/shared/api/client'
 import type {
+  AkfaMapping,
+  AkfaMessage,
   AkfaPosition,
   AkfaProduct,
   AkfaSummary,
+  BulkResult,
   HubPage,
   IgnoreResult,
   ProductDraft,
@@ -15,6 +18,10 @@ export const akfaKeys = {
   summary: ['akfa', 'summary'] as const,
   /** Product lists of the tabs. */
   products: ['akfa', 'products'] as const,
+  /** Links of WinPro positions to Akfa products (price changes, mapping). */
+  mappings: ['akfa', 'mappings'] as const,
+  /** The inbound message log. */
+  messages: ['akfa', 'messages'] as const,
 }
 
 /** The old tabs' page size. */
@@ -107,4 +114,48 @@ export const akfaApi = {
         body,
       )
       .then((r) => r.data),
+
+  mappings: (
+    params: {
+      status?: string
+      priceStatus?: string
+      search?: string
+      minDelta?: number | null
+      page?: number
+      size?: number
+    },
+    signal?: AbortSignal,
+  ) =>
+    api
+      .get<HubPage<AkfaMapping>>(`${A}/mappings`, { params: query(params), signal })
+      .then((r) => r.data),
+
+  /** A stale price (changed some other way) answers 409 unless `force`. */
+  approvePrice: (id: number, force = false) =>
+    api.put(`${A}/mappings/${id}/approve-price?force=${force}`),
+
+  rejectPrice: (id: number) => api.put(`${A}/mappings/${id}/reject-price`),
+
+  bulkApprovePrice: (ids: number[], force = false) =>
+    api.put<BulkResult>(`${A}/mappings/bulk-approve-price`, { ids, force }).then((r) => r.data),
+
+  bulkRejectPrice: (ids: number[]) =>
+    api.put<BulkResult>(`${A}/mappings/bulk-reject-price`, { ids }).then((r) => r.data),
+
+  messages: (
+    params: { status?: string | null; type?: string | null; page?: number; size?: number },
+    signal?: AbortSignal,
+  ) =>
+    api
+      .get<HubPage<AkfaMessage>>(`${A}/messages`, { params: query(params), signal })
+      .then((r) => r.data),
+
+  message: (id: number, signal?: AbortSignal) =>
+    api.get<AkfaMessage>(`${A}/messages/${id}`, { signal }).then((r) => r.data),
+
+  /** Processes a failed or partial message again. */
+  retryMessage: (id: number) => api.post(`${A}/messages/${id}/retry`),
+
+  /** Recalculates every WinPro price from the Akfa rates (runs on the server). */
+  recalculateRates: () => api.post(`${A}/rates/recalculate`),
 }

@@ -56,6 +56,15 @@ describe('normalizeError — Spring error pages', () => {
   })
 })
 
+describe('normalizeError — backendMessage', () => {
+  it('keeps the backend text apart from the generic fallback', () => {
+    expect(normalizeError(axiosError(409, { error: 'stale' } as Body)).backendMessage).toBe('stale')
+    const empty = normalizeError(axiosError(409, '' as unknown as Body))
+    expect(empty.backendMessage).toBeUndefined()
+    expect(empty.message).not.toBe('')
+  })
+})
+
 describe('readBlobError', () => {
   it('reads the JSON body of a blob request back, so its message shows', async () => {
     const blob = new Blob([JSON.stringify({ error: 'Неверный формат файла' })], {

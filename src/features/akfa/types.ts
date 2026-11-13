@@ -74,3 +74,52 @@ export type IgnoreResult = {
   ignored?: number[] | null
   skipped?: { id: number; reason: string }[] | null
 }
+
+/** A link of a WinPro position to an Akfa product, with its pending price (GET /v1/akfa/mappings). */
+export type AkfaMapping = {
+  id: number
+  productId?: number | null
+  productName?: string | null
+  article?: string | null
+  textureId?: number | null
+  textureName?: string | null
+  akfaProductId?: number | null
+  akfaProductName?: string | null
+  groupName?: string | null
+  /** The WinPro price now, and the one Akfa's rate gives. */
+  pendingBasePrice?: number | null
+  pendingBaseCurrencySymbol?: string | null
+  pendingPrice?: number | null
+  pendingCurrencySymbol?: string | null
+  priceDeltaPercent?: number | null
+  priceStatus?: string | null
+  priceError?: string | null
+  pendingSince?: string | null
+  lastAppliedAt?: string | null
+  lastAppliedPrice?: number | null
+  lastAppliedBy?: string | null
+  /** The WinPro price was changed some other way since: approving needs `force`. */
+  stale?: boolean | null
+}
+
+/** PUT …/bulk-approve-price, …/bulk-reject-price. */
+export type BulkResult = {
+  processed?: number[] | null
+  skipped?: { id: number; reason: string }[] | null
+}
+
+/** An inbound message from Akfa's queue (GET /v1/akfa/messages). */
+export type AkfaMessage = {
+  id: number
+  receivedAt?: string | null
+  processedAt?: string | null
+  messageType?: string | null
+  queue?: string | null
+  itemCount?: number | null
+  failedCount?: number | null
+  status?: string | null
+  attempts?: number | null
+  error?: string | null
+  /** The message itself (JSON text or an object), in the detail only. */
+  body?: unknown
+}
