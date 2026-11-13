@@ -1,9 +1,13 @@
+import { useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { PAGE_SIZES } from '@/shared/api/table'
 import { cn } from '@/shared/lib/cn'
 import { getPageItems } from './helpers'
 import { Select } from './Select'
+
+/** More pages than this: a field to type the page number in. */
+const JUMP_FROM = 10
 
 type PaginationProps = {
   page: number
@@ -83,8 +87,42 @@ export function Pagination({ page, size, total, sizes = PAGE_SIZES, onChange }: 
           >
             <ChevronRight size={16} />
           </button>
+          {pageCount > JUMP_FROM && <PageJump pageCount={pageCount} onGo={go} />}
         </nav>
       )}
     </div>
+  )
+}
+
+/** «Перейти: [ 37 ]» — Enter opens that page (kept within 1…pageCount). */
+function PageJump({ pageCount, onGo }: { pageCount: number; onGo: (page: number) => void }) {
+  const { t } = useTranslation()
+  const id = useId()
+  const [text, setText] = useState('')
+  const jump = () => {
+    const n = Math.trunc(Number(text))
+    if (!text.trim() || !Number.isFinite(n)) return
+    onGo(Math.min(pageCount, Math.max(1, n)))
+    setText('')
+  }
+  return (
+    <span className="ml-2 flex items-center gap-1.5">
+      <label htmlFor={id}>{t('pagination.go_to')}</label>
+      <input
+        id={id}
+        type="text"
+        inputMode="numeric"
+        placeholder={`1–${pageCount}`}
+        value={text}
+        onChange={(e) => setText(e.target.value.replace(/\D/g, ''))}
+        onKeyDown={(e) => {
+          if (e.key !== 'Enter') return
+          e.preventDefault() // not a form's submit
+          jump()
+        }}
+        onBlur={jump}
+        className="h-8 w-16 rounded-md border border-line bg-surface px-2 text-center tabular-nums outline-none placeholder:text-faint focus:border-primary"
+      />
+    </span>
   )
 }

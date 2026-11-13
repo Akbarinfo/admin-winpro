@@ -28,4 +28,26 @@ describe('Modal', () => {
     )
     expect(onClose).not.toHaveBeenCalled()
   })
+
+  it('stays open on a click on the backdrop, unless asked to close then', () => {
+    const onClose = vi.fn()
+    const { rerender } = render(
+      <Modal open onClose={onClose} title="Окно">
+        <p>body</p>
+      </Modal>,
+    )
+    // a click on the <dialog> itself is a click on its backdrop
+    fireEvent.click(screen.getByRole('dialog'))
+    expect(onClose).not.toHaveBeenCalled()
+    // a click inside isn't one either way
+    rerender(
+      <Modal open onClose={onClose} title="Окно" closeOnBackdrop>
+        <p>body</p>
+      </Modal>,
+    )
+    fireEvent.click(screen.getByText('body'))
+    expect(onClose).not.toHaveBeenCalled()
+    fireEvent.click(screen.getByRole('dialog'))
+    expect(onClose).toHaveBeenCalledTimes(1)
+  })
 })

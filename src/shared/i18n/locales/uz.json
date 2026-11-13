@@ -117,7 +117,8 @@
     "prev": "Oldingi sahifa",
     "next": "Keyingi sahifa",
     "page": "{{page}}-sahifa",
-    "label": "Sahifalar"
+    "label": "Sahifalar",
+    "go_to": "O'tish:"
   },
   "upload": {
     "choose": "Rasmni tanlang yoki shu yerga torting",

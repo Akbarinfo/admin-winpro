@@ -80,4 +80,18 @@ describe('useServerTable', () => {
     await waitFor(() => expect(router.state.location.search).toBe('?units.page=3'))
     await waitFor(() => expect(screen.getByTestId('rows')).toHaveTextContent('21,22,23,24,25'))
   })
+
+  it('opens with the page size last chosen for the table', async () => {
+    const fetchPage = makeFetch(500)
+    const first = setup(fetchPage)
+    await waitFor(() => expect(screen.getByTestId('rows')).toHaveTextContent('1,2'))
+    act(() => first.table().pagination.onChange({ page: 1, size: 100 }))
+    await waitFor(() => expect(fetchPage.mock.calls.at(-1)![0]).toMatchObject({ length: 100 }))
+    first.unmount()
+
+    // coming back without it in the URL: still 100
+    const second = setup(fetchPage)
+    await waitFor(() => expect(second.table().pagination.size).toBe(100))
+    expect(fetchPage.mock.calls.at(-1)![0]).toMatchObject({ start: 0, length: 100 })
+  })
 })

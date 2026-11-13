@@ -1,8 +1,10 @@
-import { Fragment, type Key, type ReactNode } from 'react'
+import { Fragment, useContext, useLayoutEffect, useRef, type Key, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
+import { UNSAFE_LocationContext } from 'react-router'
 import { ArrowDown, ArrowUp, ArrowUpDown, ChevronRight } from 'lucide-react'
 import type { TableSort } from '@/shared/api/table'
 import { cn } from '@/shared/lib/cn'
+import { scrollMemory } from '@/shared/lib/scrollMemory'
 import { Highlight } from './Highlight'
 import { nextSort } from './helpers'
 
@@ -76,12 +78,30 @@ export function DataTable<T>({
 }: DataTableProps<T>) {
   const { t } = useTranslation()
   const colCount = columns.length + (actions ? 1 : 0) + (expandable ? 1 : 0)
+
+  // Back on the same page and query: the list opens where it was left. (The context is read
+  // directly so the table works outside a router too, e.g. in unit tests.)
+  const location = useContext(UNSAFE_LocationContext)?.location
+  const scrollKey = location ? location.pathname + location.search : null
+  const scroller = useRef<HTMLDivElement>(null)
+  const restoredFor = useRef<string | null>(null)
+  useLayoutEffect(() => {
+    const el = scroller.current
+    if (!el || !scrollKey || loading || rows.length === 0 || restoredFor.current === scrollKey)
+      return
+    restoredFor.current = scrollKey
+    el.scrollTop = scrollMemory.get(scrollKey)
+  }, [scrollKey, loading, rows.length])
   const cell = (align?: 'left' | 'right') =>
     cn('px-3.5 py-2.5 whitespace-nowrap', align === 'right' && 'text-right')
 
   return (
     // Scrolls inside itself; in a flex column (list pages) it takes the remaining height and the header stays put.
-    <div className="min-h-0 flex-1 overflow-auto">
+    <div
+      ref={scroller}
+      onScroll={(e) => scrollKey && scrollMemory.set(scrollKey, e.currentTarget.scrollTop)}
+      className="min-h-0 flex-1 overflow-auto"
+    >
       <table className="w-full border-collapse text-[13.5px]">
         <thead>
           <tr>

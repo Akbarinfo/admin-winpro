@@ -52,7 +52,9 @@ Feature ichida nisbiy import (`./api`), boshqa joyda `@/` alias (`@/shared/ui`).
 - **Server ma'lumotlari** TanStack Query'da. Zustand faqat client holati uchun (session, preferences).
   Server javobi Zustand'ga ko'chirilmaydi.
 - **Jadval holati** (page, size, sort, search, filtrlar) URL'da saqlanadi (`useTableParams`, filtrlar — `useTableFilters`
-  bilan bir xil prefiks ostida), localStorage'da emas.
+  bilan bir xil prefiks ostida). Istisno — «На странице»: har jadval uchun oxirgi tanlov localStorage'da
+  (`shared/store/tablePrefs`), sahifaga qayta kirilganda o'sha son bilan ochiladi. Menyu havolasi bo'limning
+  oxirgi URL'iga olib boradi (`useLastView`, sessionStorage), jadval scroll joyi esa `DataTable`da tiklanadi.
 - **Formalar**: react-hook-form + zod schema, `useEntityForm` orqali. Oddiy matn maydoni `form.register()` + `<Field>`,
   boshqariladigan maydon (Combobox, NumberInput) `<FormField>` orqali. Schema xabarlari i18n kalitlari (`validation.required`).
   Combobox/NumberInput bo'sh qiymati `null`: `requiredNumber()`, `positiveNumber()` (`shared/lib/zod.ts`) uni chiqishda `number`ga aylantiradi.
@@ -143,6 +145,9 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    Ikkalasi oyna konstruktori `webcc` bilan (`shared/webcc`: `useWebcc`, `WebccCanvas`).
    Переводы ✅ (`features/translationKeys`: `translations.*` kaliti davlat tarjimalarida band;
    `POST /v1/translation/table` — DataTables emas, sahifa 1 dan, `filter: {query}`; Excel import/eksport).
+   Akfa integratsiyasi (`features/akfa`, `/v1/akfa/**` — DataTables emas, sahifa 1 dan, `{data,total}`):
+   skelet + xulosa + «Новые товары» ✅; keyin «Изменения цен», «Журнал», «Сопоставление», `/integrations/unit`.
+   Qator tanlash — `shared/hooks/useRowSelection`.
 
 Bu ro'yxatdagi bosqich tugaganda yangilanadi.
 

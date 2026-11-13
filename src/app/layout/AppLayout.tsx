@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Outlet, useNavigation } from 'react-router'
+import { Outlet, useLocation, useNavigation } from 'react-router'
 import { Menu } from 'lucide-react'
 import { cn } from '@/shared/lib/cn'
+import { useLastView } from '@/shared/store/tablePrefs'
 import { IconButton, LanguageSwitch, ThemeToggle } from '@/shared/ui'
 import { Sidebar } from './Sidebar'
 import { UserMenu } from './UserMenu'
@@ -13,6 +14,11 @@ export function AppLayout() {
   const closeNav = () => setNavOpen(false)
   // A section's page loads on its first visit: the current page stays until it's there.
   const loadingPage = useNavigation().state === 'loading'
+
+  // Each page's last query (table page, filters, search): the menu brings the user back to it.
+  const { pathname, search } = useLocation()
+  const remember = useLastView((s) => s.remember)
+  useEffect(() => remember(pathname, search), [remember, pathname, search])
 
   return (
     <div className="grid h-dvh lg:grid-cols-[260px_minmax(0,1fr)]">

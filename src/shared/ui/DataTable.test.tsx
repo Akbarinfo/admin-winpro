@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
+import { MemoryRouter } from 'react-router'
 import { DataTable, type Column } from './DataTable'
 
 type Row = { id: number; name: string; rate: number }
@@ -150,5 +151,25 @@ describe('DataTable', () => {
     )
     await userEvent.click(screen.getByRole('button', { name: 'Скрыть EUR' }))
     expect(screen.queryByText(/panel of/)).not.toBeInTheDocument()
+  })
+
+  it('opens where it was scrolled to on the same page and query', () => {
+    const table = (url: string) => (
+      <MemoryRouter initialEntries={[url]}>
+        <DataTable columns={columns} rows={rows} getRowKey={(r) => r.id} />
+      </MemoryRouter>
+    )
+    const scroller = () => screen.getByRole('table').parentElement!
+    const first = render(table('/currency?currency.page=2'))
+    scroller().scrollTop = 480
+    fireEvent.scroll(scroller())
+    first.unmount()
+
+    const back = render(table('/currency?currency.page=2'))
+    expect(scroller().scrollTop).toBe(480)
+    back.unmount()
+    // another page of it starts at the top
+    render(table('/currency?currency.page=3'))
+    expect(scroller().scrollTop).toBe(0)
   })
 })

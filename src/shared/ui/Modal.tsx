@@ -15,11 +15,16 @@ type ModalProps = {
   size?: keyof typeof SIZES
   /** Wraps body and footer in a <form>, so Enter submits and footer buttons can be type="submit". */
   onSubmit?: FormEventHandler<HTMLFormElement>
+  /**
+   * A click on the dark backdrop closes it too. Off by default: a stray click mustn't lose what's
+   * typed. Escape and the × always close.
+   */
+  closeOnBackdrop?: boolean
 }
 
 /**
  * Native <dialog>: the browser handles focus trapping, Escape and the top layer.
- * Closes on Escape, the × button and a click on the backdrop.
+ * Closes on Escape and the × button; on a click on the backdrop only with `closeOnBackdrop`.
  */
 export function Modal({
   open,
@@ -29,6 +34,7 @@ export function Modal({
   footer,
   size = 'md',
   onSubmit,
+  closeOnBackdrop = false,
 }: ModalProps) {
   const { t } = useTranslation()
   const ref = useRef<HTMLDialogElement>(null)
@@ -64,7 +70,7 @@ export function Modal({
         e.preventDefault()
         onClose()
       }}
-      onClick={(e) => e.target === e.currentTarget && onClose()}
+      onClick={(e) => closeOnBackdrop && e.target === e.currentTarget && onClose()}
       className={cn(
         'm-auto max-h-[calc(100%-32px)] w-[calc(100%-32px)] overflow-auto rounded-lg border border-line bg-surface p-0 text-fg',
         'shadow-[0_1px_2px_rgb(19_38_42/.06),0_8px_24px_rgb(19_38_42/.08)] backdrop:bg-overlay',

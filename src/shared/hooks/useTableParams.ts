@@ -1,14 +1,20 @@
 import { useCallback, useMemo } from 'react'
-import { useSearchParams } from 'react-router'
-import type { TableParams, TableSort } from '@/shared/api/table'
+import { useLocation, useSearchParams } from 'react-router'
+import { PAGE_SIZES, type TableParams, type TableSort } from '@/shared/api/table'
+import { useTablePrefs } from '@/shared/store/tablePrefs'
 import { readTableParams, writeTableParams } from './tableParams'
 
 /**
  * Page, size, sort and search of one table, stored in the URL under `key`.
  * Links can be shared and the Back button returns to the same page of the table.
+ * «На странице» is remembered for the table (its section + key): it opens with the last one chosen.
  */
-export function useTableParams(key: string, size: number, sort?: TableSort) {
+export function useTableParams(key: string, defaultSize: number, sort?: TableSort) {
   const [searchParams, setSearchParams] = useSearchParams()
+  const table = `${useLocation().pathname.split('/')[1]}.${key}`
+  const saved = useTablePrefs((s) => s.sizes[table])
+  const setSize = useTablePrefs((s) => s.setSize)
+  const size = saved !== undefined && PAGE_SIZES.includes(saved) ? saved : defaultSize
   const sortColumn = sort?.column
   const sortDir = sort?.dir
 
@@ -26,7 +32,8 @@ export function useTableParams(key: string, size: number, sort?: TableSort) {
   )
 
   const setParams = useCallback(
-    (patch: Partial<TableParams>) =>
+    (patch: Partial<TableParams>) => {
+      if (patch.size !== undefined && patch.size !== defaults.size) setSize(table, patch.size)
       setSearchParams(
         (prev) =>
           writeTableParams(
@@ -36,8 +43,9 @@ export function useTableParams(key: string, size: number, sort?: TableSort) {
             defaults,
           ),
         { replace: true },
-      ),
-    [setSearchParams, key, defaults],
+      )
+    },
+    [setSearchParams, key, defaults, setSize, table],
   )
 
   return [params, setParams] as const

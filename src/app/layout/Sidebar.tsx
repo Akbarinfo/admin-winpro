@@ -2,11 +2,13 @@ import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router'
 import { Frame } from 'lucide-react'
 import { cn } from '@/shared/lib/cn'
+import { useLastView } from '@/shared/store/tablePrefs'
 import { NAV } from './nav'
 
 /** @param onNavigate closes the mobile drawer after a link is chosen. */
 export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const { t } = useTranslation()
+  const lastSearch = useLastView((s) => s.search)
 
   return (
     <div className="flex h-full flex-col">
@@ -44,7 +46,8 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
               ) : (
                 <NavLink
                   key={to}
-                  to={to}
+                  // back where the section was left: its table's page, filters and search
+                  to={{ pathname: to, search: lastSearch[to] ?? '' }}
                   end={to === '/'}
                   onClick={onNavigate}
                   className={({ isActive }) =>

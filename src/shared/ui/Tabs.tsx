@@ -19,6 +19,8 @@ type TabsProps<T extends string> = {
   /** The chosen tab's content. */
   children: ReactNode
   className?: string
+  /** The panel's layout; by default it scrolls itself. A page whose table scrolls inside gives its own. */
+  panelClassName?: string
 }
 
 /**
@@ -33,6 +35,7 @@ export function Tabs<T extends string>({
   onChange,
   children,
   className,
+  panelClassName,
 }: TabsProps<T>) {
   const refs = useRef<(HTMLButtonElement | null)[]>([])
   const tabId = (v: T) => `${id}-tab-${v}`
@@ -59,7 +62,9 @@ export function Tabs<T extends string>({
       <div
         role="tablist"
         aria-label={label}
-        className="flex shrink-0 gap-1 overflow-x-auto border-b border-line px-3"
+        // Scrolls sideways when the tabs don't fit, never up and down: the line under them is a
+        // shadow inside the list, so the chosen tab's underline doesn't stick out of it.
+        className="flex shrink-0 gap-1 overflow-x-auto overflow-y-hidden px-3 shadow-[inset_0_-1px_0_var(--line)]"
       >
         {items.map((item, i) => {
           const selected = item.value === value
@@ -78,7 +83,7 @@ export function Tabs<T extends string>({
               onClick={() => onChange(item.value)}
               onKeyDown={(e) => onKeyDown(e, i)}
               className={cn(
-                '-mb-px inline-flex h-11 shrink-0 items-center gap-2 border-b-2 px-3 font-semibold transition-colors outline-none',
+                'inline-flex h-11 shrink-0 items-center gap-2 border-b-2 px-3 font-semibold transition-colors outline-none',
                 'focus-visible:shadow-[inset_0_0_0_2px_var(--primary)]',
                 selected ? 'border-primary text-fg' : 'border-transparent text-muted hover:text-fg',
               )}
@@ -104,7 +109,7 @@ export function Tabs<T extends string>({
         role="tabpanel"
         id={`${id}-panel`}
         aria-labelledby={tabId(value)}
-        className="min-h-0 flex-1 overflow-y-auto"
+        className={cn('min-h-0 flex-1', panelClassName ?? 'overflow-y-auto')}
       >
         {children}
       </div>

@@ -117,7 +117,8 @@
     "prev": "Previous page",
     "next": "Next page",
     "page": "Page {{page}}",
-    "label": "Pages"
+    "label": "Pages",
+    "go_to": "Go to:"
   },
   "upload": {
     "choose": "Choose an image or drop it here",

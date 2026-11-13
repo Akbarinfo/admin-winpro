@@ -29,7 +29,14 @@ export const isClientError = (error: unknown): error is ApiError =>
 // The backend answers with { error }, sometimes plain text (e.g. /reset/password).
 type ErrorBody =
   | string
-  | { error?: string; message?: string; code?: string; errors?: Record<string, string> }
+  | {
+      error?: string
+      message?: string
+      code?: string
+      errors?: Record<string, string>
+      timestamp?: unknown
+      path?: unknown
+    }
   | undefined
 
 export function normalizeError(error: AxiosError<ErrorBody>): ApiError {
@@ -38,7 +45,11 @@ export function normalizeError(error: AxiosError<ErrorBody>): ApiError {
   const status = error.response?.status ?? 0
   const data = error.response?.data
   const body = typeof data === 'object' ? data : undefined
-  const backendMessage = typeof data === 'string' ? data : (body?.error ?? body?.message)
+  // Our endpoints answer { error: "<the reason>" }. Spring's own error page (timestamp, path…) has
+  // error: "Bad Request" and the reason in message (the Akfa endpoints answer so): take that.
+  const springDefault = body?.timestamp !== undefined && body?.path !== undefined && !!body?.message
+  const backendMessage =
+    typeof data === 'string' ? data : springDefault ? body.message : (body?.error ?? body?.message)
   const message = backendMessage || i18n.t(status === 0 ? 'errors.network' : 'errors.unknown')
 
   const { token, logout } = useSession.getState()
@@ -59,15 +70,19 @@ export function normalizeError(error: AxiosError<ErrorBody>): ApiError {
 
 /**
  * A request made with `responseType: 'blob'` (Excel files) gets its error body as a Blob too.
- * Reads a JSON one back into an object, so the backend's message isn't lost.
+ * Reads it back — JSON into an object, plain text (e.g. Akfa's 409) as text — so the backend's
+ * message isn't lost.
  */
 export async function readBlobError<T>(error: AxiosError<T>) {
   const data = error.response?.data
-  if (!(data instanceof Blob) || !data.type.includes('json')) return error
+  if (!(data instanceof Blob)) return error
+  const isJson = data.type.includes('json')
+  if (!isJson && !data.type.startsWith('text/')) return error
   try {
-    error.response!.data = JSON.parse(await data.text()) as T
+    const text = await data.text()
+    error.response!.data = (isJson ? JSON.parse(text) : text) as T
   } catch {
-    // not JSON after all — keep the generic message
+    // not readable after all — keep the generic message
   }
   return error
 }

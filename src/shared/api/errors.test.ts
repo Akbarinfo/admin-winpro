@@ -42,6 +42,20 @@ describe('normalizeError', () => {
   })
 })
 
+describe('normalizeError — Spring error pages', () => {
+  it('takes the reason from message, not the «Bad Request» in error', () => {
+    const e = normalizeError(
+      axiosError(400, {
+        timestamp: '2026-11-13T10:00:00',
+        path: '/v1/akfa/products/1/map',
+        error: 'Bad Request',
+        message: 'Позиция уже привязана',
+      } as Body),
+    )
+    expect(e.message).toBe('Позиция уже привязана')
+  })
+})
+
 describe('readBlobError', () => {
   it('reads the JSON body of a blob request back, so its message shows', async () => {
     const blob = new Blob([JSON.stringify({ error: 'Неверный формат файла' })], {
@@ -49,6 +63,12 @@ describe('readBlobError', () => {
     })
     const error = await readBlobError(axiosError(400, blob as unknown as Body))
     expect(normalizeError(error as never).message).toBe('Неверный формат файла')
+  })
+
+  it('reads a plain-text blob body as the message', async () => {
+    const blob = new Blob(['Нет несопоставленных товаров'], { type: 'text/plain' })
+    const error = await readBlobError(axiosError(409, blob as unknown as Body))
+    expect(normalizeError(error as never).message).toBe('Нет несопоставленных товаров')
   })
 
   it('leaves other bodies alone', async () => {

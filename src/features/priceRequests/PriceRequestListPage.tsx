@@ -5,6 +5,7 @@ import { Check, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { isClientError } from '@/shared/api/errors'
 import { useTableFilters } from '@/shared/hooks/useTableFilters'
+import { useRowSelection } from '@/shared/hooks/useRowSelection'
 import { useTableParams } from '@/shared/hooks/useTableParams'
 import { formatDate, formatNumber } from '@/shared/lib/format'
 import {
@@ -61,25 +62,12 @@ export function PriceRequestListPage() {
     placeholderData: keepPreviousData,
   })
   const rows = list.data?.data ?? []
-  const pending = rows.filter((r) => r.requestStatus === 'PENDING')
 
   // Only pending requests of the page shown can be chosen. Another page, size, status or search
   // starts with nothing chosen, as the old page did.
   const view = `${params.page}|${params.size}|${status}|${search}`
-  const [chosenIn, setChosenIn] = useState(view)
-  const [chosen, setChosen] = useState<ReadonlySet<number>>(new Set())
-  if (chosenIn !== view) {
-    setChosenIn(view)
-    setChosen(new Set())
-  }
-  const selected = pending.filter((r) => chosen.has(r.id))
-  const allSelected = pending.length > 0 && selected.length === pending.length
-  const toggle = (id: number) =>
-    setChosen((prev) => {
-      const next = new Set(prev)
-      if (!next.delete(id)) next.add(id)
-      return next
-    })
+  const selection = useRowSelection(rows, view, (r) => r.requestStatus === 'PENDING')
+  const { selected, allSelected } = selection
 
   const [action, setAction] = useState<Action>(null)
   const [running, setRunning] = useState(false)
@@ -99,7 +87,7 @@ export function PriceRequestListPage() {
         if (isClientError(e) && e.status !== 420) clientError ??= e.message
       }
     }
-    setChosen(new Set())
+    selection.clear()
     await queryClient.invalidateQueries({ queryKey: priceRequestKeys.all })
     return { done, clientError }
   }
@@ -145,12 +133,12 @@ export function PriceRequestListPage() {
           type="checkbox"
           className="size-4 accent-primary"
           aria-label={t('priceRequests.select_all')}
-          disabled={pending.length === 0}
+          disabled={selection.none}
           checked={allSelected}
           ref={(el) => {
-            if (el) el.indeterminate = selected.length > 0 && !allSelected
+            if (el) el.indeterminate = selection.someSelected
           }}
-          onChange={() => setChosen(allSelected ? new Set() : new Set(pending.map((r) => r.id)))}
+          onChange={selection.toggleAll}
         />
       ),
       render: (row) =>
@@ -159,8 +147,8 @@ export function PriceRequestListPage() {
             type="checkbox"
             className="size-4 accent-primary"
             aria-label={t('priceRequests.select', { name: requestName(row) })}
-            checked={chosen.has(row.id)}
-            onChange={() => toggle(row.id)}
+            checked={selection.isChosen(row.id)}
+            onChange={() => selection.toggle(row.id)}
           />
         ),
     },
