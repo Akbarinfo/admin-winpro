@@ -34,15 +34,20 @@ export function useSystemTextures(systemId: number | null) {
   })
 }
 
-/** The textures a product comes in (/v1/texture/list/by/productId/{id}); none until one is chosen. */
+/** The textures a product comes in (/v1/texture/list/by/productId/{id}): one query, shared by every picker. */
+export const productTexturesQuery = (productId: number) => ({
+  queryKey: [...textureKeys.all, 'product', productId] as const,
+  queryFn: ({ signal }: { signal: AbortSignal }) =>
+    api
+      .get<TextureOption[]>(`/v1/texture/list/by/productId/${productId}`, { signal })
+      .then((r) => r.data),
+  staleTime: 60_000,
+})
+
+/** A product's textures; none until one is chosen. */
 export function useProductTextures(productId: number | null) {
   return useQuery({
-    queryKey: [...textureKeys.all, 'product', productId],
-    queryFn: ({ signal }) =>
-      api
-        .get<TextureOption[]>(`/v1/texture/list/by/productId/${productId}`, { signal })
-        .then((r) => r.data),
+    ...productTexturesQuery(productId ?? 0),
     enabled: productId !== null,
-    staleTime: 60_000,
   })
 }

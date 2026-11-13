@@ -3,6 +3,7 @@ import { useEffect, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { X } from 'lucide-react'
 import { useSeriesList } from '@/shared/lookups/series'
+import { productTexturesQuery } from '@/shared/lookups/textures'
 import { cn } from '@/shared/lib/cn'
 import { Input, Select, Spinner } from '@/shared/ui'
 import { ARTICLE_GROUP_TYPES, akfaApi, akfaKeys } from './api'
@@ -50,11 +51,7 @@ export function PositionPicker({ akfaProductId, value, onChange }: Props) {
   // «Все текстуры» per product
   const [opened, setOpened] = useState<number[]>([])
   const textures = useQueries({
-    queries: opened.map((productId) => ({
-      queryKey: [...akfaKeys.all, 'product-textures', productId],
-      queryFn: ({ signal }: { signal: AbortSignal }) => akfaApi.productTextures(productId, signal),
-      staleTime: 60_000,
-    })),
+    queries: opened.map(productTexturesQuery),
   })
 
   // Grouped by product, the textures without a price added after the priced ones.

@@ -92,6 +92,7 @@ const CHIP_TONES = {
   ok: 'bg-ok-soft text-ok',
   warn: 'bg-warn-soft text-warn',
   danger: 'bg-danger-soft text-danger',
+  info: 'bg-info-soft text-info',
 }
 
 export function Chip({

@@ -1,4 +1,5 @@
 export { Alert } from './Alert'
+export { BackLink } from './BackLink'
 export { Button } from './Button'
 export { ColorInput } from './ColorInput'
 export { ColorSwatch } from './ColorSwatch'

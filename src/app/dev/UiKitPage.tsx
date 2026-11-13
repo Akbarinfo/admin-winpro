@@ -4,6 +4,7 @@ import type { TableSort } from '@/shared/api/table'
 import { formatDate, formatNumber } from '@/shared/lib/format'
 import {
   Alert,
+  BackLink,
   Button,
   Card,
   Checkbox,
@@ -422,6 +423,9 @@ export function UiKitPage() {
             <Pagination page={page.page} size={page.size} total={318} onChange={setPage} />
           </TableCard>
         </KitCard>
+        <KitCard title="BackLink" replaces="стрелку «назад» с navigate(-1) над страницей">
+          <BackLink to="/ui-kit">К списку соединений</BackLink>
+        </KitCard>
         <KitCard
           title="Panel"
           replaces="заголовки «Варианты соединений», «Параметр…» над связанными таблицами"
@@ -503,7 +507,11 @@ export function UiKitPage() {
         <KitCard title="Alert">
           <Alert>Неверный логин или пароль.</Alert>
           <Alert tone="warn">Запись используется в 3 шаблонах.</Alert>
+          <Alert tone="info">Курс обновляется каждый день в 09:00.</Alert>
           <Alert tone="ok">Цены обновлены.</Alert>
+          <Alert tone="danger" title="Заказ возвращён">
+            Причина: неверные размеры створки.
+          </Alert>
         </KitCard>
         <KitCard title="Chip, Spinner">
           <div className={row}>
@@ -512,6 +520,7 @@ export function UiKitPage() {
             <Chip tone="ok">Активен</Chip>
             <Chip tone="warn">Нет цены</Chip>
             <Chip tone="danger">Ошибка</Chip>
+            <Chip tone="info">Новый</Chip>
           </div>
           <div className={`${row} text-primary`}>
             <Spinner />

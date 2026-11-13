@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate, useSearchParams } from 'react-router'
 import { AlertTriangle, Copy, FilterX, Pencil, Plus, Trash2 } from 'lucide-react'
+import { useConfirmCopy } from '@/shared/hooks/useConfirmCopy'
 import { useConfirmDelete } from '@/shared/hooks/useConfirmDelete'
 import { useServerTable } from '@/shared/hooks/useServerTable'
 import { useTableFilters } from '@/shared/hooks/useTableFilters'
@@ -14,7 +14,6 @@ import {
   Button,
   Checkbox,
   Combobox,
-  ConfirmDialog,
   DataTable,
   Highlight,
   IconButton,
@@ -42,7 +41,6 @@ const byId = <T extends { id: number }>(list: T[] | undefined, id: number | null
 export function ProductListPage({ group }: { group: ProductGroup }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
   const { pathname, search } = useLocation()
   // The form returns to this exact page of the list, with its filters and sort.
   const openForm = (to: string) => navigate(to, { state: { from: pathname + search } })
@@ -98,15 +96,12 @@ export function ProductListPage({ group }: { group: ProductGroup }) {
     onDeleted: (row) => row.id === selectedId && select(null),
   })
 
-  const [copying, setCopying] = useState<ProductRow | null>(null)
-  const copy = useMutation({
-    mutationFn: (row: ProductRow) => productApi.copy(row.id),
-    onSuccess: async (created) => {
-      setCopying(null)
-      await queryClient.invalidateQueries({ queryKey: productKeys.all })
-      openForm(`${groupPath(group)}/update/${created.id}`)
-    },
-    onError: () => setCopying(null),
+  const copy = useConfirmCopy({
+    copy: (row: ProductRow) => productApi.copy(row.id),
+    invalidate: productKeys.all,
+    describe: (row) => t('product.copy_text', { name: row.name }),
+    // the copy opens at once, to be renamed
+    onCopied: (created) => openForm(`${groupPath(group)}/update/${created.id}`),
   })
 
   const searchText = filters.searchTxt ?? ''
@@ -292,7 +287,7 @@ export function ProductListPage({ group }: { group: ProductGroup }) {
           empty={t('product.empty')}
           actions={(row) => (
             <>
-              <IconButton label={t('product.copy')} onClick={() => setCopying(row)}>
+              <IconButton label={t('product.copy')} onClick={() => copy.request(row)}>
                 <Copy size={16} />
               </IconButton>
               <IconButton
@@ -311,16 +306,7 @@ export function ProductListPage({ group }: { group: ProductGroup }) {
       </TableCard>
 
       {del.dialog}
-      <ConfirmDialog
-        open={copying !== null}
-        tone="primary"
-        title={t('product.copy_title')}
-        description={t('product.copy_text', { name: copying?.name ?? '' })}
-        confirmLabel={t('product.copy')}
-        loading={copy.isPending}
-        onConfirm={() => copying && copy.mutate(copying)}
-        onCancel={() => !copy.isPending && setCopying(null)}
-      />
+      {copy.dialog}
     </ListLayout>
   )
 }

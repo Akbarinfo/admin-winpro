@@ -9,15 +9,22 @@
   --muted: #5b7074;
   --faint: #8a9da0;
   --primary: #37a0ad;
-  --primary-strong: #2a8794;
+  --primary-strong: #1f6e78; /* selected text on primary-soft: 5.2:1 */
   --primary-soft: #e4f3f5;
   --primary-fg: #ffffff;
-  --ok: #2f8f5b;
-  --ok-soft: #e3f4ea;
-  --warn: #b7791f;
-  --warn-soft: #fdf3dd;
-  --danger: #c2413b;
-  --danger-soft: #fbe7e6;
+  /* Statuses (as in my-winpro): soft ground, a -200 line, text dark enough for 4.5:1 on the ground */
+  --ok: #047857;
+  --ok-soft: #ecfdf5;
+  --ok-line: #a7f3d0;
+  --warn: #b45309;
+  --warn-soft: #fffbeb;
+  --warn-line: #fde68a;
+  --danger: #b91c1c;
+  --danger-soft: #fef2f2;
+  --danger-line: #fecaca;
+  --info: #1d4ed8;
+  --info-soft: #eff6ff;
+  --info-line: #bfdbfe;
   --overlay: rgb(12 24 27 / 0.42);
   --highlight: #fde68a; /* search matches */
   color-scheme: light;
@@ -38,10 +45,16 @@
   --primary-fg: #08292e;
   --ok: #5cc28a;
   --ok-soft: #15352a;
+  --ok-line: #1f5a3f;
   --warn: #e0a84a;
   --warn-soft: #3a2d14;
+  --warn-line: #5c4518;
   --danger: #ef7a73;
   --danger-soft: #3d1c1b;
+  --danger-line: #6b2a27;
+  --info: #8fb4ff;
+  --info-soft: #172544;
+  --info-line: #2b4278;
   --overlay: rgb(0 0 0 / 0.6);
   --highlight: rgb(234 179 8 / 0.4);
   color-scheme: dark;

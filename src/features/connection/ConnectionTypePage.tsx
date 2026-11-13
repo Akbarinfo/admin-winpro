@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation, useParams } from 'react-router'
-import { ArrowLeft } from 'lucide-react'
+import { useLocation, useParams } from 'react-router'
 import { useChosenId } from '@/shared/hooks/useChosenId'
 import { ParameterPanel } from '@/shared/parameters'
-import { PageHeader } from '@/shared/ui'
+import { BackLink, PageHeader } from '@/shared/ui'
 import { connectionApi, connectionKeys, SPEC_PARAMETERS, TYPE_PARAMETERS } from './api'
 import { connectionLabel } from './helpers'
 import { SpecificationsPanel } from './SpecificationsPanel'
@@ -29,13 +28,7 @@ export function ConnectionTypePage() {
 
   return (
     <div className="grid gap-4">
-      <Link
-        to="/connection"
-        className="inline-flex w-fit items-center gap-1.5 text-muted hover:text-fg"
-      >
-        <ArrowLeft size={16} />
-        {t('connection.back')}
-      </Link>
+      <BackLink to="/connection">{t('connection.back')}</BackLink>
       <PageHeader title={t('connection.variants')} description={name || undefined} />
 
       <div className="grid gap-4 xl:grid-cols-2">

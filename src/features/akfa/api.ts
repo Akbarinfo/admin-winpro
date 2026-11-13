@@ -102,14 +102,6 @@ export const akfaApi = {
       .get<AkfaPosition[]>(`${A}/positions/search`, { params: query(params), signal })
       .then((r) => r.data ?? []),
 
-  /** Every texture of a product, for the positions without a price. */
-  productTextures: (productId: number, signal?: AbortSignal) =>
-    api
-      .get<{ id: number; name: string }[]>(`/v1/texture/list/by/productId/${productId}`, {
-        signal,
-      })
-      .then((r) => r.data ?? []),
-
   map: (id: number, targets: { productId: number; textureId: number }[]) =>
     api.post<SavedMapping[]>(`${A}/products/${id}/map`, { targets }).then((r) => r.data ?? []),
 

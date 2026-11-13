@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation, useParams } from 'react-router'
-import { ArrowLeft } from 'lucide-react'
+import { useLocation, useParams } from 'react-router'
 import { useChosenId } from '@/shared/hooks/useChosenId'
 import { ParameterPanel } from '@/shared/parameters'
-import { PageHeader } from '@/shared/ui'
+import { BackLink, PageHeader } from '@/shared/ui'
 import { AdditionalPanel } from './AdditionalPanel'
 import { ADDITIONAL_PARAMETERS, insertApi, insertKeys, SPEC_PARAMETERS } from './api'
 import { consistLabel } from './helpers'
@@ -30,13 +29,7 @@ export function InsertPage() {
 
   return (
     <div className="grid gap-4">
-      <Link
-        to="/inserts"
-        className="inline-flex w-fit items-center gap-1.5 text-muted hover:text-fg"
-      >
-        <ArrowLeft size={16} />
-        {t('inserts.back')}
-      </Link>
+      <BackLink to="/inserts">{t('inserts.back')}</BackLink>
       <PageHeader title={t('inserts.open')} description={name || undefined} />
 
       <div className="grid gap-4 xl:grid-cols-2">

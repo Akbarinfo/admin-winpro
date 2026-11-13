@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useLocation, useParams } from 'react-router'
-import { ArrowLeft, Copy, CopyPlus } from 'lucide-react'
+import { useLocation, useParams } from 'react-router'
+import { Copy, CopyPlus } from 'lucide-react'
 import { useConfirmCopy } from '@/shared/hooks/useConfirmCopy'
 import { ParameterPanel } from '@/shared/parameters'
-import { IconButton, PageHeader } from '@/shared/ui'
+import { BackLink, IconButton, PageHeader } from '@/shared/ui'
 import { cn } from '@/shared/lib/cn'
 import { furnitureApi, furnitureKeys, SPEC_PARAMETERS, SPEC_TABS, type SpecTab } from './api'
 import { CopyToAccessoryDialog } from './CopyToAccessoryDialog'
@@ -75,13 +75,7 @@ export function FurnitureSpecificationPage() {
 
   return (
     <div className="grid gap-4">
-      <Link
-        to="/furniture"
-        className="inline-flex w-fit items-center gap-1.5 text-muted hover:text-fg"
-      >
-        <ArrowLeft size={16} />
-        {t('furniture.back')}
-      </Link>
+      <BackLink to="/furniture">{t('furniture.back')}</BackLink>
       <PageHeader title={t('furniture.open')} description={name || undefined} />
 
       <div className="grid gap-4 xl:grid-cols-2">

@@ -12,8 +12,7 @@ export const akfaRoutes: RouteObject[] = [
   {
     // Akfa units ↔ WinPro units; add / update/:id open a dialog over the list.
     path: '/integrations/unit',
-    lazy: () =>
-      import('./UnitMappingListPage').then((m) => ({ Component: m.UnitMappingListPage })),
+    lazy: () => import('./UnitMappingListPage').then((m) => ({ Component: m.UnitMappingListPage })),
     children: [
       { path: 'add', lazy: unitDialog },
       { path: 'update/:id', lazy: unitDialog },

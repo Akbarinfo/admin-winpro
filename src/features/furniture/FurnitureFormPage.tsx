@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate, useParams } from 'react-router'
-import { ArrowLeft } from 'lucide-react'
+import { useNavigate, useParams } from 'react-router'
 import { useEntityForm } from '@/shared/hooks/useEntityForm'
+import { useListUrl } from '@/shared/hooks/useListUrl'
 import {
   Alert,
+  BackLink,
   Button,
   Card,
   Combobox,
@@ -56,7 +57,9 @@ export function FurnitureFormPage() {
   const { t } = useTranslation()
   const { id } = useParams()
   const navigate = useNavigate()
-  const close = () => navigate('/furniture')
+  // back to the list as it was left
+  const listUrl = useListUrl('/furniture')
+  const close = () => navigate(listUrl)
 
   const types = useAccessoryEnum('type')
   const openingTypes = useAccessoryEnum('openingtype')
@@ -129,13 +132,7 @@ export function FurnitureFormPage() {
 
   return (
     <div className="mx-auto grid max-w-[880px] gap-4">
-      <Link
-        to="/furniture"
-        className="inline-flex w-fit items-center gap-1.5 text-muted hover:text-fg"
-      >
-        <ArrowLeft size={16} />
-        {t('furniture.back')}
-      </Link>
+      <BackLink to="/furniture">{t('furniture.back')}</BackLink>
       <PageHeader title={t(isEdit ? 'furniture.edit' : 'furniture.new')} />
 
       {/* The record couldn't be loaded: say so instead of an empty form that would save over it. */}

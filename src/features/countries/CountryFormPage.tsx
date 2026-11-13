@@ -1,13 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate, useParams } from 'react-router'
-import { ArrowLeft, BookOpen } from 'lucide-react'
+import { useNavigate, useParams } from 'react-router'
+import { BookOpen } from 'lucide-react'
 import { useEntityForm } from '@/shared/hooks/useEntityForm'
+import { useListUrl } from '@/shared/hooks/useListUrl'
 import { currencyLabel, useCurrencies, type Currency } from '@/shared/lookups/currencies'
 import { useSession } from '@/shared/store/session'
 import {
   Alert,
+  BackLink,
   Button,
   Card,
   Combobox,
@@ -58,7 +60,9 @@ export function CountryFormPage() {
   const { t } = useTranslation()
   const { id } = useParams()
   const navigate = useNavigate()
-  const close = () => navigate('/country')
+  // back to the list as it was left
+  const listUrl = useListUrl('/country')
+  const close = () => navigate(listUrl)
 
   const currencies = useCurrencies()
   const isAdmin = useSession((s) => s.user?.role === 'ADMINISTRATOR')
@@ -123,13 +127,7 @@ export function CountryFormPage() {
 
   return (
     <div className="mx-auto grid max-w-[880px] gap-4">
-      <Link
-        to="/country"
-        className="inline-flex w-fit items-center gap-1.5 text-muted hover:text-fg"
-      >
-        <ArrowLeft size={16} />
-        {t('countries.back')}
-      </Link>
+      <BackLink to="/country">{t('countries.back')}</BackLink>
       <PageHeader
         title={t(isEdit ? 'countries.edit' : 'countries.add')}
         actions={

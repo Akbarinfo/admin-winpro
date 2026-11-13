@@ -18,10 +18,16 @@
   --color-primary-fg: var(--primary-fg);
   --color-ok: var(--ok);
   --color-ok-soft: var(--ok-soft);
+  --color-ok-line: var(--ok-line);
   --color-warn: var(--warn);
   --color-warn-soft: var(--warn-soft);
+  --color-warn-line: var(--warn-line);
   --color-danger: var(--danger);
   --color-danger-soft: var(--danger-soft);
+  --color-danger-line: var(--danger-line);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-info-line: var(--info-line);
   --color-overlay: var(--overlay);
   --color-highlight: var(--highlight);
 

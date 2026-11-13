@@ -21,7 +21,6 @@
     "price_warning_hint": "The product has a suspicious price",
     "clear_filters": "Clear filters",
     "copy": "Copy",
-    "copy_title": "Copy the product?",
     "copy_text": "A copy of «{{name}}» will be created, then its form opens.",
     "section_main": "Main",
     "section_sizes": "Sizes",

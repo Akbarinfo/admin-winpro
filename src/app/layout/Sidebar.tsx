@@ -28,7 +28,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
       >
         {NAV.map((group) => (
           <div key={group.title}>
-            <div className="px-2.5 pb-1.5 text-[11px] font-semibold tracking-[.08em] text-faint uppercase">
+            <div className="px-2.5 pb-1.5 text-sm font-semibold tracking-[.08em] text-faint uppercase">
               {t(group.title)}
             </div>
             {group.items.map(({ to, label, icon: Icon, status }) =>
