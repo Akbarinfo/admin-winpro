@@ -152,7 +152,8 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
    «Сопоставление единиц» ✅ (`/integrations/unit`, `/v1/akfa/unit-mappings` — GET by id yo'q, dialog yozuvni ro'yxatdan oladi).
    Akfa integratsiyasi tugadi; keyin katalog: `/connection`, `/inserts`, `/filling`, `/furniture`.
 7. Katalog: Соединение ✅ (`/connection` + `/connection/type/:id` — 4 bog'langan panel, tanlov URL'da `?typeId&specId`),
-   Вставки ✅ (`/inserts` + `/inserts/layout/page/:id`), keyin `/filling`, `/furniture`.
+   Вставки ✅ (`/inserts` + `/inserts/layout/page/:id`), Заполнение ✅ (`features/fillingGroups`: `/filling` +
+   `/filling/specification/:id`; saqlash doim POST, kalit `shared/lookups/fillings`dagi `fillingGroupKeys`), keyin `/furniture`.
    Umumiy qismlar: parametr panellari — `shared/parameters` (`ParameterPanel`, eski `AddParamComponent`: saqlash doim POST),
    mahsulot + rang — `shared/lookups/ProductTextureFields` (`ProductPicker`), panel tanlovi URL'da — `useChosenId`,
    nusxa olish — `useConfirmCopy`, panel ramkasi — `Panel`.

@@ -50,7 +50,8 @@
     "phone": "Enter the full number",
     "color": "Colour as #RRGGBB",
     "email": "Enter a valid email",
-    "non_negative": "Can't be less than zero"
+    "non_negative": "Can't be less than zero",
+    "integer": "Enter a whole number"
   },
   "auth": {
     "brand_title": "Control panel for the window business",

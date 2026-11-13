@@ -1,0 +1,27 @@
+{
+  "fillingGroups": {
+    "title": "To'ldirish",
+    "add": "To'ldirish qo'shish",
+    "edit": "To'ldirishni tahrirlash",
+    "empty": "To'ldirish guruhlari yo'q",
+    "name": "Nomi",
+    "clearance": "Oraliq, mm",
+    "outer": "Tashqi",
+    "inner": "Ichki",
+    "open": "Guruh spetsifikatsiyasi",
+    "back": "To'ldirishlar ro'yxatiga",
+    "spec": {
+      "title": "Guruh mahsulotlari",
+      "add": "Spetsifikatsiya qo'shish",
+      "edit": "Spetsifikatsiyani tahrirlash",
+      "empty": "Spetsifikatsiya yo'q",
+      "thickness": "Qalinlik",
+      "texture": "Rang",
+      "product": "Mahsulot",
+      "supplier": "Yetkazib beruvchi",
+      "article": "Artikul"
+    },
+    "spec_params": "Spetsifikatsiya parametrlari",
+    "pick_spec": "Spetsifikatsiya qatorini tanlang"
+  }
+}

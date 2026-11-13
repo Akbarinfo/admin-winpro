@@ -16,6 +16,7 @@ import { drawingTemplateRoutes } from '@/features/drawingTemplates'
 import { translationRoutes } from '@/features/translationKeys'
 import { akfaRoutes } from '@/features/akfa'
 import { connectionRoutes } from '@/features/connection'
+import { fillingRoutes } from '@/features/fillingGroups'
 import { insertRoutes } from '@/features/inserts'
 import { salesCategoryRoutes } from '@/features/salesCategory'
 import { seriesRoutes } from '@/features/series'
@@ -58,6 +59,7 @@ const featureRoutes = [
   ...akfaRoutes,
   ...connectionRoutes,
   ...insertRoutes,
+  ...fillingRoutes,
 ]
 
 // Dev-only pages; lazy so they never reach the production bundle.

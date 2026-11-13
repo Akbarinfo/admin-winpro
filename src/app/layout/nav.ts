@@ -88,8 +88,8 @@ export const NAV: NavGroup[] = [
     items: [
       { to: '/textures', label: 'textures.title', icon: Palette, status: 'ready' },
       { to: '/connection', label: 'connection.title', icon: Link2, status: 'ready' },
-      { to: '/inserts', label: 'inserts.title', icon: ListPlus, status: 'new' },
-      { to: '/filling', label: 'sidebar_menu_filling', icon: PanelsTopLeft },
+      { to: '/inserts', label: 'inserts.title', icon: ListPlus, status: 'ready' },
+      { to: '/filling', label: 'fillingGroups.title', icon: PanelsTopLeft, status: 'new' },
       { to: '/furniture', label: 'sidebar_menu_accessories', icon: Settings2 },
       { to: '/profile_system', label: 'profileSystems.title', icon: Layers3, status: 'ready' },
     ],

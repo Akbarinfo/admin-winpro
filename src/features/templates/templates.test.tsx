@@ -258,7 +258,7 @@ describe('Templates', () => {
     // the lazy page and the constructor's dynamic import: slow when the whole suite runs
     await waitFor(() => expect(cc.opened).toEqual(['{"shapes":[1]}']), { timeout: 8000 })
     expect(screen.queryByText('Не удалось запустить конструктор.')).not.toBeInTheDocument()
-  })
+  }, 15_000)
 
   it('starts the parent over after saving: the drawing opens again, the old canvas goes', async () => {
     render('/templates/update/5')

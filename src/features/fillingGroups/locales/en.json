@@ -1,0 +1,27 @@
+{
+  "fillingGroups": {
+    "title": "Fillings",
+    "add": "Add filling",
+    "edit": "Edit filling",
+    "empty": "No filling groups",
+    "name": "Name",
+    "clearance": "Clearance, mm",
+    "outer": "Outer",
+    "inner": "Inner",
+    "open": "Group specification",
+    "back": "Back to fillings",
+    "spec": {
+      "title": "Group products",
+      "add": "Add specification",
+      "edit": "Edit specification",
+      "empty": "No specification",
+      "thickness": "Thickness",
+      "texture": "Colour",
+      "product": "Product",
+      "supplier": "Supplier",
+      "article": "Article"
+    },
+    "spec_params": "Specification parameters",
+    "pick_spec": "Choose a specification row"
+  }
+}

@@ -50,7 +50,8 @@
     "phone": "Raqamni to'liq kiriting",
     "color": "Rang #RRGGBB formatida",
     "email": "To'g'ri email kiriting",
-    "non_negative": "Noldan kichik bo'lishi mumkin emas"
+    "non_negative": "Noldan kichik bo'lishi mumkin emas",
+    "integer": "Butun son kiriting"
   },
   "auth": {
     "brand_title": "Deraza biznesini boshqarish paneli",
