@@ -15,10 +15,10 @@ paths:
 - Bir klass guruhida qarama-qarshi klasslar bo'lmasin (`bg-surface` + `bg-primary`): `cn()` ularni birlashtirmaydi,
   CSS tartibi yutadi. Holatga qarab `cond ? a : b` bilan tanlang.
 - Ikonkali tugma — `IconButton` va majburiy `label` (u tooltip ham, ekran o'quvchi uchun nom ham).
-- Matn i18n orqali (`common.*`, `pagination.*`). Istisno: `/ui-kit` (dev sahifa) — u yerda ruscha matn to'g'ridan-to'g'ri.
+- Matn i18n orqali (`common.*`, `pagination.*`).
 - Props tipi: `ComponentProps<'button'> & {…}`; `ref` React 19'da oddiy prop.
 - O'lchamlar: input/tugma balandligi `h-9` (sm `h-[30px]`, lg `h-[42px]`), radius `rounded-md` (8px) / `rounded-lg` (12px),
   dialog va kartochka ichki padding'i `px-4`.
-- Yangi komponent → `index.ts`ga eksport, `/ui-kit`ga namuna (qaysi eski komponent o'rnini bosishi bilan), test.
+- Yangi komponent → `index.ts`ga eksport va test.
 - Ochiladigan ro'yxatlarda belgilangan/hover variant — `bg-primary-soft`, tanlangani — `text-primary-strong` + ✓.
   `bg-surface-2` oq fonda deyarli ko'rinmaydi, ro'yxatlar uchun ishlatilmaydi.

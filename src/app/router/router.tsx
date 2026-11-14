@@ -64,19 +64,15 @@ const featureRoutes = [
   ...furnitureRoutes,
 ]
 
-// Dev-only pages; lazy so they never reach the production bundle.
-const devRoutes = import.meta.env.DEV
-  ? [
-      {
-        path: '/ui-kit',
-        lazy: () => import('../dev/UiKitPage').then((m) => ({ Component: m.UiKitPage })),
-      },
-    ]
-  : []
+// The home page: the sections opened last.
+const homeRoute = {
+  path: '/',
+  lazy: () => import('../home/HomePage').then((m) => ({ Component: m.HomePage })),
+}
 
 // Every other menu section shows «being migrated» until its feature is added above.
-const placeholderRoutes = NAV_ITEMS.map((item) => ({
-  path: item.to === '/' ? '/' : `${item.to}/*`,
+const placeholderRoutes = NAV_ITEMS.filter((item) => item.to !== '/').map((item) => ({
+  path: `${item.to}/*`,
   element: <ComingSoonPage />,
 }))
 
@@ -101,8 +97,8 @@ export const router = createBrowserRouter([
           </RequireAuth>
         ),
         children: [
+          homeRoute,
           ...featureRoutes,
-          ...devRoutes,
           ...placeholderRoutes,
           { path: '*', element: <NotFoundPage /> },
         ],

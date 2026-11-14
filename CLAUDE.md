@@ -16,7 +16,6 @@ npm run test:run      # vitest bir marta
 ```
 
 Ishni tugatgandan keyin `npm run typecheck && npm run lint && npm run test:run` o'tishi shart.
-Dev rejimda `/ui-kit` sahifasi hamma `shared/ui` komponentlarini ko'rsatadi (production'ga tushmaydi).
 Prettier `src/` dagi faylni har tahrirdan keyin avtomatik formatlaydi (`.claude/settings.json` hook).
 
 ## Stek
@@ -124,7 +123,7 @@ Namuna bo'lim — **Курсы валют** (`features/exchange`). Yangi bo'lim 
 
 1. Skelet: layout, router, auth, session store — ✅ kod tayyor, real backend bilan login tekshirilishi kerak
 2. Umumiy qatlam — ✅ DataTable, Pagination, Combobox, TreeSelect, Modal, FormField, NumberInput, useServerTable, useConfirmDelete,
-   useEntityForm, lookups (valyutalar), testlar, `/ui-kit`. ImageUpload 4-, Excel (`Menu`, `ExcelUploadDialog`) 5-bosqichda.
+   useEntityForm, lookups (valyutalar), testlar. ImageUpload 4-, Excel (`Menu`, `ExcelUploadDialog`) 5-bosqichda.
 3. Namuna bo'lim: Курсы валют — ✅ kod va testlar tayyor, real backend bilan tekshirilishi kerak
 4. Oddiy CRUD bo'limlar — ✅ (`/new-feature <bo'lim>`): Валюты, Единицы, Серии, Виды материала, Языки,
    Поставщики, Услуги мастерской, Тарифные функции, Текстуры (+ соответствия; `/texturegroup` → `/textures`),

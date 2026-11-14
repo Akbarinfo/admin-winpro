@@ -32,3 +32,24 @@ export function todayIso() {
   const pad = (n: number) => String(n).padStart(2, '0')
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
 }
+
+const UNITS: [Intl.RelativeTimeFormatUnit, number][] = [
+  ['year', 365 * 24 * 3600],
+  ['month', 30 * 24 * 3600],
+  ['week', 7 * 24 * 3600],
+  ['day', 24 * 3600],
+  ['hour', 3600],
+  ['minute', 60],
+]
+
+/**
+ * A moment in the past, said the way people say it: «5 минут назад», «вчера».
+ * Under a minute it's our own text («только что», «hozir»): browsers lack Uzbek for it and said «now».
+ */
+export function formatRelative(at: number, now = Date.now()) {
+  const seconds = Math.round((now - at) / 1000)
+  const rtf = new Intl.RelativeTimeFormat(locale(), { numeric: 'auto' })
+  for (const [unit, size] of UNITS)
+    if (seconds >= size) return rtf.format(-Math.floor(seconds / size), unit)
+  return i18n.t('common.just_now')
+}

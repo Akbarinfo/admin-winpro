@@ -27,6 +27,10 @@
   --info-line: #bfdbfe;
   --overlay: rgb(12 24 27 / 0.42);
   --highlight: #fde68a; /* search matches */
+  /* WinPro logo (shared/ui/Logo): the door outline, the wordmark, «CONSTRUCTION» */
+  --logo-ink: #06315b;
+  --logo-text: #35496d;
+  --logo-sub: #b2b5c0;
   color-scheme: light;
 }
 
@@ -57,5 +61,9 @@
   --info-line: #2b4278;
   --overlay: rgb(0 0 0 / 0.6);
   --highlight: rgb(234 179 8 / 0.4);
+  /* the logo's dark blues would vanish here: light ink on the dark ground */
+  --logo-ink: #cfe3e6;
+  --logo-text: #e2eeef;
+  --logo-sub: #6b8387;
   color-scheme: dark;
 }

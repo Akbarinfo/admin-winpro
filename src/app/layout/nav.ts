@@ -11,7 +11,6 @@ import {
   Hammer,
   House,
   Languages,
-  LayoutGrid,
   Layers,
   Layers3,
   LayoutTemplate,
@@ -90,7 +89,7 @@ export const NAV: NavGroup[] = [
       { to: '/connection', label: 'connection.title', icon: Link2, status: 'ready' },
       { to: '/inserts', label: 'inserts.title', icon: ListPlus, status: 'ready' },
       { to: '/filling', label: 'fillingGroups.title', icon: PanelsTopLeft, status: 'ready' },
-      { to: '/furniture', label: 'furniture.title', icon: Settings2, status: 'new' },
+      { to: '/furniture', label: 'furniture.title', icon: Settings2, status: 'ready' },
       { to: '/profile_system', label: 'profileSystems.title', icon: Layers3, status: 'ready' },
     ],
   },
@@ -137,17 +136,6 @@ export const NAV: NavGroup[] = [
       },
     ],
   },
-  // Dev only: component showcase for reviewing the design.
-  ...(import.meta.env.DEV
-    ? [
-        {
-          title: 'nav.group_dev',
-          items: [
-            { to: '/ui-kit', label: 'nav.ui_kit', icon: LayoutGrid, status: 'ready' as const },
-          ],
-        },
-      ]
-    : []),
 ]
 
 export const NAV_ITEMS = NAV.flatMap((group) => group.items)

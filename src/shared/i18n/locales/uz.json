@@ -32,7 +32,8 @@
     "copied": "Nusxa yaratildi",
     "copy_title": "Nusxa olinsinmi?",
     "copy_text": "Yozuvning nusxasi yaratiladi.",
-    "copy_named": "«{{name}}» nusxasi yaratiladi."
+    "copy_named": "«{{name}}» nusxasi yaratiladi.",
+    "just_now": "hozir"
   },
   "errors": {
     "network": "Server bilan aloqa yo'q. Internetni tekshirib, qayta urinib ko'ring.",
@@ -54,14 +55,14 @@
     "integer": "Butun son kiriting"
   },
   "auth": {
-    "brand_title": "Deraza biznesini boshqarish paneli",
-    "brand_text": "Deraza nimadan yig'ilsa, hammasi shu yerda: profil artikulidan kerakli mamlakatdagi narxigacha.",
-    "feat_catalog_title": "Mahsulotlar katalogi",
-    "feat_catalog_text": "Profillar, furnitura, uplotnitellar va to'ldirishlar o'lcham va chizmalari bilan",
-    "feat_prices_title": "Mamlakatlar bo'yicha narxlar",
-    "feat_prices_text": "O'zbekiston va Qozog'iston, har bir sana uchun valyuta kurslari",
-    "feat_akfa_title": "Akfa integratsiyasi",
-    "feat_akfa_text": "Artikullarni moslashtirish va narxlarni avtomatik yangilash",
+    "brand_title": "Har bir mukammal deraza aniq ma'lumotdan boshlanadi",
+    "brand_text": "Siz bugun kiritgan har bir raqam ertaga kimningdir uyida issiqlik, yorug'lik va xotirjamlikka aylanadi.",
+    "value_accuracy_title": "Aniqlik",
+    "value_accuracy_text": "Bir marta to'g'ri kiriting — hamma joyda to'g'ri hisoblanadi",
+    "value_speed_title": "Tezlik",
+    "value_speed_text": "Kam vaqt sarflang — ko'proq natijaga erishing",
+    "value_trust_title": "Ishonch",
+    "value_trust_text": "Tartibli ma'lumot — xotirjam jamoa va mamnun mijoz",
     "login_title": "Tizimga kirish",
     "login_subtitle": "Ishchi hisobingiz bilan kiring",
     "username": "Email yoki login",
@@ -108,8 +109,6 @@
     "group_system": "Tizim",
     "akfa_units": "Birliklarni moslashtirish",
     "feedback": "Fikr-mulohazalar",
-    "group_dev": "Ishlab chiqish",
-    "ui_kit": "UI komponentlar",
     "new": "NEW",
     "not_migrated": "Hali ko'chirilmagan"
   },
@@ -187,5 +186,12 @@
     "add": "Parametr qo'shish",
     "edit": "Parametrni tahrirlash",
     "empty": "Parametrlar yo'q"
+  },
+  "home": {
+    "recent_title": "Yaqinda ochilganlar",
+    "recent_hint": "Siz kirgan oxirgi 10 ta bo'lim — har biri qolgan joyingizdan ochiladi.",
+    "empty_title": "Hozircha bo'sh",
+    "empty_text": "Menyudan istalgan bo'limni oching — u shu yerda paydo bo'ladi.",
+    "clear": "Ro'yxatni tozalash"
   }
 }

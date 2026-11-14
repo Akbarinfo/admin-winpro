@@ -2,6 +2,8 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup, configure } from '@testing-library/react'
 import { afterEach } from 'vitest'
 import '@/shared/i18n'
+import { useRecentPages } from '@/shared/store/recentPages'
+import { useSession } from '@/shared/store/session'
 import { useLastView, useTablePrefs } from '@/shared/store/tablePrefs'
 import { blockNetwork, takeNetworkAttempts } from './network'
 
@@ -17,9 +19,13 @@ afterEach(() => {
   cleanup()
   sessionStorage.clear()
   localStorage.removeItem('winpro.tables')
+  localStorage.removeItem('winpro.recent-pages')
   // remembered page sizes and last views mustn't leak from one test into the next
   useTablePrefs.setState({ sizes: {} })
   useLastView.setState({ search: {} })
+  useRecentPages.setState({ byUser: {} })
+  // a user set by one test (e.g. for its recent pages) mustn't sign the next one in
+  useSession.setState({ token: null, user: null })
   const attempts = takeNetworkAttempts()
   if (attempts.length)
     throw new Error(`Test real tarmoqqa so'rov yubormoqchi bo'ldi:\n${attempts.join('\n')}`)

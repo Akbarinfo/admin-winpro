@@ -32,7 +32,8 @@
     "copied": "Copy created",
     "copy_title": "Make a copy?",
     "copy_text": "A copy of the record will be made.",
-    "copy_named": "A copy of «{{name}}» will be made."
+    "copy_named": "A copy of «{{name}}» will be made.",
+    "just_now": "just now"
   },
   "errors": {
     "network": "Can't reach the server. Check your connection and try again.",
@@ -54,14 +55,14 @@
     "integer": "Enter a whole number"
   },
   "auth": {
-    "brand_title": "Control panel for the window business",
-    "brand_text": "Everything a window is made of: from a profile's article number to its price in each country.",
-    "feat_catalog_title": "Product catalog",
-    "feat_catalog_text": "Profiles, hardware, seals and fillings with sizes and drawings",
-    "feat_prices_title": "Prices by country",
-    "feat_prices_text": "Uzbekistan and Kazakhstan, exchange rates for every date",
-    "feat_akfa_title": "Akfa integration",
-    "feat_akfa_text": "Article mapping and automatic price updates",
+    "brand_title": "Every flawless window starts with accurate data",
+    "brand_text": "Every number you enter today becomes warmth, light and peace of mind in someone's home tomorrow.",
+    "value_accuracy_title": "Accuracy",
+    "value_accuracy_text": "Enter it right once, and it's right everywhere",
+    "value_speed_title": "Speed",
+    "value_speed_text": "Spend less time, get more done",
+    "value_trust_title": "Trust",
+    "value_trust_text": "Orderly data: a calm team and happy customers",
     "login_title": "Sign in",
     "login_subtitle": "Use your work account",
     "username": "Email or login",
@@ -108,8 +109,6 @@
     "group_system": "System",
     "akfa_units": "Unit mapping",
     "feedback": "Feedback",
-    "group_dev": "Development",
-    "ui_kit": "UI components",
     "new": "NEW",
     "not_migrated": "Not migrated yet"
   },
@@ -187,5 +186,12 @@
     "add": "Add parameter",
     "edit": "Edit parameter",
     "empty": "No parameters"
+  },
+  "home": {
+    "recent_title": "Recently opened",
+    "recent_hint": "The last 10 sections you visited — each opens where you left off.",
+    "empty_title": "Nothing here yet",
+    "empty_text": "Open any section from the menu and it will show up here.",
+    "clear": "Clear list"
   }
 }

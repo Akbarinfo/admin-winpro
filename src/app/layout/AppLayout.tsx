@@ -3,8 +3,11 @@ import { useTranslation } from 'react-i18next'
 import { Outlet, useLocation, useNavigation } from 'react-router'
 import { Menu } from 'lucide-react'
 import { cn } from '@/shared/lib/cn'
+import { useRecentPages } from '@/shared/store/recentPages'
+import { useSession } from '@/shared/store/session'
 import { useLastView } from '@/shared/store/tablePrefs'
 import { IconButton, LanguageSwitch, ThemeToggle } from '@/shared/ui'
+import { findNavItem } from './nav'
 import { Sidebar } from './Sidebar'
 import { UserMenu } from './UserMenu'
 
@@ -19,6 +22,14 @@ export function AppLayout() {
   const { pathname, search } = useLocation()
   const remember = useLastView((s) => s.remember)
   useEffect(() => remember(pathname, search), [remember, pathname, search])
+
+  // The home page lists the sections opened last (per user), each back where it was left.
+  const userKey = useSession((s) => s.user?.username ?? s.user?.email ?? '')
+  const visit = useRecentPages((s) => s.visit)
+  useEffect(() => {
+    const item = findNavItem(pathname)
+    if (item && item.to !== '/' && item.status) visit(userKey, item.to, pathname + search)
+  }, [visit, userKey, pathname, search])
 
   return (
     <div className="grid h-dvh lg:grid-cols-[260px_minmax(0,1fr)]">

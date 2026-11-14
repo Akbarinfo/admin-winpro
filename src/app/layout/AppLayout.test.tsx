@@ -4,6 +4,8 @@ import { describe, expect, it } from 'vitest'
 // the sections' translations, for their menu labels
 import '@/features/currency'
 import '@/features/units'
+import { useRecentPages } from '@/shared/store/recentPages'
+import { useSession } from '@/shared/store/session'
 import { renderWithProviders } from '@/test/render'
 import { AppLayout } from './AppLayout'
 
@@ -30,5 +32,23 @@ describe('AppLayout', () => {
     await userEvent.click(screen.getByRole('link', { name: 'Валюты' }))
     await waitFor(() => expect(router.state.location.pathname).toBe('/currency'))
     expect(router.state.location.search).toBe('?currency.page=3&currency.q=usd')
+  })
+
+  it('writes each opened section into the user’s recent pages, with the address last seen', async () => {
+    useSession.setState({ user: { username: 'ali' } })
+    const { router } = renderWithProviders(<></>, { url: '/currency?currency.page=2', routes })
+    await screen.findByText('Страница валют')
+    await userEvent.click(screen.getByRole('link', { name: 'Единицы измерения' }))
+    await waitFor(() => expect(router.state.location.pathname).toBe('/units'))
+    expect(useRecentPages.getState().byUser.ali.map((p) => [p.section, p.url])).toEqual([
+      ['/units', '/units'],
+      ['/currency', '/currency?currency.page=2'],
+    ])
+  })
+
+  it('has the logo leading home', async () => {
+    renderWithProviders(<></>, { url: '/currency', routes })
+    await screen.findByText('Страница валют')
+    expect(screen.getByRole('link', { name: 'WinPro Admin' })).toHaveAttribute('href', '/')
   })
 })

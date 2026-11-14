@@ -53,7 +53,7 @@ Graph oxirgi `/graphify src --update`dagi holatni ko'rsatadi — yangi fayllar u
 - Ranglar faqat token klasslari; hex, `bg-gray-*`, `font-mono` yo'q. Bir klass guruhida qarama-qarshi klasslar yo'q.
 - Matnlar `t('x.…')` orqali; kalitlar uchala tilda bir xil; bo'lim kalitlari faqat `x.*` ostida;
   `locales/legacy/*.json` o'zgarmagan.
-- Yangi umumiy komponent: `shared/ui/index.ts`ga eksport, `/ui-kit`da namuna, testi bor.
+- Yangi umumiy komponent: `shared/ui/index.ts`ga eksport, testi bor.
 
 **Testlar**
 - `x.test.tsx` HTTP client'ni mock qiladi va endpoint + body'ni tekshiradi: ro'yxat, yaratish, tahrirlash, o'chirish,

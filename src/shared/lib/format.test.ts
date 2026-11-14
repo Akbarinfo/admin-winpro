@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { formatDate, formatDateTime, formatNumber, todayIso } from './format'
+import { i18n } from '@/shared/i18n'
+import { formatDate, formatDateTime, formatNumber, formatRelative, todayIso } from './format'
 
 describe('formatDate', () => {
   it('formats ISO dates and timestamps as dd.mm.yyyy', () => {
@@ -38,5 +39,24 @@ describe('formatDateTime', () => {
   it('falls back to the date, and to empty', () => {
     expect(formatDateTime('2026-10-19')).toBe('19.10.2026')
     expect(formatDateTime(null)).toBe('')
+  })
+})
+
+describe('formatRelative', () => {
+  const now = Date.UTC(2026, 10, 14, 12, 0, 0)
+  it('says how long ago, in the interface language', () => {
+    expect(formatRelative(now - 20_000, now)).toBe('только что')
+    expect(formatRelative(now - 5 * 60_000, now)).toBe('5 минут назад')
+    expect(formatRelative(now - 3 * 3600_000, now)).toBe('3 часа назад')
+    expect(formatRelative(now - 26 * 3600_000, now)).toBe('вчера')
+  })
+
+  it('says «hozir» in Uzbek under a minute', async () => {
+    await i18n.changeLanguage('uz')
+    try {
+      expect(formatRelative(now - 5_000, now)).toBe('hozir')
+    } finally {
+      await i18n.changeLanguage('ru')
+    }
   })
 })
