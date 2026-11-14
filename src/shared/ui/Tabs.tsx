@@ -100,7 +100,7 @@ export function Tabs<T extends string>({
                 {item.count != null && (
                   <span
                     className={cn(
-                      'inline-grid h-5 min-w-[22px] place-items-center rounded-full px-1.5 text-xs tabular-nums',
+                      'inline-grid h-5 min-w-5.5 place-items-center rounded-full px-1.5 text-xs tabular-nums',
                       selected ? 'bg-primary text-primary-fg' : 'bg-line text-muted',
                     )}
                   >

@@ -1,16 +1,18 @@
 /* Design tokens — the only place colors are defined. Components use them via Tailwind (bg-surface, text-primary…). */
 :root {
-  --bg: #f3f7f7;
+  /* Neutrals and the primary family follow my-winpro (tailwind.config + its most used colours):
+     a navy-tinted grey instead of the old green-grey. */
+  --bg: #f1f6fd; /* my-winpro body: blue-100/40 */
   --surface: #ffffff;
-  --surface-2: #f8fbfb;
-  --line: #dce6e7;
-  --line-strong: #c6d4d6;
-  --fg: #13262a;
-  --muted: #5b7074;
-  --faint: #8a9da0;
+  --surface-2: #fafbfd;
+  --line: #dce0e8;
+  --line-strong: #b9c3d1;
+  --fg: #1a344d;
+  --muted: #667085; /* my-winpro's #7a889b is 3.6:1 on white — too faint for labels; this is 4.8:1 */
+  --faint: #7a889b;
   --primary: #37a0ad;
-  --primary-strong: #1f6e78; /* selected text on primary-soft: 5.2:1 */
-  --primary-soft: #e4f3f5;
+  --primary-strong: #0c5c67; /* my-winpro primaryInk: 6.9:1 on primary-soft */
+  --primary-soft: #e8f5f7;
   --primary-fg: #ffffff;
   /* Statuses (as in my-winpro): soft ground, a -200 line, text dark enough for 4.5:1 on the ground */
   --ok: #047857;
@@ -25,9 +27,9 @@
   --info: #1d4ed8;
   --info-soft: #eff6ff;
   --info-line: #bfdbfe;
-  --overlay: rgb(12 24 27 / 0.42);
+  --overlay: rgb(26 52 77 / 0.42);
   --highlight: #fde68a; /* search matches */
-  /* WinPro logo (shared/ui/Logo): the door outline, the wordmark, «CONSTRUCTION» */
+  /* WinPro logo (shared/ui/Logo): the door outline, the wordmark, «ADMIN» */
   --logo-ink: #06315b;
   --logo-text: #35496d;
   --logo-sub: #b2b5c0;
@@ -35,18 +37,18 @@
 }
 
 .dark {
-  --bg: #0d1719;
-  --surface: #132226;
-  --surface-2: #172a2e;
-  --line: #23383c;
-  --line-strong: #30494e;
-  --fg: #e2eeef;
-  --muted: #93a9ad;
-  --faint: #6b8387;
-  --primary: #4cb6c3;
-  --primary-strong: #6cc7d2;
-  --primary-soft: #173b40;
-  --primary-fg: #08292e;
+  --bg: #0e1a27;
+  --surface: #142233;
+  --surface-2: #19293c;
+  --line: #233649;
+  --line-strong: #2f465e;
+  --fg: #e4ecf5;
+  --muted: #9daec2;
+  --faint: #7a889b;
+  --primary: #45b8c6;
+  --primary-strong: #7fdce8;
+  --primary-soft: #123a44;
+  --primary-fg: #062a30;
   --ok: #5cc28a;
   --ok-soft: #15352a;
   --ok-line: #1f5a3f;
@@ -62,8 +64,8 @@
   --overlay: rgb(0 0 0 / 0.6);
   --highlight: rgb(234 179 8 / 0.4);
   /* the logo's dark blues would vanish here: light ink on the dark ground */
-  --logo-ink: #cfe3e6;
-  --logo-text: #e2eeef;
-  --logo-sub: #6b8387;
+  --logo-ink: #cfe0f0;
+  --logo-text: #e4ecf5;
+  --logo-sub: #7a889b;
   color-scheme: dark;
 }

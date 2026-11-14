@@ -36,7 +36,7 @@ export function AuthLayout() {
         <footer className="text-[12.5px] text-faint">© {YEAR} WinPro</footer>
       </section>
 
-      <section className="relative hidden flex-col justify-center overflow-hidden bg-linear-150 from-[#37a0ad] to-[#1d6f7a] p-10 text-white md:flex lg:p-14 dark:from-[#2a8794] dark:to-[#0f4a52]">
+      <section className="relative hidden flex-col justify-center overflow-hidden bg-linear-150 from-primary to-primary-strong p-10 text-white md:flex lg:p-14 dark:from-primary-soft dark:to-bg">
         <div className="relative z-10 max-w-120">
           <h1 className="text-[clamp(30px,3.2vw,42px)] leading-[1.1] font-semibold tracking-tight text-balance">
             {t('auth.brand_title')}

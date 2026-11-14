@@ -32,13 +32,13 @@ export function AppLayout() {
   }, [visit, userKey, pathname, search])
 
   return (
-    <div className="grid h-dvh lg:grid-cols-[260px_minmax(0,1fr)]">
+    <div className="grid h-dvh lg:grid-cols-[280px_minmax(0,1fr)]">
       {/* Below lg the sidebar is an off-canvas drawer. */}
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-50 w-[280px] max-w-[86%] border-r border-line bg-surface transition-transform duration-200',
+          'fixed inset-y-0 left-0 z-50 w-70 max-w-[86%] border-r border-line bg-surface transition-transform duration-200',
           'lg:sticky lg:top-0 lg:z-auto lg:h-screen lg:w-auto lg:max-w-none lg:translate-x-0',
-          navOpen ? 'translate-x-0' : '-translate-x-[105%]',
+          navOpen ? 'translate-x-0' : 'translate-x-[-105%]',
         )}
       >
         <Sidebar onNavigate={closeNav} />
@@ -59,7 +59,7 @@ export function AppLayout() {
             className="absolute inset-x-0 top-0 z-30 h-0.5 animate-pulse bg-primary"
           />
         )}
-        <header className="z-20 flex h-[60px] shrink-0 items-center gap-2.5 border-b border-line bg-surface px-4">
+        <header className="z-20 flex h-15 shrink-0 items-center gap-2.5 border-b border-line bg-surface px-4">
           <IconButton
             label={t('layout.open_menu')}
             onClick={() => setNavOpen(true)}

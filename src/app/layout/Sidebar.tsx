@@ -12,7 +12,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex h-[60px] shrink-0 items-center border-b border-line px-[18px]">
+      <div className="flex h-15 shrink-0 items-center border-b border-line px-4.5">
         {/* the same logo as on the sign-in page; it leads home */}
         <Link to="/" onClick={onNavigate} className="rounded-md">
           <Logo className="h-9" />
@@ -21,7 +21,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
 
       <nav
         aria-label={t('layout.navigation')}
-        className="grid gap-[18px] overflow-y-auto px-2.5 pt-3 pb-5"
+        className="grid gap-4.5 overflow-y-auto px-2.5 pt-3 pb-5"
       >
         {NAV.map((group) => (
           <div key={group.title}>
@@ -35,7 +35,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                   key={to}
                   aria-disabled="true"
                   title={t('nav.not_migrated')}
-                  className="flex h-[34px] cursor-not-allowed items-center gap-2.5 rounded-md px-2.5 font-medium text-muted opacity-45"
+                  className="flex h-8.5 cursor-not-allowed items-center gap-2.5 rounded-md px-2.5 font-medium text-muted opacity-45"
                 >
                   <Icon size={18} aria-hidden="true" className="shrink-0" />
                   <span className="truncate">{t(label)}</span>
@@ -51,7 +51,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                   // nearly invisible as a hover on the white sidebar; a tint of the brand colour shows.
                   className={({ isActive }) =>
                     cn(
-                      'flex h-[34px] items-center gap-2.5 rounded-md px-2.5 font-medium transition-colors',
+                      'flex h-8.5 items-center gap-2.5 rounded-md px-2.5 font-medium transition-colors',
                       isActive
                         ? 'bg-primary-soft text-primary-strong'
                         : 'text-muted hover:bg-primary-soft/60 hover:text-fg',
